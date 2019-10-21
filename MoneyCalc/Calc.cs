@@ -8,7 +8,7 @@ namespace MoneyCalc
     {
         public Calc()
         {
-
+           //sadasdas
         }
     }
 }
