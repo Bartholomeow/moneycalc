@@ -6,5 +6,9 @@ namespace MoneyCalc
 {
     class Calc
     {
+        public Calc()
+        {
+
+        }
     }
 }

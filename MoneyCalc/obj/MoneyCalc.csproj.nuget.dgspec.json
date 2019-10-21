@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Vlad\\Source\\Repos\\moneycalc\\MoneyCalc\\MoneyCalc.csproj": {}
+    "C:\\Users\\Vlad\\Documents\\GitHub\\moneycalc\\MoneyCalc\\MoneyCalc.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Vlad\\Source\\Repos\\moneycalc\\MoneyCalc\\MoneyCalc.csproj": {
+    "C:\\Users\\Vlad\\Documents\\GitHub\\moneycalc\\MoneyCalc\\MoneyCalc.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Vlad\\Source\\Repos\\moneycalc\\MoneyCalc\\MoneyCalc.csproj",
+        "projectUniqueName": "C:\\Users\\Vlad\\Documents\\GitHub\\moneycalc\\MoneyCalc\\MoneyCalc.csproj",
         "projectName": "MoneyCalc",
-        "projectPath": "C:\\Users\\Vlad\\Source\\Repos\\moneycalc\\MoneyCalc\\MoneyCalc.csproj",
+        "projectPath": "C:\\Users\\Vlad\\Documents\\GitHub\\moneycalc\\MoneyCalc\\MoneyCalc.csproj",
         "packagesPath": "C:\\Users\\Vlad\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Vlad\\Source\\Repos\\moneycalc\\MoneyCalc\\obj\\",
+        "outputPath": "C:\\Users\\Vlad\\Documents\\GitHub\\moneycalc\\MoneyCalc\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Vlad\\AppData\\Roaming\\NuGet\\NuGet.Config",
