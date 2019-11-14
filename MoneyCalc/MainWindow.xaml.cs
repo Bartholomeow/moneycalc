@@ -20,9 +20,24 @@ namespace MoneyCalc
     /// </summary>
     public partial class MainWindow : Window
     {
+        public Account account;
         public MainWindow()
         {
+            account = Account.getAccount();
             InitializeComponent();
+            DataContext = account;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            IncomeWindow income = new IncomeWindow(account);
+            income.Show();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            ExpenseWindow expense = new ExpenseWindow(account);
+            expense.Show();
         }
     }
 }

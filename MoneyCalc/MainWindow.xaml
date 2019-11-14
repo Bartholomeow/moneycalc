@@ -5,10 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MoneyCalc"
         mc:Ignorable="d"
-        Title="MoneyCalc" Height="450" Width="321">
+        Title="MoneyCalc" Height="326" Width="551" Background="LightSkyBlue">
     <Grid>
-        <Button Content="Расход" HorizontalAlignment="Left" Height="76" Margin="160,332,0,0" VerticalAlignment="Top" Width="136" Background="Crimson" FontSize="30"/>
-        <Button Content="Доход" HorizontalAlignment="Left" Height="76" Margin="24,332,0,0" VerticalAlignment="Top" Width="136" Background="ForestGreen" FontSize="30"/>
-
+        <Button Content="Расход" HorizontalAlignment="Left" Height="76" Margin="391,210,0,0" VerticalAlignment="Top" Width="136" BorderThickness="0" FontSize="30" Click="Button_Click_1">
+            <Button.Background>
+                <RadialGradientBrush RadiusX="0.6" RadiusY="0.8" GradientOrigin="0.3,0.3">
+                    <GradientStop Color="Crimson" Offset="1" />
+                    <GradientStop Color="White" Offset="0" />
+                </RadialGradientBrush>
+            </Button.Background>
+        </Button>
+        <Button Content="Доход" HorizontalAlignment="Left" Height="76" Margin="391,134,0,0" VerticalAlignment="Top" Width="136" BorderThickness="0" FontSize="30" Click="Button_Click">
+            <Button.Background>
+                <RadialGradientBrush RadiusX="0.6" RadiusY="0.8" GradientOrigin="0.3,0.3">
+                    <GradientStop Color="SpringGreen" Offset="1" />
+                    <GradientStop Color="White" Offset="0" />
+                </RadialGradientBrush>
+            </Button.Background>
+        </Button>
+        <TextBlock Name="balanceTextBlock" Text="{Binding Path=Balance, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="49" Margin="391,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="136"/>
     </Grid>
 </Window>
