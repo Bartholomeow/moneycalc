@@ -5,11 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MoneyCalc"
         mc:Ignorable="d"
-        Title="Income" Height="301" Width="206">
-    <Canvas>
-        <WrapPanel Name="categoriesPanel" Height="201" Width="186" Canvas.Left="10" Canvas.Top="74">
-
-        </WrapPanel>
-        <TextBox Name="incomeTextBox" Height="50" Canvas.Left="10" Canvas.Top="10" TextWrapping="Wrap" Width="186"/>
-    </Canvas>
+        Title="Income" Height="300" Width="200">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="56*"/>
+        </Grid.RowDefinitions>
+        <WrapPanel Name="categoriesPanel" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <TextBox Name="incomeTextBox" TextWrapping="Wrap" Grid.Row="0"/>
+    </Grid>
 </Window>

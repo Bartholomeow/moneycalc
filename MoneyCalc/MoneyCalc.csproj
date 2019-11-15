@@ -4,6 +4,12 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resourses\moneycalc.ico</ApplicationIcon>
+    <Win32Resource />
   </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Resourses\" />
+  </ItemGroup>
 
 </Project>

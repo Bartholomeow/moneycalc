@@ -22,6 +22,17 @@ namespace MoneyCalc
         {
             this.account = account;
             InitializeComponent();
+            buildCategoryButtons();
+        }
+        private void ButtonAdd_Click(object sender, RoutedEventArgs e)
+        {
+            AddCategoryWindow addCategoryWindow = new AddCategoryWindow(account, 0);
+            addCategoryWindow.ShowDialog();
+            categoriesPanel.Children.Clear();
+            buildCategoryButtons();
+        }
+        public void buildCategoryButtons()
+        {
             foreach (var category in account.ExpenseCategories)
             {
                 Button button = new Button()
@@ -32,8 +43,15 @@ namespace MoneyCalc
                 button.Click += _button_Click;
                 categoriesPanel.Children.Add(button);
             }
+            Button buttonAdd = new Button()
+            {
+                Content = "+",
+                Height = 50,
+                Width = 50
+            };
+            buttonAdd.Click += ButtonAdd_Click;
+            categoriesPanel.Children.Add(buttonAdd);
         }
-
         private void _button_Click(object sender, RoutedEventArgs e)
         {
             if (expenseTextBox.Text == "")

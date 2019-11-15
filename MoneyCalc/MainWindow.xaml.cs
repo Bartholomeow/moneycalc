@@ -24,20 +24,20 @@ namespace MoneyCalc
         public MainWindow()
         {
             account = Account.getAccount();
-            InitializeComponent();
             DataContext = account;
+            InitializeComponent();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             IncomeWindow income = new IncomeWindow(account);
-            income.Show();
+            income.ShowDialog();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             ExpenseWindow expense = new ExpenseWindow(account);
-            expense.Show();
+            expense.ShowDialog();
         }
     }
 }
