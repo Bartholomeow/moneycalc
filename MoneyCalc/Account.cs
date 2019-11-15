@@ -3,28 +3,20 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Runtime.CompilerServices;
+using System.Xml.Serialization;
 
 namespace MoneyCalc
 {
+    [Serializable]
     public class Account : INotifyPropertyChanged
     {
         private static Account account;
-        private Account() 
+        private Account()
         {
-            Balance = 0;
             ExpenseCategories = new List<Category>();
             IncomeCategories = new List<Category>();
-            ExpensesForDays = new SortedDictionary <Date, Dictionary<Category, int>>(new DateComparer());
+            ExpensesForDays = new SortedDictionary<Date, Dictionary<Category, int>>(new DateComparer());
             IncomesForDays = new SortedDictionary<Date, Dictionary<Category, int>>(new DateComparer());
-            ExpenseCategories.Add(new Category("Транспорт"));
-            ExpenseCategories.Add(new Category("Еда"));
-            ExpenseCategories.Add(new Category("Счета"));
-            ExpenseCategories.Add(new Category("Подарки"));
-            ExpenseCategories.Add(new Category("Развлечения"));
-            ExpenseCategories.Add(new Category("Жилье"));
-            IncomeCategories.Add(new Category("Зарплата"));
-            IncomeCategories.Add(new Category("Сбережения"));
-            IncomeCategories.Add(new Category("Депозит"));
         }
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
@@ -48,7 +40,9 @@ namespace MoneyCalc
         }
         public List<Category> ExpenseCategories { get; set; }
         public List<Category> IncomeCategories { get; set; }
+        [XmlIgnore]
         public SortedDictionary<Date, Dictionary<Category, int>> ExpensesForDays { get; set; }
+        [XmlIgnore]
         public SortedDictionary<Date, Dictionary<Category, int>> IncomesForDays { get; set; }
         public void GetIncome(Income income)
         {

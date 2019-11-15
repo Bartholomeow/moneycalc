@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MoneyCalc"
         mc:Ignorable="d"
-        Title="MoneyCalc" Height="326" Width="551" Background="LightSkyBlue">
+        Title="MoneyCalc" Height="326" Width="551" Background="LightSkyBlue" Closing="Window_Closing">
     <Grid>
         <Button Content="Расход" HorizontalAlignment="Left" Height="76" Margin="391,210,0,0" VerticalAlignment="Top" Width="136" BorderThickness="0" FontSize="30" Click="Button_Click_1">
             <Button.Background>

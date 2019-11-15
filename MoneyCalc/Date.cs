@@ -9,6 +9,13 @@ namespace MoneyCalc
         public int Day { get; set; }
         public int Month { get; set; }
         public int Year { get; set; }
+        public Date(string date)
+        {
+            string[] d = date.Split('.');
+            Day = int.Parse(d[0]);
+            Month = int.Parse(d[1]);
+            Year = int.Parse(d[2]);
+        }
         public Date(int day, int month, int year)
         {
             Day = day;
@@ -24,6 +31,10 @@ namespace MoneyCalc
         {
             string hash = Day + Month + Year + "";
             return int.Parse(hash);
+        }
+        public override string ToString()
+        {
+            return Day + "." + Month + "." + Year;
         }
 
     }

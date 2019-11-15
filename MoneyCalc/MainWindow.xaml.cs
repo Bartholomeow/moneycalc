@@ -12,6 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.Json;
+using System.Xml.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace MoneyCalc
 {
@@ -23,21 +27,23 @@ namespace MoneyCalc
         public Account account;
         public MainWindow()
         {
-            account = Account.getAccount();
+            account = Serializer.AccountReader("config.txt");
             DataContext = account;
             InitializeComponent();
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             IncomeWindow income = new IncomeWindow(account);
             income.ShowDialog();
         }
-
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             ExpenseWindow expense = new ExpenseWindow(account);
             expense.ShowDialog();
+        }
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Serializer.AccountWriter("config.txt", account);
         }
     }
 }
