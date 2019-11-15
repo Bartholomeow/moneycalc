@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Text.RegularExpressions;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -45,9 +46,9 @@ namespace MoneyCalc
             }
             Button buttonAdd = new Button()
             {
-                Content = "+",
+                Content = "Добавить категорию",
                 Height = 50,
-                Width = 50
+                Width = 150
             };
             buttonAdd.Click += ButtonAdd_Click;
             categoriesPanel.Children.Add(buttonAdd);
@@ -57,6 +58,12 @@ namespace MoneyCalc
             if (expenseTextBox.Text == "")
             {
                 MessageBox.Show("Введите расход.");
+                return;
+            }
+            Regex r = new Regex("^[0-9]+$");
+            if (!r.IsMatch(expenseTextBox.Text))
+            {
+                MessageBox.Show("Введите корректные данные в поле расход.");
                 return;
             }
             Button button = (Button)sender;
