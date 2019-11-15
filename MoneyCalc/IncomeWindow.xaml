@@ -5,13 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MoneyCalc"
         mc:Ignorable="d"
-        Title="Income" Height="300" Width="200">
+        Title="Доход" Height="300" Width="200">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="15*"/>
-            <RowDefinition Height="56*"/>
+            <RowDefinition Height="73*"/>
+            <RowDefinition Height="207*"/>
         </Grid.RowDefinitions>
-        <WrapPanel Name="categoriesPanel" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-        <TextBox Name="incomeTextBox" TextWrapping="Wrap" Grid.Row="0"/>
+        <WrapPanel Name="categoriesPanel" VerticalAlignment="Top" Height="176" Grid.Row="1" Margin="0,31,0,0"/>
+        <TextBox Name="incomeTextBox" TextWrapping="Wrap" Height="31" VerticalAlignment="Top" Margin="0,41,0,0"/>
+        <Label Content="Выберите категорию дохода" Margin="0,2,0,0" VerticalAlignment="Top" Height="31" Grid.Row="1"/>
+        <Label Content="Введите доход" Margin="0,5,0,0" Height="36" VerticalAlignment="Top"/>
     </Grid>
 </Window>

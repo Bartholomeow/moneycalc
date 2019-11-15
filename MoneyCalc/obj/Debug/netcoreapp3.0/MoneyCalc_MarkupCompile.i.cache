@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\Vlad\Documents\GitHub\moneycalc\MoneyCalc\obj\Debug\netcoreapp3.0\
+C:\Users\Smirnov\Source\Repos\moneycalc\MoneyCalc\obj\Debug\netcoreapp3.0\
 MoneyCalc
 none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_0
-C:\Users\Vlad\Documents\GitHub\moneycalc\MoneyCalc\App.xaml
+C:\Users\Smirnov\Source\Repos\moneycalc\MoneyCalc\App.xaml
 4-1665105822
 
-13-912814263
-192-1322056207
+13-783127466
+192-1037106189
 AddCategoryWindow.xaml;ExpenseWindow.xaml;IncomeWindow.xaml;MainWindow.xaml;
 
 False

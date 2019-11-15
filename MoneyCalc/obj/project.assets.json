@@ -8,25 +8,24 @@
     ".NETCoreApp,Version=v3.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Vlad\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\Smirnov\\.nuget\\packages\\": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Vlad\\Documents\\GitHub\\moneycalc\\MoneyCalc\\MoneyCalc.csproj",
+      "projectUniqueName": "C:\\Users\\Smirnov\\Source\\Repos\\moneycalc\\MoneyCalc\\MoneyCalc.csproj",
       "projectName": "MoneyCalc",
-      "projectPath": "C:\\Users\\Vlad\\Documents\\GitHub\\moneycalc\\MoneyCalc\\MoneyCalc.csproj",
-      "packagesPath": "C:\\Users\\Vlad\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Vlad\\Documents\\GitHub\\moneycalc\\MoneyCalc\\obj\\",
+      "projectPath": "C:\\Users\\Smirnov\\Source\\Repos\\moneycalc\\MoneyCalc\\MoneyCalc.csproj",
+      "packagesPath": "C:\\Users\\Smirnov\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Smirnov\\Source\\Repos\\moneycalc\\MoneyCalc\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\"
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Vlad\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\Smirnov\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.0"
@@ -66,7 +65,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100-preview9-014004\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }
