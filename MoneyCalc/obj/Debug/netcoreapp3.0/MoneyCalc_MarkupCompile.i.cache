@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_0
 C:\Users\Smirnov\Source\Repos\moneycalc\MoneyCalc\App.xaml
-4-1665105822
+5-1887992315
 
-13-783127466
+141745106493
 192-1037106189
-AddCategoryWindow.xaml;ExpenseWindow.xaml;IncomeWindow.xaml;MainWindow.xaml;
+AddCategoryWindow.xaml;CalcWindow.xaml;ExpenseWindow.xaml;IncomeWindow.xaml;MainWindow.xaml;
 
 False
 
