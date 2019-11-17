@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace MoneyCalc
 {
     public class Date
     {
-        public int Day { get; set; }
-        public int Month { get; set; }
-        public int Year { get; set; }
+        public int Day { get; }
+        public int Month { get; }
+        public int Year { get; }
         public Date(string date)
         {
-            string[] d = date.Split('.');
+            var d = date.Split('.');
             Day = int.Parse(d[0]);
             Month = int.Parse(d[1]);
             Year = int.Parse(d[2]);
@@ -24,12 +22,12 @@ namespace MoneyCalc
         }
         public override bool Equals(object obj)
         {
-            Date o = (Date)obj;
-            return (Day == o.Day && Month == o.Month && Year == o.Year);
+            var o = (Date)obj;
+            return o != null && (Day == o.Day && Month == o.Month && Year == o.Year);
         }
         public override int GetHashCode()
         {
-            string hash = Day + Month + Year + "";
+            var hash = Day + Month + Year + "";
             return int.Parse(hash);
         }
         public override string ToString()
@@ -43,12 +41,12 @@ namespace MoneyCalc
         public int Compare(Date x, Date y)
         {
             if (x.Year > y.Year) return 1;
-            else if (x.Year < y.Year) return -1;
-            else if (x.Month > y.Month) return 1;
-            else if (x.Month < y.Month) return -1;
-            else if (x.Day > y.Day) return 1;
-            else if (x.Day > y.Day) return -1;
-            else return 0;
+            if (x.Year < y.Year) return -1;
+            if (x.Month > y.Month) return 1;
+            if (x.Month < y.Month) return -1;
+            if (x.Day > y.Day) return 1;
+            if (x.Day > y.Day) return -1;
+            return 0;
         }
     }
 }

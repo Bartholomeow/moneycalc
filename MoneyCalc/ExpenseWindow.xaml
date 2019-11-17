@@ -12,8 +12,8 @@
             <RowDefinition Height="207*"/>
         </Grid.RowDefinitions>
         <WrapPanel Name="categoriesPanel" VerticalAlignment="Top" Height="176" Grid.Row="1" Margin="0,31,0,0"/>
-        <TextBox Name="expenseTextBox" TextWrapping="Wrap" Height="31" VerticalAlignment="Top" Margin="0,41,0,0"/>
+        <TextBox Grid.Row="0" Name="expenseTextBox" TextWrapping="Wrap" Height="31" VerticalAlignment="Top" Margin="0,41,0,0"/>
         <Label Content="Выберите категорию расхода" Margin="0,2,0,0" VerticalAlignment="Top" Height="31" Grid.Row="1"/>
-        <Label Content="Введите расход" Margin="0,5,0,0" Height="36" VerticalAlignment="Top"/>
+        <Label Grid.Row="0" Content="Введите расход" Margin="0,5,0,0" Height="36" VerticalAlignment="Top"/>
     </Grid>
 </Window>

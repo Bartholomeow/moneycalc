@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using System.Runtime.CompilerServices;
-using System.Xml.Serialization;
 
 namespace MoneyCalc
 {
-    [Serializable]
     public class Account : INotifyPropertyChanged
     {
-        private static Account account;
+        //Конструктор, который позволяет создать только один экземпляр класса.
+        private static Account _account;
+        public static Account GetAccount() => _account ??= new Account();
         private Account()
         {
             ExpenseCategories = new List<Category>();
@@ -18,32 +17,28 @@ namespace MoneyCalc
             ExpensesForDays = new SortedDictionary<Date, Dictionary<Category, int>>(new DateComparer());
             IncomesForDays = new SortedDictionary<Date, Dictionary<Category, int>>(new DateComparer());
         }
+        //Реализация интерфейса INotifyPropertyChanged, позволяющаяя привязывать поле "баланс" к элементам WPF.
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
-        public static Account getAccount()
-        {
-            if (account == null)
-                account = new Account();
-            return account;
-        }
+        
         private int _balance;
         public int Balance 
         {
-            get { return _balance; }
+            get => _balance;
             set { _balance = value;
-                OnPropertyChanged("Balance");
+                OnPropertyChanged();
             }
         }
+        //Списки категорий расходов и доходов.
         public List<Category> ExpenseCategories { get; set; }
         public List<Category> IncomeCategories { get; set; }
-        [XmlIgnore]
+        //Словари, хранящие данные о том, сколько и в какой категории в какой день было расходов и доходов
         public SortedDictionary<Date, Dictionary<Category, int>> ExpensesForDays { get; set; }
-        [XmlIgnore]
         public SortedDictionary<Date, Dictionary<Category, int>> IncomesForDays { get; set; }
+        //Методы добавления расходов и доходов на сегодняшнее число
         public void GetIncome(Income income)
         {
             var date = DateTime.Now;

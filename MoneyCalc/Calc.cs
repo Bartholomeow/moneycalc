@@ -1,28 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-using System.Runtime.CompilerServices;
-using System.Xml.Serialization;
 
 
 namespace MoneyCalc
 {
-    class RPN
+    public class Calc
     {
-
-        static public double Calculate(string input) // метод счета с ним работаем 
+        public static double Calculate(string input) // метод счета с ним работаем 
         {
-            string output = GetExpression(input);
-            double result = Counting(output);
+            var output = GetExpression(input);
+            var result = Counting(output);
             return result;
         }
 
         
-        static private string GetExpression(string input)  //  метод получение из строки опз
+        private static string GetExpression(string input)  //  метод получение из строки опз
         {
-            string output = string.Empty;
-            Stack<char> operStack = new Stack<char>();
+            var output = string.Empty;
+            var operStack = new Stack<char>();
 
             for (int i = 0; i < input.Length; i++) 
             {
@@ -31,7 +26,7 @@ namespace MoneyCalc
                     continue;
 
             
-                if (Char.IsDigit(input[i])) 
+                if (char.IsDigit(input[i])) 
                 {
                     
                     while (!IsDelimeter(input[i]) && !IsOperator(input[i]))
@@ -81,17 +76,17 @@ namespace MoneyCalc
             return output;
         }
 
-        static private double Counting(string input) //  метод котораый получает опз и выдает результат
+        private static double Counting(string input) //  метод котораый получает опз и выдает результат
         {
             double result = 0; 
-            Stack<double> temp = new Stack<double>(); 
+            var temp = new Stack<double>(); 
 
             for (int i = 0; i < input.Length; i++) 
             {
                 
-                if (Char.IsDigit(input[i]))
+                if (char.IsDigit(input[i]))
                 {
-                    string a = string.Empty;
+                    var a = string.Empty;
 
                     while (!IsDelimeter(input[i]) && !IsOperator(input[i])) 
                     {
@@ -121,19 +116,15 @@ namespace MoneyCalc
             }
             return temp.Peek(); 
         }
-        static private bool IsDelimeter(char c)
+        private static bool IsDelimeter(char c)
         {
-            if ((" =".IndexOf(c) != -1))
-                return true;
-            return false;
+            return " =".IndexOf(c) != -1;
         }
-        static private bool IsOperator(char с)
+        private static bool IsOperator(char с)
         {
-            if (("+-/*^()".IndexOf(с) != -1))
-                return true;
-            return false;
+            return "+-/*^()".IndexOf(с) != -1;
         }
-        static private byte GetPriority(char s)
+        private static byte GetPriority(char s)
         {
             switch (s)
             {

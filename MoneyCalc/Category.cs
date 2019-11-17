@@ -1,6 +1,7 @@
-﻿namespace MoneyCalc
+﻿using System.Linq;
+
+namespace MoneyCalc
 {
-    //Класс, отвечающий за категории доходов и расходов
     public class Category
     {
         public string Name { get;}
@@ -8,23 +9,13 @@
         {
             Name = name;
         }
-        public override string ToString()
-        {
-            return Name;
-        }
-        public override int GetHashCode()
-        {
-            int hash = 0;
-            for (int i = 0; i < Name.Length; i++)
-            {
-                hash += Name[i];
-            }
-            return hash;
-        }
+        public override string ToString() => Name;
+        public override int GetHashCode() => Name.Aggregate(0, (current, t) => current + t);
+
         public override bool Equals(object obj)
         {
-            Category o = (Category)obj;
-            return Name.Equals(o.Name);
+            var o = (Category)obj;
+            return o != null && Name.Equals(o.Name);
         }
     }
 }

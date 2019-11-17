@@ -35,7 +35,7 @@ namespace MoneyCalc
                 case "=":
                     try
                     {                     
-                        TextBoxMain.Text = RPN.Calculate(TextBoxMain.Text).ToString();
+                        TextBoxMain.Text = Calc.Calculate(TextBoxMain.Text).ToString();
                     }
                     catch
                     {
