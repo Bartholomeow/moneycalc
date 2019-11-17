@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Xml.Serialization;
-
-namespace MoneyCalc
+﻿namespace MoneyCalc
 {
-    [Serializable]
+    //Класс, отвечающий за категории доходов и расходов
     public class Category
     {
         public string Name { get;}
-        public Category() { }
         public Category(string name)
         {
             Name = name;

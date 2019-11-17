@@ -1,48 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace MoneyCalc
 {
     /// <summary>
     /// Логика взаимодействия для AddCategoryWindow.xaml
     /// </summary>
-    public partial class AddCategoryWindow : Window
+    public partial class AddCategoryWindow
     {
-        Account account;
-        int incomeOrExpense;
+        private readonly Account _account;
+        private readonly int _incomeOrExpense;
         public AddCategoryWindow(Account account, int incomeOrExpense)
         {
-            this.account = account;
-            this.incomeOrExpense = incomeOrExpense;
+            _account = account;
+            _incomeOrExpense = incomeOrExpense;
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            if (addCategoryTextbox.Text == "")
+            if (AddCategoryTextBox.Text == "")
             {
                 MessageBox.Show("Введите название категории.");
                 return;
             }
-            if(incomeOrExpense == 1)
+            switch (_incomeOrExpense)
             {
-                account.IncomeCategories.Add(new Category(addCategoryTextbox.Text));
+                case 1:
+                    _account.IncomeCategories.Add(new Category(AddCategoryTextBox.Text));
+                    break;
+                case 0:
+                    _account.ExpenseCategories.Add(new Category(AddCategoryTextBox.Text));
+                    break;
             }
-            else if(incomeOrExpense == 0)
-            {
-                account.ExpenseCategories.Add(new Category(addCategoryTextbox.Text));
-            }
-            MessageBox.Show($"Добавлена категория {addCategoryTextbox.Text}");
-            this.Close();
+            MessageBox.Show($"Добавлена категория {AddCategoryTextBox.Text}");
+            Close();
         }
     }
 }

@@ -13,8 +13,8 @@
             <RowDefinition Height="31*"/>
         </Grid.RowDefinitions>
         <TextBlock Text="Введите название категории" HorizontalAlignment="Center"/>
-        <TextBox Name="addCategoryTextbox" Text="" Grid.Row="1" HorizontalAlignment="Center" Height="27" TextWrapping="Wrap" VerticalAlignment="Center" Width="134"/>
-        <Button Content="Добавить" HorizontalAlignment="Center" Grid.Row="2" Height="24" VerticalAlignment="Center" Click="Button_Click" Width="56"/>
+        <TextBox Name="AddCategoryTextBox" Text="" Grid.Row="1" HorizontalAlignment="Center" Height="27" TextWrapping="Wrap" VerticalAlignment="Center" Width="134"/>
+        <Button Name="AddButton" Content="Добавить" HorizontalAlignment="Center" Grid.Row="2" Height="24" VerticalAlignment="Center" Click="AddButton_Click" Width="56"/>
 
     </Grid>
 </Window>
