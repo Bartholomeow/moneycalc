@@ -5,15 +5,63 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MoneyCalc"
         mc:Ignorable="d"
-        Title="Расход" Height="300" Width="200">
+        Title="Расход" Height="330" Width="400">
+    <Window.Resources>
+        <ResourceDictionary>
+            <LinearGradientBrush x:Key="ButtonBackground" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#FFD9EDFF" Offset="0"/>
+                <GradientStop Color="#FFC0DEFF" Offset="0.445"/>
+                <GradientStop Color="#FFAFD1F8" Offset="0.53"/>
+            </LinearGradientBrush>
+            <Style TargetType="{x:Type Button}" x:Key="DefaultButtonStyle">
+                <Setter Property="Background" Value="{StaticResource ButtonBackground}"/>
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="FontSize" Value="20"/>
+            </Style>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="73*"/>
-            <RowDefinition Height="207*"/>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
-        <WrapPanel Name="categoriesPanel" VerticalAlignment="Top" Height="176" Grid.Row="1" Margin="0,31,0,0"/>
-        <TextBox Grid.Row="0" Name="expenseTextBox" TextWrapping="Wrap" Height="31" VerticalAlignment="Top" Margin="0,41,0,0"/>
-        <Label Content="Выберите категорию расхода" Margin="0,2,0,0" VerticalAlignment="Top" Height="31" Grid.Row="1"/>
-        <Label Grid.Row="0" Content="Введите расход" Margin="0,5,0,0" Height="36" VerticalAlignment="Top"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50"></ColumnDefinition>
+            <ColumnDefinition Width="50"></ColumnDefinition>
+            <ColumnDefinition Width="50"></ColumnDefinition>
+            <ColumnDefinition Width="50"></ColumnDefinition>
+            <ColumnDefinition Width="200"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <TextBox Grid.Row="1" Name="expenseTextBox" Grid.ColumnSpan="4" Text="0"
+                 FontSize="32" TextAlignment="Right"
+                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        </TextBox>
+
+        <Button Grid.Row="2" Grid.Column="0" Button.Click="Calc_Click" Style="{StaticResource DefaultButtonStyle}">1</Button>
+        <Button Grid.Row="2" Grid.Column="1" Button.Click="Calc_Click" Style="{StaticResource DefaultButtonStyle}">2</Button>
+        <Button Grid.Row="2" Grid.Column="2" Button.Click="Calc_Click" Style="{StaticResource DefaultButtonStyle}">3</Button>
+        <Button Grid.Row="3" Grid.Column="0" Button.Click="Calc_Click" Style="{StaticResource DefaultButtonStyle}">4</Button>
+        <Button Grid.Row="3" Grid.Column="1" Button.Click="Calc_Click" Style="{StaticResource DefaultButtonStyle}">5</Button>
+        <Button Grid.Row="3" Grid.Column="2" Button.Click="Calc_Click" Style="{StaticResource DefaultButtonStyle}">6</Button>
+        <Button Grid.Row="4" Grid.Column="0" Button.Click="Calc_Click" Style="{StaticResource DefaultButtonStyle}">7</Button>
+        <Button Grid.Row="4" Grid.Column="1" Button.Click="Calc_Click" Style="{StaticResource DefaultButtonStyle}">8</Button>
+        <Button Grid.Row="4" Grid.Column="2" Button.Click="Calc_Click" Style="{StaticResource DefaultButtonStyle}">9</Button>
+        <Button Grid.Row="5" Grid.Column="1" Button.Click="Calc_Click" Style="{StaticResource DefaultButtonStyle}">0</Button>
+
+        <Button Grid.Row="2" Grid.Column="3" Button.Click="Calc_Click" Style="{StaticResource DefaultButtonStyle}">*</Button>
+        <Button Grid.Row="3" Grid.Column="3" Button.Click="Calc_Click" Style="{StaticResource DefaultButtonStyle}">-</Button>
+        <Button Grid.Row="4" Grid.Column="3" Button.Click="Calc_Click" Style="{StaticResource DefaultButtonStyle}">+</Button>
+        <Button Grid.Row="5" Grid.Column="3" Button.Click="Calc_Click" Style="{StaticResource DefaultButtonStyle}">=</Button>
+
+        <Button Grid.Row="5" Grid.Column="0" Button.Click="Calc_Click" Style="{StaticResource DefaultButtonStyle}">C</Button>
+
+        <WrapPanel Name="categoriesPanel"  Grid.Row="1" Grid.Column="4" Grid.RowSpan="5"/>
+        <Label Content="Выберите категорию расхода" Grid.Row="0" Grid.Column="4"/>
+        <Label Content="Введите расход" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4"/>
     </Grid>
 </Window>

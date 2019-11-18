@@ -73,5 +73,38 @@ namespace MoneyCalc
             MessageBox.Show($"Потрачено: {cost} \nКатегория: {category}");
             expenseTextBox.Text = "";
         }
+        private void Calc_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = e.Source as Button;
+            if (btn == null)
+                return;
+            string value = btn.Content.ToString();
+            if (String.IsNullOrEmpty(value))
+                return;
+            switch (value)
+            {
+                case "C":
+                    expenseTextBox.Text = "0";
+                    break;
+
+                case "=":
+                    try
+                    {
+                        expenseTextBox.Text = Calc.Calculate(expenseTextBox.Text).ToString();
+                    }
+                    catch
+                    {
+                        expenseTextBox.Text = "Error";
+                    }
+                    break;
+
+                case "Ок":
+
+                default:
+                    expenseTextBox.Text = expenseTextBox.Text.TrimStart('0') + value;
+                    break;
+            }
+
+        }
     }
 }
