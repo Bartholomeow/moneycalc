@@ -77,5 +77,38 @@ namespace MoneyCalc
             MessageBox.Show($"Зачислено: {cost} \nКатегория: {category}");
             incomeTextBox.Text = "";
         }
+        private void Calc_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = e.Source as Button;
+            if (btn == null)
+                return;
+            string value = btn.Content.ToString();
+            if (String.IsNullOrEmpty(value))
+                return;
+            switch (value)
+            {
+                case "C":
+                    incomeTextBox.Text = "0";
+                    break;
+
+                case "=":
+                    try
+                    {
+                        incomeTextBox.Text = Calc.Calculate(incomeTextBox.Text).ToString();
+                    }
+                    catch
+                    {
+                        incomeTextBox.Text = "Error";
+                    }
+                    break;
+
+                case "Ок":
+
+                default:
+                    incomeTextBox.Text = incomeTextBox.Text.TrimStart('0') + value;
+                    break;
+            }
+
+        }
     }
 }
