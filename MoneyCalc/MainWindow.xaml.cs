@@ -24,26 +24,24 @@ namespace MoneyCalc
     /// </summary>
     public partial class MainWindow : Window
     {
-        public Account account;
+        private readonly Account _account;
         public MainWindow()
         {
-            account = Serializer.AccountReader("config.txt");
-            DataContext = account;
+            _account = Serializer.AccountReader("config.txt");
+            DataContext = _account;
             InitializeComponent();
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
+
+        private void transactionClick(object sender, RoutedEventArgs e)
         {
-            IncomeWindow income = new IncomeWindow(account);
-            income.ShowDialog();
-        }
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            ExpenseWindow expense = new ExpenseWindow(account);
-            expense.ShowDialog();
+            var button = (Button) sender;
+            var transactionWindow = button.Name == "incomeButton" ? new TransactionWindow(1) : new TransactionWindow(0);
+
+            transactionWindow.ShowDialog();
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Serializer.AccountWriter("config.txt", account);
+            Serializer.AccountWriter("config.txt", _account);
         }
     }
 }

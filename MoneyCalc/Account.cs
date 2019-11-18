@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Collections.ObjectModel;
 
 namespace MoneyCalc
 {
@@ -12,8 +13,8 @@ namespace MoneyCalc
         public static Account GetAccount() => _account ??= new Account();
         private Account()
         {
-            ExpenseCategories = new List<Category>();
-            IncomeCategories = new List<Category>();
+            ExpenseCategories = new ObservableCollection<Category>();
+            IncomeCategories = new ObservableCollection<Category>();
             ExpensesForDays = new SortedDictionary<Date, Dictionary<Category, int>>(new DateComparer());
             IncomesForDays = new SortedDictionary<Date, Dictionary<Category, int>>(new DateComparer());
         }
@@ -33,8 +34,14 @@ namespace MoneyCalc
             }
         }
         //Списки категорий расходов и доходов.
-        public List<Category> ExpenseCategories { get; set; }
-        public List<Category> IncomeCategories { get; set; }
+        public ObservableCollection<Category> ExpenseCategories { get; set; }
+        public ObservableCollection<Category> IncomeCategories { get; set; }
+
+        public void AddExpenseCategory(string name) => ExpenseCategories.Add(new Category(name));
+        public void AddIncomeCategory(string name) => IncomeCategories.Add(new Category(name));
+
+        public void DeleteExpenseCategory(Category category) => ExpenseCategories.Remove(category);
+        public void DeleteIncomeCategory(Category category) => IncomeCategories.Remove(category);
         //Словари, хранящие данные о том, сколько и в какой категории в какой день было расходов и доходов
         public SortedDictionary<Date, Dictionary<Category, int>> ExpensesForDays { get; set; }
         public SortedDictionary<Date, Dictionary<Category, int>> IncomesForDays { get; set; }

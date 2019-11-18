@@ -100,6 +100,7 @@ namespace MoneyCalc
             foreach (var (date, categoriesCost) in account.IncomesForDays)
             {
                 sw.WriteLine(date);
+                sw.WriteLine(categoriesCost.Count);
                 foreach (var (category, cost) in categoriesCost)
                 {
                     sw.WriteLine(category + " " + cost);

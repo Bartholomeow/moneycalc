@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MoneyCalc
 {
-    public class Expense
+    public class Expense 
     {
         public Category Category { get; set; }
         public int Cost { get; set; }

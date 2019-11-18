@@ -9,9 +9,9 @@ namespace MoneyCalc
     {
         private readonly Account _account;
         private readonly int _incomeOrExpense;
-        public AddCategoryWindow(Account account, int incomeOrExpense)
+        public AddCategoryWindow(int incomeOrExpense)
         {
-            _account = account;
+            _account = Account.GetAccount();
             _incomeOrExpense = incomeOrExpense;
             InitializeComponent();
         }
@@ -23,15 +23,9 @@ namespace MoneyCalc
                 MessageBox.Show("Введите название категории.");
                 return;
             }
-            switch (_incomeOrExpense)
-            {
-                case 1:
-                    _account.IncomeCategories.Add(new Category(AddCategoryTextBox.Text));
-                    break;
-                case 0:
-                    _account.ExpenseCategories.Add(new Category(AddCategoryTextBox.Text));
-                    break;
-            }
+            if (_incomeOrExpense == 1)
+                _account.AddIncomeCategory(AddCategoryTextBox.Text);
+            else _account.AddExpenseCategory(AddCategoryTextBox.Text);
             MessageBox.Show($"Добавлена категория {AddCategoryTextBox.Text}");
             Close();
         }

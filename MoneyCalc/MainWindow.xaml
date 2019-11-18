@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MoneyCalc"
         mc:Ignorable="d"
-        Title="MoneyCalc" Height="326" Width="551" Background="LightSkyBlue" Closing="Window_Closing">
+        Title="MoneyCalc" Height="245" Width="172" Background="LightSkyBlue" Closing="Window_Closing">
     <Grid>
-        <Button Content="Расход" HorizontalAlignment="Left" Height="76" Margin="391,210,0,0" VerticalAlignment="Top" Width="136" BorderThickness="0" FontSize="30" Click="Button_Click_1">
+        <Button Name="expenseButton" Content="Расход" HorizontalAlignment="Left" Height="76" Margin="10,134,0,0" VerticalAlignment="Top" Width="136" BorderThickness="0" FontSize="30" Click="transactionClick">
             <Button.Background>
                 <RadialGradientBrush RadiusX="0.6" RadiusY="0.8" GradientOrigin="0.3,0.3">
                     <GradientStop Color="Crimson" Offset="1" />
@@ -15,7 +15,7 @@
                 </RadialGradientBrush>
             </Button.Background>
         </Button>
-        <Button Content="Доход" HorizontalAlignment="Left" Height="76" Margin="391,134,0,0" VerticalAlignment="Top" Width="136" BorderThickness="0" FontSize="30" Click="Button_Click">
+        <Button Name="incomeButton" Content="Доход" HorizontalAlignment="Left" Height="76" Margin="10,58,0,0" VerticalAlignment="Top" Width="136" BorderThickness="0" FontSize="30" Click="transactionClick">
             <Button.Background>
                 <RadialGradientBrush RadiusX="0.6" RadiusY="0.8" GradientOrigin="0.3,0.3">
                     <GradientStop Color="SpringGreen" Offset="1" />
@@ -23,6 +23,7 @@
                 </RadialGradientBrush>
             </Button.Background>
         </Button>
-        <TextBlock Name="balanceTextBlock" Text="{Binding Path=Balance, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" Height="49" Margin="391,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="136"/>
+        <TextBlock Name="balanceTextBlock" Text="{Binding Path=Balance, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Left" FontSize="16" FontWeight="Bold" Height="26" Margin="83,18,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="81"/>
+        <TextBlock HorizontalAlignment="Left" Height="26" Margin="10,18,0,0" Text="Баланс :" FontSize="16" FontWeight="Bold" TextWrapping="Wrap" VerticalAlignment="Top" Width="68"/>
     </Grid>
 </Window>

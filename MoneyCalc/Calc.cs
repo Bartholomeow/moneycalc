@@ -116,6 +116,7 @@ namespace MoneyCalc
             }
             return temp.Peek(); 
         }
+
         private static bool IsDelimeter(char c)
         {
             return " =".IndexOf(c) != -1;
