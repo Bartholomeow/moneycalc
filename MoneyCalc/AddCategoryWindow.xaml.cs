@@ -1,19 +1,19 @@
 ﻿using System.Windows;
+using System.Windows.Media;
 
 namespace MoneyCalc
 {
-    /// <summary>
-    /// Логика взаимодействия для AddCategoryWindow.xaml
-    /// </summary>
     public partial class AddCategoryWindow
     {
         private readonly Account _account;
-        private readonly int _incomeOrExpense;
-        public AddCategoryWindow(int incomeOrExpense)
+        private readonly byte _incomeOrExpense;
+        public AddCategoryWindow(byte incomeOrExpense)
         {
+            InitializeComponent();
             _account = Account.GetAccount();
             _incomeOrExpense = incomeOrExpense;
-            InitializeComponent();
+            AddCategoryTextBox.Foreground = Brushes.LightGray;
+            AddCategoryTextBox.Text = "Не более 12 букв.";
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
@@ -28,6 +28,12 @@ namespace MoneyCalc
             else _account.AddExpenseCategory(AddCategoryTextBox.Text);
             MessageBox.Show($"Добавлена категория {AddCategoryTextBox.Text}");
             Close();
+        }
+
+        private void AddCategoryTextBox_OnGotFocus(object sender, RoutedEventArgs e)
+        {
+            AddCategoryTextBox.Foreground = Brushes.Black;
+            AddCategoryTextBox.Text = "";
         }
     }
 }

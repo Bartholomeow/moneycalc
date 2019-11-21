@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.IO;
+using System.Linq;
 
 namespace MoneyCalc
 {
@@ -16,6 +18,7 @@ namespace MoneyCalc
             {
                 using var sr = new StreamReader(path, Encoding.GetEncoding("windows-1251"));
                 int k;
+                account.RegistrationDate = new Date(sr.ReadLine() ?? throw new InvalidOperationException());
                 account.Balance = int.Parse(sr.ReadLine() ?? throw new InvalidOperationException());
                 var n = int.Parse(sr.ReadLine() ?? throw new InvalidOperationException());
                 for (int i = 0; i < n; i++)
@@ -31,7 +34,7 @@ namespace MoneyCalc
                 for (int i = 0; i < n; i++)
                 {
                     var date = new Date(sr.ReadLine());
-                    account.ExpensesForDays.Add(date, new Dictionary<Category, int>());
+                    account.ExpensesAtDay.Add(date, new ObservableCollection<(Category, int)>());
                     k = int.Parse(sr.ReadLine() ?? throw new InvalidOperationException());
                     for (int j = 0; j < k; j++)
                     {
@@ -39,14 +42,14 @@ namespace MoneyCalc
                         if (categoryCost == null) continue;
                         var category = new Category(categoryCost[0]);
                         var cost = int.Parse(categoryCost[1]);
-                        account.ExpensesForDays[date].Add(category, cost);
+                        account.ExpensesAtDay[date].Add((category, cost));
                     }
                 }
                 n = int.Parse(sr.ReadLine() ?? throw new InvalidOperationException());
                 for (int i = 0; i < n; i++)
                 {
                     var date = new Date(sr.ReadLine());
-                    account.IncomesForDays.Add(date, new Dictionary<Category, int>());
+                    account.IncomesAtDay.Add(date, new ObservableCollection<(Category, int)>());
                     k = int.Parse(sr.ReadLine() ?? throw new InvalidOperationException());
                     for (int j = 0; j < k; j++)
                     {
@@ -54,7 +57,7 @@ namespace MoneyCalc
                         if (categoryCost == null) continue;
                         var category = new Category(categoryCost[0]);
                         var cost = int.Parse(categoryCost[1]);
-                        account.IncomesForDays[date].Add(category, cost);
+                        account.IncomesAtDay[date].Add((category, cost));
                     }
                 }
             }
@@ -75,6 +78,7 @@ namespace MoneyCalc
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             using var sw = new StreamWriter(path, false,  Encoding.GetEncoding("windows-1251"));
+            sw.WriteLine(account.RegistrationDate);
             sw.WriteLine(account.Balance);
             sw.WriteLine(account.ExpenseCategories.Count);
             foreach (var category in account.ExpenseCategories)
@@ -86,8 +90,8 @@ namespace MoneyCalc
             {
                 sw.WriteLine(category);
             }
-            sw.WriteLine(account.ExpensesForDays.Count);
-            foreach (var (date, categoriesCost) in account.ExpensesForDays)
+            sw.WriteLine(account.ExpensesAtDay.Count);
+            foreach (var (date, categoriesCost) in account.ExpensesAtDay)
             {
                 sw.WriteLine(date);
                 sw.WriteLine(categoriesCost.Count);
@@ -96,8 +100,8 @@ namespace MoneyCalc
                     sw.WriteLine(category + " " + cost);
                 }
             }
-            sw.WriteLine(account.IncomesForDays.Count);
-            foreach (var (date, categoriesCost) in account.IncomesForDays)
+            sw.WriteLine(account.IncomesAtDay.Count);
+            foreach (var (date, categoriesCost) in account.IncomesAtDay)
             {
                 sw.WriteLine(date);
                 sw.WriteLine(categoriesCost.Count);

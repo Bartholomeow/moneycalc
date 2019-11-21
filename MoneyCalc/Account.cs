@@ -3,20 +3,24 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace MoneyCalc
 {
     public class Account : INotifyPropertyChanged
     {
+        //Дата первого захода в приложение
+        public Date RegistrationDate;
         //Конструктор, который позволяет создать только один экземпляр класса.
         private static Account _account;
         public static Account GetAccount() => _account ??= new Account();
         private Account()
         {
+            RegistrationDate = Date.Now;
             ExpenseCategories = new ObservableCollection<Category>();
             IncomeCategories = new ObservableCollection<Category>();
-            ExpensesForDays = new SortedDictionary<Date, Dictionary<Category, int>>(new DateComparer());
-            IncomesForDays = new SortedDictionary<Date, Dictionary<Category, int>>(new DateComparer());
+            ExpensesAtDay = new SortedDictionary<Date, ObservableCollection<(Category, int)>>(new DateComparer());
+            IncomesAtDay = new SortedDictionary<Date, ObservableCollection<(Category, int)>>(new DateComparer());
         }
         //Реализация интерфейса INotifyPropertyChanged, позволяющаяя привязывать поле "баланс" к элементам WPF.
         public event PropertyChangedEventHandler PropertyChanged;
@@ -36,87 +40,39 @@ namespace MoneyCalc
         //Списки категорий расходов и доходов.
         public ObservableCollection<Category> ExpenseCategories { get; set; }
         public ObservableCollection<Category> IncomeCategories { get; set; }
-
+        //Методы добавления на аккаунт категорий
         public void AddExpenseCategory(string name) => ExpenseCategories.Add(new Category(name));
         public void AddIncomeCategory(string name) => IncomeCategories.Add(new Category(name));
 
         public void DeleteExpenseCategory(Category category) => ExpenseCategories.Remove(category);
         public void DeleteIncomeCategory(Category category) => IncomeCategories.Remove(category);
         //Словари, хранящие данные о том, сколько и в какой категории в какой день было расходов и доходов
-        public SortedDictionary<Date, Dictionary<Category, int>> ExpensesForDays { get; set; }
-        public SortedDictionary<Date, Dictionary<Category, int>> IncomesForDays { get; set; }
+        public SortedDictionary<Date, ObservableCollection<(Category, int)>> ExpensesAtDay { get; set; }
+        public SortedDictionary<Date, ObservableCollection<(Category, int)>> IncomesAtDay { get; set; }
         //Методы добавления расходов и доходов на сегодняшнее число
-        public void GetIncome(Income income)
+        public void GetIncome((Category, int) transaction)
         {
-            var date = DateTime.Now;
-            Date myDate = new Date(date.Day, date.Month, date.Year);
-            if(!IncomesForDays.ContainsKey(myDate))
+            var date = new Date(DateTime.Now);
+            if(!IncomesAtDay.ContainsKey(date))
             {
-                IncomesForDays.Add(myDate, new Dictionary<Category, int>());
+                IncomesAtDay.Add(date, new ObservableCollection<(Category, int)>());
             }
-            if(!IncomesForDays[myDate].ContainsKey(income.Category))
-            {
-                IncomesForDays[myDate].Add(income.Category, 0);
-            }
-            IncomesForDays[myDate][income.Category] += income.Cost;
-            Balance += income.Cost;
+            IncomesAtDay[date].Add(transaction);
+            Balance += transaction.Item2;
         }
-        public void GetExpense(Expense expense)
+
+        public void GetExpense((Category, int) transaction)
         {
-            var date = DateTime.Now;
-            Date myDate = new Date(date.Day, date.Month, date.Year);
-            if (!ExpensesForDays.ContainsKey(myDate))
+            var date = new Date(DateTime.Now);
+            if (!ExpensesAtDay.ContainsKey(date))
             {
-                ExpensesForDays.Add(myDate, new Dictionary<Category, int>());
+                ExpensesAtDay.Add(date, new ObservableCollection<(Category, int)>());
             }
-            if (!ExpensesForDays[myDate].ContainsKey(expense.Category))
-            {
-                ExpensesForDays[myDate].Add(expense.Category, 0);
-            }
-            ExpensesForDays[myDate][expense.Category] += expense.Cost;
-            Balance -= expense.Cost;
+
+            ExpensesAtDay[date].Add(transaction);
+            Balance -= transaction.Item2;
         }
-        //public int GetSumOfExpensesAtDate(Date date)
-        //{
-        //    if(!ExpensesForDays.ContainsKey(date))
-        //    {
-        //        ExpensesForDays.Add(date, new List<Expense>());
-        //    }
-        //    var expenses = ExpensesForDays[date];
-        //    int sumOfExpensesAtDate = 0;
-        //    foreach (var expense in expenses)
-        //    {
-        //        sumOfExpensesAtDate += expense.Cost;
-        //    }
-        //    return sumOfExpensesAtDate;
-        //}
-        //public int GetSumOfExpensesInCategoryAtDate(Date date, Category category)
-        //{
-        //    if (!ExpensesForDays.ContainsKey(date))
-        //    {
-        //        ExpensesForDays.Add(date, new List<Expense>());
-        //    }
-        //    var expenses = ExpensesForDays[date];
-        //    int sumOfExpensesAtDate = 0;
-        //    foreach (var expense in expenses)
-        //    {
-        //        sumOfExpensesAtDate += expense.Cost;
-        //    }
-        //    return sumOfExpensesAtDate;
-        //}
-        //public int GetSumOfIncomesAtDate(Date date)
-        //{
-        //    if (!IncomesForDays.ContainsKey(date))
-        //    {
-        //        IncomesForDays.Add(date, new List<Income>());
-        //    }
-        //    var incomes = IncomesForDays[date];
-        //    int sumOfIncomesAtDate = 0;
-        //    foreach (var income in incomes)
-        //    {
-        //        sumOfIncomesAtDate += income.Cost;
-        //    }
-        //    return sumOfIncomesAtDate;
-        //}
+        public int GetSumOfExpensesAtDate(Date date) => ExpensesAtDay[date].Sum(category => category.Item2);
+        public int GetSumOfIncomesAtDate(Date date) => IncomesAtDay[date].Sum(category => category.Item2);
     }
 }

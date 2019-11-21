@@ -4,6 +4,22 @@
              xmlns:local="clr-namespace:MoneyCalc"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <LinearGradientBrush x:Key="ButtonBackground" StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#FFD9EDFF" Offset="0"/>
+                <GradientStop Color="#FFC0DEFF" Offset="0.445"/>
+                <GradientStop Color="#FFAFD1F8" Offset="0.53"/>
+            </LinearGradientBrush>
+            <Style x:Key="DefaultTextBlockStyle">
+                <Setter Property="Control.FontSize" Value="15"></Setter>
+                <Setter Property="Control.FontFamily" Value="ALice Black"></Setter>
+                <Setter Property="Control.FontWeight" Value="Bold"></Setter>
+            </Style>
+            <Style TargetType="Button" x:Key="DefaultButtonStyle">
+                <Setter Property="Background" Value="{StaticResource ButtonBackground}"/>
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="FontSize" Value="20"/>
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

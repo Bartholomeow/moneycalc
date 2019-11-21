@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 
 
 namespace MoneyCalc
@@ -17,7 +18,7 @@ namespace MoneyCalc
         private static string GetExpression(string input)  //  метод получение из строки опз
         {
             var output = string.Empty;
-            var operStack = new Stack<char>();
+            var operationStack = new Stack<char>();
 
             for (int i = 0; i < input.Length; i++) 
             {
@@ -45,38 +46,38 @@ namespace MoneyCalc
                 if (IsOperator(input[i])) 
                 {
                     if (input[i] == '(')
-                        operStack.Push(input[i]); 
+                        operationStack.Push(input[i]); 
                     else if (input[i] == ')')
                     {
                        
-                        char s = operStack.Pop();
+                        char s = operationStack.Pop();
 
                         while (s != '(')
                         {
                             output += s.ToString() + ' ';
-                            s = operStack.Pop();
+                            s = operationStack.Pop();
                         }
                     }
                     else 
                     {
-                        if (operStack.Count > 0) 
-                            if (GetPriority(input[i]) <= GetPriority(operStack.Peek()))
-                                output += operStack.Pop().ToString() + " "; 
+                        if (operationStack.Count > 0) 
+                            if (GetPriority(input[i]) <= GetPriority(operationStack.Peek()))
+                                output += operationStack.Pop().ToString() + " "; 
 
-                        operStack.Push(char.Parse(input[i].ToString()));
+                        operationStack.Push(char.Parse(input[i].ToString()));
 
                     }
                 }
             }
 
            
-            while (operStack.Count > 0)
-                output += operStack.Pop() + " ";
+            while (operationStack.Count > 0)
+                output += operationStack.Pop() + " ";
 
             return output;
         }
 
-        private static double Counting(string input) //  метод котораый получает опз и выдает результат
+        private static double Counting(string input) //  метод который получает опз и выдает результат
         {
             double result = 0; 
             var temp = new Stack<double>(); 
@@ -109,7 +110,8 @@ namespace MoneyCalc
                         case '-': result = b - a; break;
                         case '*': result = b * a; break;
                         case '/': result = b / a; break;
-                        case '^': result = double.Parse(Math.Pow(double.Parse(b.ToString()), double.Parse(a.ToString())).ToString()); break;
+                        case '^': result = double.Parse(Math.Pow(double.Parse(b.ToString(CultureInfo.CurrentCulture)), 
+                            double.Parse(a.ToString(CultureInfo.CurrentCulture))).ToString(CultureInfo.CurrentCulture)); break;
                     }
                     temp.Push(result); 
                 }
