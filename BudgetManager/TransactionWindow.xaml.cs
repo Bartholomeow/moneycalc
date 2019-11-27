@@ -3,7 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Text.RegularExpressions;
 
-namespace MoneyCalc
+namespace BudgetManager
 {
     public partial class TransactionWindow
     {
@@ -26,7 +26,7 @@ namespace MoneyCalc
 
         private void Calc_Click(object sender, RoutedEventArgs e)
         {
-            var button = (Button) sender;
+            var button = (Button)sender;
             var value = button.Content.ToString();
             if (string.IsNullOrEmpty(value))
                 return;
@@ -53,7 +53,7 @@ namespace MoneyCalc
         }
         private void DeleteMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            var category = (Category) CategoryListbox.SelectedItem;
+            var category = (Category)CategoryListbox.SelectedItem;
             if (_type == 1)
             {
                 _account.DeleteIncomeCategory(category);

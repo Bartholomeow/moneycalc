@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
-namespace MoneyCalc
+namespace BudgetManager
 {
     public class Account : INotifyPropertyChanged
     {
@@ -13,7 +13,10 @@ namespace MoneyCalc
         public Date RegistrationDate;
         //Конструктор, который позволяет создать только один экземпляр класса.
         private static Account _account;
-        public static Account GetAccount() => _account ??= new Account();
+        public static Account GetAccount()
+        {
+            return _account ?? (_account = new Account());
+        }
         public static Account DeleteData()
         {
             _account = new Account();

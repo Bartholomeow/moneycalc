@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using Microsoft.VisualBasic.CompilerServices;
 
-namespace MoneyCalc
+namespace BudgetManager
 {
     public class Date
     {

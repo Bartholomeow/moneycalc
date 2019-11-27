@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace MoneyCalc
+namespace BudgetManager
 {
     public class Category
     {
