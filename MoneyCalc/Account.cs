@@ -14,8 +14,14 @@ namespace MoneyCalc
         //Конструктор, который позволяет создать только один экземпляр класса.
         private static Account _account;
         public static Account GetAccount() => _account ??= new Account();
+        public static Account DeleteData()
+        {
+            _account = new Account();
+            return _account;
+        }
         private Account()
         {
+            Balance = 0;
             RegistrationDate = Date.Now;
             ExpenseCategories = new ObservableCollection<Category>();
             IncomeCategories = new ObservableCollection<Category>();

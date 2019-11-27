@@ -22,15 +22,12 @@ namespace MoneyCalc
 {
     public partial class MainWindow : Window
     {
-        private readonly Account _account;
+        private Account _account;
         public MainWindow()
         {
             _account = Serializer.AccountReader("config.txt");
-            DataContext = _account;
             InitializeComponent();
-            DatePicker.SelectedDate = Date.Now;
-            DatePicker.DisplayDateEnd = Date.Now;
-            DatePicker.DisplayDateStart = _account.RegistrationDate;
+            DataConfiguration();
         }
 
         private void Transaction_Click(object sender, RoutedEventArgs e)
@@ -43,7 +40,7 @@ namespace MoneyCalc
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            Serializer.AccountWriter("config.txt", _account);
+            Serializer.AccountWriter("config.txt");
         }
 
         private void DatePicker_OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -62,19 +59,7 @@ namespace MoneyCalc
                 MessageBox.Show("Данные об указанном периоде отсутствуют.");
                 return;
             }
-            if (!_account.IncomesAtDay.ContainsKey(date))
-            {
-                _account.IncomesAtDay.Add(date, new ObservableCollection<(Category, int)>());
-            }
-
-            if (!_account.ExpensesAtDay.ContainsKey(date))
-            {
-                _account.ExpensesAtDay.Add(date, new ObservableCollection<(Category, int)>());
-            }
-            IncomesListBox.ItemsSource = _account.IncomesAtDay[date];
-            ExpensesListBox.ItemsSource = _account.ExpensesAtDay[date];
-            SumOfIncomesTextBlock.Text = _account.GetSumOfIncomesAtDate(date).ToString();
-            SumOfExpensesTextBlock.Text = _account.GetSumOfExpensesAtDate(date).ToString();
+            TransactionConfiguration(date);
         }
 
         private void RightButton_Click(object sender, RoutedEventArgs e)
@@ -95,6 +80,49 @@ namespace MoneyCalc
                 return;
             }
             DatePicker.SelectedDate = ((DateTime) DatePicker.SelectedDate).AddDays(-1);
+        }
+
+        private void SynchMenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            var synchronizationWindow = new SynchronizationWindow();
+            synchronizationWindow.ShowDialog();
+            _account = Account.GetAccount();
+            DataConfiguration();
+            TransactionConfiguration(Date.Now);
+        }
+
+        private void DeleteMenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult messageBoxResult = MessageBox.Show("Вы уверены, что хотите очистить данные?", "Подтверждение", MessageBoxButton.YesNo);
+            if (messageBoxResult == MessageBoxResult.Yes)
+                _account = Account.DeleteData();
+            DataConfiguration();
+            TransactionConfiguration(Date.Now);
+        }
+
+        public void DataConfiguration()
+        {
+            DataContext = _account;
+            DatePicker.SelectedDate = Date.Now;
+            DatePicker.DisplayDateEnd = Date.Now;
+            DatePicker.DisplayDateStart = _account.RegistrationDate;
+        }
+
+        public void TransactionConfiguration(Date date)
+        {
+            if (!_account.IncomesAtDay.ContainsKey(date))
+            {
+                _account.IncomesAtDay.Add(date, new ObservableCollection<(Category, int)>());
+            }
+
+            if (!_account.ExpensesAtDay.ContainsKey(date))
+            {
+                _account.ExpensesAtDay.Add(date, new ObservableCollection<(Category, int)>());
+            }
+            IncomesListBox.ItemsSource = _account.IncomesAtDay[date];
+            ExpensesListBox.ItemsSource = _account.ExpensesAtDay[date];
+            SumOfIncomesTextBlock.Text = _account.GetSumOfIncomesAtDate(date).ToString();
+            SumOfExpensesTextBlock.Text = _account.GetSumOfExpensesAtDate(date).ToString();
         }
     }
 }

@@ -66,7 +66,7 @@ namespace MoneyCalc
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            if (TransactionTextBox.Text == "")
+            if (TransactionTextBox.Text == "" && TransactionTextBox.Text == "0")
             {
                 MessageBox.Show("Введите расход / доход.");
                 return;

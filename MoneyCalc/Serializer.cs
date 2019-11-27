@@ -12,7 +12,7 @@ namespace MoneyCalc
         //Метод взятия данных об аккаунте из файла.
         public static Account AccountReader(string path)
         {
-            var account = Account.GetAccount();
+            var account = Account.DeleteData();
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             try
             {
@@ -74,8 +74,9 @@ namespace MoneyCalc
             return account;
         }
         //Метод сохранения данных об аккаунте в файле.
-        public static void AccountWriter(string path, Account account)
+        public static void AccountWriter(string path)
         {
+            var account = Account.GetAccount();
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             using var sw = new StreamWriter(path, false,  Encoding.GetEncoding("windows-1251"));
             sw.WriteLine(account.RegistrationDate);

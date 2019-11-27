@@ -23,7 +23,7 @@
         </StackPanel>
         <StackPanel Grid.Column="1">
             <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Margin="5,0,5,0">Введите расход / доход</TextBlock>
-            <TextBox  Name="TransactionTextBox" Text="0" FontSize="32" TextAlignment="Right" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,0"></TextBox>
+            <TextBox  Name="TransactionTextBox" Text="0" MaxLength="5" FontSize="32" TextAlignment="Right" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,0"></TextBox>
             <Grid Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50"></ColumnDefinition>

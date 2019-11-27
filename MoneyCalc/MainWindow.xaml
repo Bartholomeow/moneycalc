@@ -3,13 +3,33 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=System.Runtime"
         mc:Ignorable="d"
         Title="MoneyCalc" Height="330" Width="390" Background="LightSkyBlue" Closing="Window_Closing" ResizeMode="NoResize">
     <Grid>
-        <TextBlock Name="BalanceTextBlock" Text="{Binding Path=Balance, UpdateSourceTrigger=PropertyChanged}" FontSize="16" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left"  Margin="85,10,0,0"/>
-        <TextBlock Text="Баланс :" FontSize="16" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left"  Margin="15,10,0,0"/>
-        <DatePicker Name="DatePicker" SelectedDateChanged="DatePicker_OnSelectedDateChanged" VerticalAlignment="Top" HorizontalAlignment="Left"  Margin="15,30,0,0"/>
-        <Grid Margin="0,70,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25*"></RowDefinition>
+            <RowDefinition Height="60*"></RowDefinition>
+            <RowDefinition Height="230*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0">
+            <MenuItem Header="Аккаунт" Height="20">
+                <MenuItem Name="SynchMenuItem" Header="Синхронизация" Click="SynchMenuItem_OnClick">
+                    <MenuItem.Icon>
+                        <Image Source="Resourses/synchronization.ico"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Name="DeleteMenuItem" Header="Очистить данные" Click="DeleteMenuItem_OnClick">
+                    <MenuItem.Icon>
+                        <Image Source="Resourses/delete.ico"></Image>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+        <TextBlock Name="BalanceTextBlock" Grid.Row="1" Text="{Binding Path=Balance, UpdateSourceTrigger=PropertyChanged}" FontSize="16" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left"  Margin="85,0,0,0"/>
+        <TextBlock Text="Баланс :" Grid.Row="1" FontSize="16" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left"  Margin="15,0,0,0" Height="21" Width="63"/>
+        <DatePicker Name="DatePicker" Grid.Row="1" SelectedDateChanged="DatePicker_OnSelectedDateChanged" VerticalAlignment="Top" HorizontalAlignment="Left"  Margin="15,25,0,0" Height="24" Width="100"/>
+        <Grid Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="55*"/>
                 <RowDefinition Height="40*"/>
@@ -23,8 +43,8 @@
             </Grid.ColumnDefinitions>
             <Button Name="ExpenseButton" Content="Расход" Height="50" Width="135" VerticalAlignment="Top" HorizontalAlignment="Right"  Margin="0,0,5,0" BorderThickness="0" FontSize="30" Click="Transaction_Click" Grid.Column="2"/>
             <Button Name="IncomeButton" Content="Доход" Height="50" Width="135" VerticalAlignment="Top" HorizontalAlignment="Left"  Margin="5,0,0,0" BorderThickness="0" FontSize="30" Click="Transaction_Click" Grid.Row="0" Grid.Column="1"/>
-            <ListBox Name ="ExpensesListBox" Height="123" Width="135" VerticalAlignment="Top" HorizontalAlignment="Right"  Margin="0,0,5,0" Grid.Column="2" Grid.Row="2"/>
-            <ListBox Name="IncomesListBox" Height="123" Width="135" VerticalAlignment="Top" HorizontalAlignment="Left"  Margin="5,0,0,0" Grid.Column="1" Grid.Row="2"/>
+            <ListBox Name ="ExpensesListBox" Height="125" Width="135" VerticalAlignment="Top" HorizontalAlignment="Right"  Margin="0,0,5,0" Grid.Column="2" Grid.Row="2"/>
+            <ListBox Name="IncomesListBox" Height="125" Width="135" VerticalAlignment="Top" HorizontalAlignment="Left"  Margin="5,0,0,0" Grid.Column="1" Grid.Row="2"/>
             <Button Name="LeftDateButton" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="0" Margin="10,0,0,10" Height="218" Width="30" Click="LeftButton_Click" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3">&lt;&lt;</Button>
             <Button Name="RightDateButton" VerticalAlignment="Top" HorizontalAlignment="Right" BorderThickness="0" Margin="0,0,10,10"  Height="218" Width="30" Click="RightButton_Click" Grid.Column="3" Grid.Row="0" Grid.RowSpan="3">&gt;&gt;</Button>
             <TextBlock Name="SumOfIncomesTextBlock" HorizontalAlignment="Center" Margin="0,10,0,0" Height="26" Style="{StaticResource DefaultTextBlockStyle}" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1"/>
