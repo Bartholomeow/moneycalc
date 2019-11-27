@@ -57,13 +57,13 @@ namespace BudgetManager
         public static bool operator <(Date x, Date y)
         {
             var dateComparer = new DateComparer();
-            int result = dateComparer.Compare(x, y);
+            var result = dateComparer.Compare(x, y);
             return result == -1;
         }
         public static bool operator >(Date x, Date y)
         {
             var dateComparer = new DateComparer();
-            int result = dateComparer.Compare(x, y);
+            var result = dateComparer.Compare(x, y);
             return result == 1;
         }
 

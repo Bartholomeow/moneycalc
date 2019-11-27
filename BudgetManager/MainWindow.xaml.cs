@@ -1,25 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Xml.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
 
 namespace BudgetManager
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         private Account _account;
         public MainWindow()
@@ -68,7 +54,8 @@ namespace BudgetManager
                 MessageBox.Show("Данные об указанном периоде отсутствуют.");
                 return;
             }
-            DatePicker.SelectedDate = ((DateTime)DatePicker.SelectedDate).AddDays(1);
+            if (DatePicker.SelectedDate != null)
+                DatePicker.SelectedDate = ((DateTime) DatePicker.SelectedDate).AddDays(1);
         }
 
         private void LeftButton_Click(object sender, RoutedEventArgs e)
@@ -78,7 +65,8 @@ namespace BudgetManager
                 MessageBox.Show("Данные об указанном периоде отсутствуют.");
                 return;
             }
-            DatePicker.SelectedDate = ((DateTime)DatePicker.SelectedDate).AddDays(-1);
+            if (DatePicker.SelectedDate != null)
+                DatePicker.SelectedDate = ((DateTime) DatePicker.SelectedDate).AddDays(-1);
         }
 
         private void SynchMenuItem_OnClick(object sender, RoutedEventArgs e)
@@ -92,7 +80,7 @@ namespace BudgetManager
 
         private void DeleteMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult messageBoxResult = MessageBox.Show("Вы уверены, что хотите очистить данные?", "Подтверждение", MessageBoxButton.YesNo);
+            var messageBoxResult = MessageBox.Show("Вы уверены, что хотите очистить данные?", "Подтверждение", MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
                 _account = Account.DeleteData();
             DataConfiguration();
@@ -113,7 +101,6 @@ namespace BudgetManager
             {
                 _account.IncomesAtDay.Add(date, new ObservableCollection<(Category, int)>());
             }
-
             if (!_account.ExpensesAtDay.ContainsKey(date))
             {
                 _account.ExpensesAtDay.Add(date, new ObservableCollection<(Category, int)>());
