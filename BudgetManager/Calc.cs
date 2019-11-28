@@ -21,7 +21,7 @@ namespace BudgetManager
                
                 if (IsDelimeter(input[i]))
                     continue;
-                if (char.IsDigit(input[i])) 
+                if (char.IsDigit(input[i]) || input[i] == ',') 
                 {
                     while (!IsDelimeter(input[i]) && !IsOperator(input[i]))
                     {
@@ -67,7 +67,7 @@ namespace BudgetManager
             var temp = new Stack<double>();
             for (byte i = 0; i < input.Length; i++) 
             {
-                if (char.IsDigit(input[i]))
+                if (char.IsDigit(input[i]) || input[i] == ',')
                 {
                     var a = string.Empty;
                     while (!IsDelimeter(input[i]) && !IsOperator(input[i])) 

@@ -2,6 +2,9 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Text.RegularExpressions;
+using System;
+using System.Diagnostics;
+using System.Windows.Input;
 
 namespace BudgetManager
 {
@@ -9,6 +12,7 @@ namespace BudgetManager
     {
         private readonly byte _type;
         private readonly Account _account;
+
         public TransactionWindow(byte type)
         {
             InitializeComponent();
@@ -32,10 +36,6 @@ namespace BudgetManager
                 return;
             switch (value)
             {
-                case "C":
-                    TransactionTextBox.Text = "0";
-                    break;
-
                 case "=":
                     try
                     {
@@ -51,6 +51,7 @@ namespace BudgetManager
                     break;
             }
         }
+
         private void DeleteMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
             var category = (Category)CategoryListbox.SelectedItem;
@@ -66,15 +67,9 @@ namespace BudgetManager
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            if (TransactionTextBox.Text == "" && TransactionTextBox.Text == "0")
+            if (TransactionTextBox.Text == "" || TransactionTextBox.Text == "0")
             {
                 MessageBox.Show("Введите расход / доход.");
-                return;
-            }
-            var r = new Regex("^[0-9+*-]+$");
-            if (!r.IsMatch(TransactionTextBox.Text))
-            {
-                MessageBox.Show("Введите корректные данные в поле.");
                 return;
             }
             try
@@ -87,7 +82,7 @@ namespace BudgetManager
                 MessageBox.Show("Введите корректные данные в поле.");
                 return;
             }
-            var cost = int.Parse(TransactionTextBox.Text);
+            var cost = double.Parse(TransactionTextBox.Text);
             if (CategoryListbox.SelectedItems.Count == 0)
             {
                 MessageBox.Show("Выберите категорию.");
@@ -105,6 +100,32 @@ namespace BudgetManager
                 MessageBox.Show($"Потрачено: {cost} \nКатегория: {category}");
             }
             TransactionTextBox.Text = "0";
+        }
+        double Time = 0;
+        private void C_Start_Click(object sender, MouseEventArgs e)
+        {
+            var start = DateTime.Now;
+            var stopwatch = Stopwatch.StartNew();
+            var end = start.Add(stopwatch.Elapsed);
+            Time = double.Parse(end.ToString("ss,ffff"));
+        }
+        private void C_End_Click(object sender, MouseEventArgs e)
+        {
+            var start = DateTime.Now;
+            var stopwatch = Stopwatch.StartNew();
+            var end = start.Add(stopwatch.Elapsed);
+            if (TransactionTextBox.Text != "")
+            { 
+                if (Math.Abs(double.Parse(end.ToString("ss,ffff")) - Time) > 1 && (double.Parse(end.ToString("ss,ffff")) - Time >= -59))
+                {
+                    TransactionTextBox.Text = "";
+
+                }
+                else
+                {
+                    TransactionTextBox.Text = TransactionTextBox.Text.Remove(TransactionTextBox.Text.Length - 1);
+                }
+            }
         }
     }
 }

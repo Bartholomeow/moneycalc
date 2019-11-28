@@ -99,11 +99,11 @@ namespace BudgetManager
         {
             if (!_account.IncomesAtDay.ContainsKey(date))
             {
-                _account.IncomesAtDay.Add(date, new ObservableCollection<(Category, int)>());
+                _account.IncomesAtDay.Add(date, new ObservableCollection<(Category, double)>());
             }
             if (!_account.ExpensesAtDay.ContainsKey(date))
             {
-                _account.ExpensesAtDay.Add(date, new ObservableCollection<(Category, int)>());
+                _account.ExpensesAtDay.Add(date, new ObservableCollection<(Category, double)>());
             }
             IncomesListBox.ItemsSource = _account.IncomesAtDay[date];
             ExpensesListBox.ItemsSource = _account.ExpensesAtDay[date];

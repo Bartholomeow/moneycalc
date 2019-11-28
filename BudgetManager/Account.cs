@@ -28,8 +28,8 @@ namespace BudgetManager
             RegistrationDate = Date.Now;
             ExpenseCategories = new ObservableCollection<Category>();
             IncomeCategories = new ObservableCollection<Category>();
-            ExpensesAtDay = new SortedDictionary<Date, ObservableCollection<(Category, int)>>(new DateComparer());
-            IncomesAtDay = new SortedDictionary<Date, ObservableCollection<(Category, int)>>(new DateComparer());
+            ExpensesAtDay = new SortedDictionary<Date, ObservableCollection<(Category, double)>>(new DateComparer());
+            IncomesAtDay = new SortedDictionary<Date, ObservableCollection<(Category, double)>>(new DateComparer());
         }
         //Реализация интерфейса INotifyPropertyChanged, позволяющаяя привязывать поле "баланс" к элементам WPF.
         public event PropertyChangedEventHandler PropertyChanged;
@@ -38,8 +38,8 @@ namespace BudgetManager
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
         
-        private int _balance;
-        public int Balance 
+        private double _balance;
+        public double Balance 
         {
             get => _balance;
             set { _balance = value;
@@ -56,32 +56,32 @@ namespace BudgetManager
         public void DeleteExpenseCategory(Category category) => ExpenseCategories.Remove(category);
         public void DeleteIncomeCategory(Category category) => IncomeCategories.Remove(category);
         //Словари, хранящие данные о том, сколько и в какой категории в какой день было расходов и доходов
-        public SortedDictionary<Date, ObservableCollection<(Category, int)>> ExpensesAtDay { get; set; }
-        public SortedDictionary<Date, ObservableCollection<(Category, int)>> IncomesAtDay { get; set; }
+        public SortedDictionary<Date, ObservableCollection<(Category, double)>> ExpensesAtDay { get; set; }
+        public SortedDictionary<Date, ObservableCollection<(Category, double)>> IncomesAtDay { get; set; }
         //Методы добавления расходов и доходов на сегодняшнее число
-        public void GetIncome((Category, int) transaction)
+        public void GetIncome((Category, double) transaction)
         {
             var date = new Date(DateTime.Now);
             if(!IncomesAtDay.ContainsKey(date))
             {
-                IncomesAtDay.Add(date, new ObservableCollection<(Category, int)>());
+                IncomesAtDay.Add(date, new ObservableCollection<(Category, double)>());
             }
             IncomesAtDay[date].Add(transaction);
             Balance += transaction.Item2;
         }
 
-        public void GetExpense((Category, int) transaction)
+        public void GetExpense((Category, double) transaction)
         {
             var date = new Date(DateTime.Now);
             if (!ExpensesAtDay.ContainsKey(date))
             {
-                ExpensesAtDay.Add(date, new ObservableCollection<(Category, int)>());
+                ExpensesAtDay.Add(date, new ObservableCollection<(Category, double)>());
             }
 
             ExpensesAtDay[date].Add(transaction);
             Balance -= transaction.Item2;
         }
-        public int GetSumOfExpensesAtDate(Date date) => ExpensesAtDay[date].Sum(category => category.Item2);
-        public int GetSumOfIncomesAtDate(Date date) => IncomesAtDay[date].Sum(category => category.Item2);
+        public double GetSumOfExpensesAtDate(Date date) => ExpensesAtDay[date].Sum(category => category.Item2);
+        public double GetSumOfIncomesAtDate(Date date) => IncomesAtDay[date].Sum(category => category.Item2);
     }
 }

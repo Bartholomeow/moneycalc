@@ -35,7 +35,7 @@ namespace BudgetManager
                     for (byte i = 0; i < n; i++)
                     {
                         var date = new Date(sr.ReadLine());
-                        account.ExpensesAtDay.Add(date, new ObservableCollection<(Category, int)>());
+                        account.ExpensesAtDay.Add(date, new ObservableCollection<(Category, double)>());
                         k = int.Parse(sr.ReadLine() ?? throw new InvalidOperationException());
                         for (byte j = 0; j < k; j++)
                         {
@@ -51,7 +51,7 @@ namespace BudgetManager
                     for (byte i = 0; i < n; i++)
                     {
                         var date = new Date(sr.ReadLine());
-                        account.IncomesAtDay.Add(date, new ObservableCollection<(Category, int)>());
+                        account.IncomesAtDay.Add(date, new ObservableCollection<(Category, double)>());
                         k = int.Parse(sr.ReadLine() ?? throw new InvalidOperationException());
                         for (byte j = 0; j < k; j++)
                         {

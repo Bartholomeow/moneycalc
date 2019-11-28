@@ -11,19 +11,19 @@
             <ColumnDefinition Width="200*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
-            <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Margin="10,5,0,0">Категории</TextBlock>
-            <ListBox Name="CategoryListbox" Margin="10,5,10,0" MinHeight="50" MaxHeight="190" BorderBrush="DarkSeaGreen">
+            <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Margin="5,0,0,0"><Run Text="Категории"/></TextBlock>
+            <ListBox x:Name="CategoryListbox" Margin="10,7,10,0" MinHeight="50" MaxHeight="190" BorderBrush="DarkSeaGreen" Height="48">
                 <ListBox.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Удалить" Name="DeleteMenuItem" Click="DeleteMenuItem_OnClick"></MenuItem>
+                        <MenuItem Header="Удалить" x:Name="DeleteMenuItem" Click="DeleteMenuItem_OnClick"/>
                     </ContextMenu>
                 </ListBox.ContextMenu>
             </ListBox>
-            <Button Name="AddCategoryButton"  Margin="10,10,10,0" Height="40" Content="Добавить категорию" Click="AddCategoryButton_OnClick" FontWeight="Bold" FontSize="14" FontStretch="Condensed" FontFamily="comic sans ms" BorderThickness="0.5"/>
+            <Button x:Name="AddCategoryButton"  Margin="10,10,10,0" Height="40" Content="Добавить категорию" Click="AddCategoryButton_OnClick" FontWeight="Bold" FontSize="14" FontStretch="Condensed" FontFamily="comic sans ms" BorderThickness="0.5"/>
         </StackPanel>
         <StackPanel Grid.Column="1">
             <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Margin="5,0,5,0">Введите расход / доход</TextBlock>
-            <TextBox  Name="TransactionTextBox" Text="0" MaxLength="5" FontSize="32" TextAlignment="Right" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,0"></TextBox>
+
             <Grid Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50"></ColumnDefinition>
@@ -36,23 +36,28 @@
                     <RowDefinition Height="50"></RowDefinition>
                     <RowDefinition Height="50"></RowDefinition>
                     <RowDefinition Height="50"></RowDefinition>
+                    <RowDefinition Height="50"></RowDefinition>
                 </Grid.RowDefinitions>
-                <Button Grid.Row="0" Grid.Column="0" Click="Calc_Click" Content="7" Style="{StaticResource DefaultButtonStyle}"/>
-                <Button Grid.Row="0" Grid.Column="1" Click="Calc_Click" Content="8" Style="{StaticResource DefaultButtonStyle}"/>
-                <Button Grid.Row="0" Grid.Column="2" Click="Calc_Click" Content="9" Style="{StaticResource DefaultButtonStyle}"/>
-                <Button Grid.Row="0" Grid.Column="3" Click="Calc_Click" Content="+" Style="{StaticResource DefaultButtonStyle}"/>
-                <Button Grid.Row="1" Grid.Column="0" Click="Calc_Click" Content="4" Style="{StaticResource DefaultButtonStyle}"/>
-                <Button Grid.Row="1" Grid.Column="1" Click="Calc_Click" Content="5" Style="{StaticResource DefaultButtonStyle}"/>
-                <Button Grid.Row="1" Grid.Column="2" Click="Calc_Click" Content="6" Style="{StaticResource DefaultButtonStyle}"/>
-                <Button Grid.Row="1" Grid.Column="3" Click="Calc_Click" Content="-" Style="{StaticResource DefaultButtonStyle}"/>
-                <Button Grid.Row="2" Grid.Column="0" Click="Calc_Click" Content="1" Style="{StaticResource DefaultButtonStyle}"/>
-                <Button Grid.Row="2" Grid.Column="1" Click="Calc_Click" Content="2" Style="{StaticResource DefaultButtonStyle}"/>
-                <Button Grid.Row="2" Grid.Column="2" Click="Calc_Click" Content="3" Style="{StaticResource DefaultButtonStyle}"/>
-                <Button Grid.Row="2" Grid.Column="3" Click="Calc_Click" Content="*" Style="{StaticResource DefaultButtonStyle}"/>
-                <Button Grid.Row="3" Grid.Column="0" Click="Calc_Click" Content="0" Style="{StaticResource DefaultButtonStyle}"/>
-                <Button Grid.Row="3" Grid.Column="1" Click="Calc_Click" Content="C" Style="{StaticResource DefaultButtonStyle}"/>
-                <Button Grid.Row="3" Grid.Column="2" Click="Calc_Click" Content="=" Style="{StaticResource DefaultButtonStyle}"/>
-                <Button Grid.Row="3" Grid.Column="3" Click="OkButton_Click" Content="OK" Style="{StaticResource DefaultButtonStyle}"/>
+                <TextBox  Name="TransactionTextBox" Text="0" FontSize="32" TextAlignment="Right" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" Margin="0,2,2,2"></TextBox>
+                <Button Grid.Row="1" Grid.Column="0" Click="Calc_Click" Content="7" Style="{StaticResource DefaultButtonStyle}"/>
+                <Button Grid.Row="1" Grid.Column="1" Click="Calc_Click" Content="8" Style="{StaticResource DefaultButtonStyle}"/>
+                <Button Grid.Row="1" Grid.Column="2" Click="Calc_Click" Content="9" Style="{StaticResource DefaultButtonStyle}"/>
+                <Button Grid.Row="1" Grid.Column="3" Click="Calc_Click" Content="+" Style="{StaticResource DefaultButtonStyle}"/>
+                <Button Grid.Row="2" Grid.Column="0" Click="Calc_Click" Content="4" Style="{StaticResource DefaultButtonStyle}"/>
+                <Button Grid.Row="2" Grid.Column="1" Click="Calc_Click" Content="5" Style="{StaticResource DefaultButtonStyle}"/>
+                <Button Grid.Row="2" Grid.Column="2" Click="Calc_Click" Content="6" Style="{StaticResource DefaultButtonStyle}"/>
+                <Button Grid.Row="2" Grid.Column="3" Click="Calc_Click" Content="-" Style="{StaticResource DefaultButtonStyle}"/>
+                <Button Grid.Row="3" Grid.Column="0" Click="Calc_Click" Content="1" Style="{StaticResource DefaultButtonStyle}"/>
+                <Button Grid.Row="3" Grid.Column="1" Click="Calc_Click" Content="2" Style="{StaticResource DefaultButtonStyle}"/>
+                <Button Grid.Row="4" Grid.Column="1" Click="Calc_Click" Content="," Style="{StaticResource DefaultButtonStyle}"/>
+                <Button Grid.Row="3" Grid.Column="2" Click="Calc_Click" Content="3" Style="{StaticResource DefaultButtonStyle}"/>
+                <Button Grid.Row="3" Grid.Column="3" Click="Calc_Click" Content="*" Style="{StaticResource DefaultButtonStyle}"/>
+
+                <Button PreviewMouseDown="C_Start_Click" PreviewMouseUp="C_End_Click" Content="C" Style="{StaticResource DefaultButtonStyle}" Grid.Column="3" />
+                <Button Grid.Row="4" Grid.Column="0" Click="Calc_Click" Content="0" Style="{StaticResource DefaultButtonStyle}"/>
+
+                <Button Grid.Row="4" Grid.Column="2" Click="Calc_Click" Content="=" Style="{StaticResource DefaultButtonStyle}"/>
+                <Button Grid.Row="4" Grid.Column="3" Click="OkButton_Click" Content="OK" Style="{StaticResource DefaultButtonStyle}"/>
             </Grid>
         </StackPanel>
 
