@@ -88,7 +88,7 @@ namespace BudgetManager
                         case '+': result = b + a; break;
                         case '-': result = b - a; break;
                         case '*': result = b * a; break;
-                        case '/': result = b / a; break;
+                        //case '/': result = b / a; break;
                         case '^': result = double.Parse(Math.Pow(double.Parse(b.ToString(CultureInfo.CurrentCulture)), 
                             double.Parse(a.ToString(CultureInfo.CurrentCulture))).ToString(CultureInfo.CurrentCulture)); break;
                     }
@@ -103,7 +103,7 @@ namespace BudgetManager
         }
         private static bool IsOperator(char с)
         {
-            return "+-/*^()".IndexOf(с) != -1;
+            return "+-*^()".IndexOf(с) != -1;
         }
         private static byte GetPriority(char s)
         {
@@ -114,7 +114,7 @@ namespace BudgetManager
                 case '+': return 2;
                 case '-': return 3;
                 case '*': return 4;
-                case '/': return 4;
+                //case '/': return 4;
                 case '^': return 5;
                 default: return 6;
             }
