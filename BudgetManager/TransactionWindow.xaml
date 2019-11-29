@@ -53,7 +53,7 @@
                 <Button Grid.Row="3" Grid.Column="2" Click="Calc_Click" Content="3" Style="{StaticResource DefaultButtonStyle}"/>
                 <Button Grid.Row="3" Grid.Column="3" Click="Calc_Click" Content="*" Style="{StaticResource DefaultButtonStyle}"/>
 
-                <Button PreviewMouseDown="C_Start_Click" PreviewMouseUp="C_End_Click" Content="C" Style="{StaticResource DefaultButtonStyle}" Grid.Column="3" />
+                <RepeatButton Click="CReapitButton_Click" Content="C" Grid.Column="3" Margin="2" Style="{StaticResource DefaultRepeatButtonStyle}"/>
                 <Button Grid.Row="4" Grid.Column="0" Click="Calc_Click" Content="0" Style="{StaticResource DefaultButtonStyle}"/>
 
                 <Button Grid.Row="4" Grid.Column="2" Click="Calc_Click" Content="=" Style="{StaticResource DefaultButtonStyle}"/>

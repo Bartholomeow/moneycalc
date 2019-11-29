@@ -101,30 +101,11 @@ namespace BudgetManager
             }
             TransactionTextBox.Text = "0";
         }
-        double Time = 0;
-        private void C_Start_Click(object sender, MouseEventArgs e)
+        private void CReapitButton_Click(object sender, RoutedEventArgs e)
         {
-            var start = DateTime.Now;
-            var stopwatch = Stopwatch.StartNew();
-            var end = start.Add(stopwatch.Elapsed);
-            Time = double.Parse(end.ToString("ss,ffff"));
-        }
-        private void C_End_Click(object sender, MouseEventArgs e)
-        {
-            var start = DateTime.Now;
-            var stopwatch = Stopwatch.StartNew();
-            var end = start.Add(stopwatch.Elapsed);
             if (TransactionTextBox.Text != "")
-            { 
-                if (Math.Abs(double.Parse(end.ToString("ss,ffff")) - Time) > 1 && (double.Parse(end.ToString("ss,ffff")) - Time >= -59))
-                {
-                    TransactionTextBox.Text = "";
-
-                }
-                else
-                {
-                    TransactionTextBox.Text = TransactionTextBox.Text.Remove(TransactionTextBox.Text.Length - 1);
-                }
+            {
+                TransactionTextBox.Text = TransactionTextBox.Text.Remove(TransactionTextBox.Text.Length - 1);
             }
         }
     }
