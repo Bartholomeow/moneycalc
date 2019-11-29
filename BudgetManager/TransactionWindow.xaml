@@ -12,7 +12,7 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
             <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Margin="5,0,0,0"><Run Text="Категории"/></TextBlock>
-            <ListBox x:Name="CategoryListbox" Margin="10,7,10,0" MinHeight="50" MaxHeight="190" BorderBrush="DarkSeaGreen" Height="48">
+            <ListBox x:Name="CategoryListbox" Margin="10,7,10,0" MinHeight="50" MaxHeight="190" BorderBrush="DarkSeaGreen">
                 <ListBox.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Удалить" x:Name="DeleteMenuItem" Click="DeleteMenuItem_OnClick"/>
