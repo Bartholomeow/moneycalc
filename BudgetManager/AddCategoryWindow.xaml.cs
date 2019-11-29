@@ -18,7 +18,7 @@ namespace BudgetManager
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            if (AddCategoryTextBox.Text == "")
+            if (AddCategoryTextBox.Text == "" || AddCategoryTextBox.Text == "Не более 12 букв.")
             {
                 MessageBox.Show("Введите название категории.");
                 return;

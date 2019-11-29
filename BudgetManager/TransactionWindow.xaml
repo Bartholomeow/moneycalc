@@ -38,7 +38,7 @@
                     <RowDefinition Height="50"></RowDefinition>
                     <RowDefinition Height="50"></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBox  Name="TransactionTextBox" Text="0" FontSize="32" TextAlignment="Right" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" Margin="0,2,2,2"></TextBox>
+                <TextBox  Name="TransactionTextBox" GotFocus="TransactionTextBox_GotFocus" Text="0" FontSize="32" TextAlignment="Right" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" Margin="0,2,2,2"></TextBox>
                 <Button Grid.Row="1" Grid.Column="0" Click="Calc_Click" Content="7" Style="{StaticResource DefaultButtonStyle}"/>
                 <Button Grid.Row="1" Grid.Column="1" Click="Calc_Click" Content="8" Style="{StaticResource DefaultButtonStyle}"/>
                 <Button Grid.Row="1" Grid.Column="2" Click="Calc_Click" Content="9" Style="{StaticResource DefaultButtonStyle}"/>

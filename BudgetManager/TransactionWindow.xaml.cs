@@ -30,6 +30,10 @@ namespace BudgetManager
 
         private void Calc_Click(object sender, RoutedEventArgs e)
         {
+            if (TransactionTextBox.Text == "Error")
+            {
+                TransactionTextBox.Clear();
+            }
             var button = (Button)sender;
             var value = button.Content.ToString();
             if (string.IsNullOrEmpty(value))
@@ -106,6 +110,14 @@ namespace BudgetManager
             if (TransactionTextBox.Text != "")
             {
                 TransactionTextBox.Text = TransactionTextBox.Text.Remove(TransactionTextBox.Text.Length - 1);
+            }
+        }
+
+        private void TransactionTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (TransactionTextBox.Text == "Error")
+            {
+                TransactionTextBox.Clear();
             }
         }
     }
