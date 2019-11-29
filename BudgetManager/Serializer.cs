@@ -18,7 +18,7 @@ namespace BudgetManager
                 {
                     int k;
                     account.RegistrationDate = new Date(sr.ReadLine() ?? throw new InvalidOperationException());
-                    account.Balance = int.Parse(sr.ReadLine() ?? throw new InvalidOperationException());
+                    account.Balance = Double.Parse(sr.ReadLine() ?? throw new InvalidOperationException());
                     var n = int.Parse(sr.ReadLine() ?? throw new InvalidOperationException());
                     for (byte i = 0; i < n; i++)
                     {
@@ -42,7 +42,7 @@ namespace BudgetManager
                             var categoryCost = sr.ReadLine()?.Split(' ');
                             if (categoryCost == null) continue;
                             var category = new Category(categoryCost[0]);
-                            var cost = int.Parse(categoryCost[1]);
+                            var cost = Double.Parse(categoryCost[1]);
                             account.ExpensesAtDay[date].Add((category, cost));
                         }
                     }
@@ -58,7 +58,7 @@ namespace BudgetManager
                             var categoryCost = sr.ReadLine()?.Split(' ');
                             if (categoryCost == null) continue;
                             var category = new Category(categoryCost[0]);
-                            var cost = int.Parse(categoryCost[1]);
+                            var cost = Double.Parse(categoryCost[1]);
                             account.IncomesAtDay[date].Add((category, cost));
                         }
                     }
