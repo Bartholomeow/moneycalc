@@ -90,6 +90,10 @@ namespace BudgetManager
                     _startPeriod = new Date(((DateTime)_startPeriod).AddYears(coefficient * 1));
                     _endPeriod = new Date(((DateTime)_endPeriod).AddYears(coefficient * 1));
                     break;
+                case "Определенный день":
+                    _startPeriod = new Date(((DateTime)_startPeriod).AddDays(coefficient * 1));
+                    _endPeriod = new Date(((DateTime)_endPeriod).AddDays(coefficient * 1));
+                    break;
             }
             DataConfiguration();
             PeriodConfiguration();
