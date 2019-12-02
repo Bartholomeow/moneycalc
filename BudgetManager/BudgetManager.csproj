@@ -84,6 +84,9 @@
     <Compile Include="Calc.cs" />
     <Compile Include="Category.cs" />
     <Compile Include="Date.cs" />
+    <Compile Include="SelectDateWindow.xaml.cs">
+      <DependentUpon>SelectDateWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Serializer.cs" />
     <Compile Include="SynchronizationWindow.xaml.cs">
       <DependentUpon>SynchronizationWindow.xaml</DependentUpon>
@@ -107,6 +110,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="SelectDateWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SynchronizationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

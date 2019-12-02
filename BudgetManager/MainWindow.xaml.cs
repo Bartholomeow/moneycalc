@@ -2,12 +2,15 @@
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Collections.Generic;
 
 namespace BudgetManager
 {
     public partial class MainWindow
     {
         private Account _account;
+        //Период за который будуд выводиться данные
+        private string selectDate = "Месяц";
         public MainWindow()
         {
             _account = Serializer.AccountReader("config.txt");
@@ -20,8 +23,9 @@ namespace BudgetManager
             var button = (Button)sender;
             var transactionWindow = button.Name == "IncomeButton" ? new TransactionWindow(1) : new TransactionWindow(0);
             transactionWindow.ShowDialog();
-            SumOfIncomesTextBlock.Text = _account.GetSumOfIncomesAtDate(Date.Now).ToString();
-            SumOfExpensesTextBlock.Text = _account.GetSumOfExpensesAtDate(Date.Now).ToString();
+            //SumOfIncomesTextBlock.Text = _account.GetSumOfIncomesAtDate(Date.Now).ToString();
+            //SumOfExpensesTextBlock.Text = _account.GetSumOfExpensesAtDate(Date.Now).ToString();
+            TransactionConfiguration(new Date((DateTime)DatePicker.SelectedDate));
         }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -105,10 +109,50 @@ namespace BudgetManager
             {
                 _account.ExpensesAtDay.Add(date, new ObservableCollection<(Category, double)>());
             }
-            IncomesListBox.ItemsSource = _account.IncomesAtDay[date];
-            ExpensesListBox.ItemsSource = _account.ExpensesAtDay[date];
-            SumOfIncomesTextBlock.Text = _account.GetSumOfIncomesAtDate(date).ToString();
-            SumOfExpensesTextBlock.Text = _account.GetSumOfExpensesAtDate(date).ToString();
+            // день
+            if (selectDate == "День")
+            {
+                IncomesListBox.ItemsSource = _account.IncomesAtDay[date];
+                ExpensesListBox.ItemsSource = _account.ExpensesAtDay[date];
+                SumOfIncomesTextBlock.Text = _account.GetSumOfIncomesAtDate(date).ToString();
+                SumOfExpensesTextBlock.Text = _account.GetSumOfExpensesAtDate(date).ToString();
+            }  
+            if (selectDate == "Месяц")
+            {
+                ObservableCollection<(Category,double)> IncomesAtMonth = new ObservableCollection<(Category, double)>();
+                ObservableCollection<(Category, double)> ExpensesAtMonth = new ObservableCollection<(Category, double)>();
+                double SumIncomesAtMonth = 0.0;
+                double SumExpensesAtMonth = 0.0;
+                for (int i = 1; i <= System.DateTime.DaysInMonth(date.Year, date.Month); i++)
+                {
+                    if (_account.IncomesAtDay.ContainsKey(new Date(i, date.Month, date.Year)))
+                    {
+                        for(int j = 0; j < _account.IncomesAtDay[new Date(i, date.Month, date.Year)].Count; j++)
+                            IncomesAtMonth.Add(_account.IncomesAtDay[new Date(i, date.Month, date.Year)][j]);
+                        SumIncomesAtMonth += _account.GetSumOfIncomesAtDate(new Date(i, date.Month, date.Year));
+                    }
+                    if (_account.ExpensesAtDay.ContainsKey(new Date(i, date.Month, date.Year)))
+                    {
+
+                        for (int j = 0; j < _account.ExpensesAtDay[new Date(i, date.Month, date.Year)].Count; j++)
+                            ExpensesAtMonth.Add(_account.ExpensesAtDay[new Date(i, date.Month, date.Year)][j]);
+                        SumExpensesAtMonth += _account.GetSumOfExpensesAtDate(new Date(i, date.Month, date.Year));
+                    }
+
+                }
+                IncomesListBox.ItemsSource = IncomesAtMonth;
+                ExpensesListBox.ItemsSource = ExpensesAtMonth;
+                SumOfIncomesTextBlock.Text = SumIncomesAtMonth.ToString();
+                SumOfExpensesTextBlock.Text = SumExpensesAtMonth.ToString();
+
+            }
+            
+        }
+
+        private void SelectDate_Click(object sender, RoutedEventArgs e)
+        {
+            
+
         }
     }
 }
