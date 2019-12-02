@@ -28,6 +28,7 @@ namespace BudgetManager
         {
             DataContext = _account;
             _selectedTypeOfDate = "День";
+            PeriodComboBox.SelectedIndex = 0;
             _startPeriod = Date.Now;
             _endPeriod = Date.Now;
             PeriodConfiguration();
@@ -51,7 +52,7 @@ namespace BudgetManager
         private void Transaction_Click(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
-            var transactionWindow = button.Name == "IncomeButton" ? new TransactionWindow(1) : new TransactionWindow(-1);
+            var transactionWindow = button.Name == "IncomeButton" ? new TransactionWindow(TypeOfTransaction.Доход) : new TransactionWindow(TypeOfTransaction.Расход);
             transactionWindow.ShowDialog();
             DataConfiguration();
         }
@@ -149,6 +150,11 @@ namespace BudgetManager
             }
             DataConfiguration();
             PeriodConfiguration();
+        }
+
+        private void ReportMenu_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

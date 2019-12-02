@@ -10,17 +10,17 @@ namespace BudgetManager
 {
     public partial class TransactionWindow
     {
-        private readonly int type;
+        private readonly TypeOfTransaction type;
         private readonly Account _account;
 
-        public TransactionWindow(int type)
+        public TransactionWindow(TypeOfTransaction type)
         {
             InitializeComponent();
             this.type = type;
             _account = Account.GetAccount();
             DateTextBlock.Text = CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DateTime.Now.DayOfWeek).ToUpper() + ", " + DateTime.Now.ToShortDateString();
             if (CategoryListbox != null)
-                CategoryListbox.ItemsSource = this.type == 1 ? _account.IncomeCategories : _account.ExpenseCategories;
+                CategoryListbox.ItemsSource = this.type == TypeOfTransaction.Доход ? _account.IncomeCategories : _account.ExpenseCategories;
         }
 
         private void AddCategoryButton_OnClick(object sender, RoutedEventArgs e)
@@ -60,7 +60,7 @@ namespace BudgetManager
         private void DeleteMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
             var category = (Category)CategoryListbox.SelectedItem;
-            if (type == 1)
+            if (type == TypeOfTransaction.Доход)
             {
                 _account.DeleteIncomeCategory(category);
             }

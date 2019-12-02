@@ -47,11 +47,29 @@ namespace BudgetManager
         //Данные о всех транзакциях в виде [Дата, Тип(доход=1/расход=-1), Категория, Стоимость].
         public List<Transaction> Data { get; set; }
         //Получение списка транзаций за период.
-        public List<Transaction> GetExpensesAtPeriod(Date date1, Date date2) => (from t in Data where (t.Type == -1 && t.Date <= date2 && t.Date >= date1) select t).ToList();
-        public List<Transaction> GetIncomesAtPeriod(Date date1, Date date2) => (from t in Data where (t.Type == 1 && t.Date <= date2 && t.Date >= date1) select t).ToList();
+        //public List<Transaction> GetExpensesAtPeriod(Date date1, Date date2) => (from t in Data where (t.Type == -1 && t.Date <= date2 && t.Date >= date1) select t).ToList();
+        //public List<Transaction> GetIncomesAtPeriod(Date date1, Date date2) => (from t in Data where (t.Type == 1 && t.Date <= date2 && t.Date >= date1) select t).ToList();
+
+        public List<Transaction> GetExpensesAtPeriod(Date date1, Date date2) =>
+            (from category in ExpenseCategories
+                let cost =
+                    (from t in Data
+                        where (t.Type == TypeOfTransaction.Расход && t.Date <= date2 && t.Date >= date1 && Equals(t.Category, category))
+                        select t.Cost).ToList().Sum()
+                where cost != 0
+                select new Transaction(category, cost)).ToList();
+        public List<Transaction> GetIncomesAtPeriod(Date date1, Date date2) =>
+            (from category in IncomeCategories
+                let cost =
+                    (from t in Data
+                        where (t.Type == TypeOfTransaction.Доход && t.Date <= date2 && t.Date >= date1 && Equals(t.Category, category))
+                        select t.Cost).ToList().Sum()
+                where cost != 0
+                select new Transaction(category, cost)).ToList();
+
         //Получение суммы транзакций за период.
-        public double GetSumOfExpensesAtPeriod(Date date1, Date date2) => (from t in Data where (t.Type == -1 && t.Date <= date2 && t.Date >= date1) select t.Cost).ToList().Sum();
-        public double GetSumOfIncomesAtPeriod(Date date1, Date date2) => (from t in Data where (t.Type == 1 && t.Date <= date2 && t.Date >= date1) select t.Cost).ToList().Sum();
+        public double GetSumOfExpensesAtPeriod(Date date1, Date date2) => (from t in Data where (t.Type == TypeOfTransaction.Расход && t.Date <= date2 && t.Date >= date1) select t.Cost).ToList().Sum();
+        public double GetSumOfIncomesAtPeriod(Date date1, Date date2) => (from t in Data where (t.Type == TypeOfTransaction.Доход && t.Date <= date2 && t.Date >= date1) select t.Cost).ToList().Sum();
 
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
@@ -70,7 +88,7 @@ namespace BudgetManager
         public void GetTransaction(Transaction transaction)
         {
             Data.Add(transaction);
-            Balance += transaction.Cost * transaction.Type;
+            Balance += transaction.Cost * (int)transaction.Type;
         }
     }
 }
