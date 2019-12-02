@@ -27,7 +27,7 @@ namespace BudgetManager
         private void StartWindowConfiguration()
         {
             DataContext = _account;
-            _selectedTypeOfDate = PeriodComboBox.SelectedItem.ToString();
+            _selectedTypeOfDate = "День";
             _startPeriod = Date.Now;
             _endPeriod = Date.Now;
             PeriodConfiguration();
@@ -39,6 +39,10 @@ namespace BudgetManager
         }
         private void DataConfiguration()
         {
+            if (IncomesListBox == null)
+            {
+                return;
+            }
             IncomesListBox.ItemsSource = _account.GetIncomesAtPeriod(_startPeriod, _endPeriod);
             ExpensesListBox.ItemsSource = _account.GetExpensesAtPeriod(_startPeriod, _endPeriod);
             SumOfExpensesTextBlock.Text = _account.GetSumOfExpensesAtPeriod(_startPeriod, _endPeriod).ToString();
@@ -143,6 +147,7 @@ namespace BudgetManager
                     break;
                 }
             }
+            DataConfiguration();
             PeriodConfiguration();
         }
     }
