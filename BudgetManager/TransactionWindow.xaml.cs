@@ -18,6 +18,7 @@ namespace BudgetManager
             InitializeComponent();
             this.type = type;
             _account = Account.GetAccount();
+            DateTextBlock.Text = CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DateTime.Now.DayOfWeek).ToUpper() + ", " + DateTime.Now.ToShortDateString();
             if (CategoryListbox != null)
                 CategoryListbox.ItemsSource = this.type == 1 ? _account.IncomeCategories : _account.ExpenseCategories;
         }

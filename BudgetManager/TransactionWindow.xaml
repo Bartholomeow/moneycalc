@@ -11,7 +11,8 @@
             <ColumnDefinition Width="200*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
-            <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Margin="5,0,0,0"><Run Text="Категории"/></TextBlock>
+            <TextBlock Name="DateTextBlock" Style="{StaticResource DefaultTextBlockStyle}" Margin="5" Foreground="Brown"/>
+            <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Margin="5,0,0,0" Text="Категории"/>
             <ListBox x:Name="CategoryListbox" Margin="10,7,10,0" MinHeight="50" MaxHeight="190" BorderBrush="DarkSeaGreen">
                 <ListBox.ContextMenu>
                     <ContextMenu>
