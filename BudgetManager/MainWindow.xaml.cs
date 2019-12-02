@@ -146,6 +146,14 @@ namespace BudgetManager
                     _endPeriod = new Date(31, 12, year);
                     break;
                 }
+                case "Определенный день":
+                {
+                        var calendar = new Calendar(_account.RegistrationDate, Date.Now);
+                        calendar.ShowDialog();
+                        _startPeriod = calendar.date;
+                        _endPeriod = calendar.date;
+                        break;
+                }
             }
             DataConfiguration();
             PeriodConfiguration();

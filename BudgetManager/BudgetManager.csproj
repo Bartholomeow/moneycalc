@@ -82,6 +82,9 @@
       <DependentUpon>AddCategoryWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Calc.cs" />
+    <Compile Include="Calendar.xaml.cs">
+      <DependentUpon>Calendar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Category.cs" />
     <Compile Include="Date.cs" />
     <Compile Include="SelectDateWindow.xaml.cs">
@@ -96,6 +99,10 @@
       <DependentUpon>TransactionWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="AddCategoryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Calendar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

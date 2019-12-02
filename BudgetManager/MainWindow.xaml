@@ -27,13 +27,13 @@
             </Menu>
             <TextBlock Name="BalanceTextBlock" Grid.Row="1" Text="{Binding Path=Balance, UpdateSourceTrigger=PropertyChanged}" FontSize="16" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left"  Margin="85,0,0,0"/>
             <TextBlock Text="Баланс :" Grid.Row="1" FontSize="16" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left"  Margin="15,0,0,0" Height="21"/>
-            <TextBlock Name="PeriodTextBlock" HorizontalAlignment="Left" Height="24" Style="{StaticResource DefaultTextBlockStyle}"  Margin="130,25,0,0" Grid.Row="1" VerticalAlignment="Top"/>
-            <ComboBox Name="PeriodComboBox" SelectedIndex="0"  SelectionChanged="PeriodComboBox_OnSelectionChanged"  HorizontalAlignment="Left" Height="24" Margin="15,25,0,0" Grid.Row="1" VerticalAlignment="Top" Width="100">
+            <TextBlock Name="PeriodTextBlock" HorizontalAlignment="Left" Height="24" Style="{StaticResource DefaultTextBlockStyle}"  Margin="168,25,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+            <ComboBox Name="PeriodComboBox" SelectedIndex="0" SelectionChanged="PeriodComboBox_OnSelectionChanged" HorizontalAlignment="Left" Height="24" Margin="15,25,0,0" Grid.Row="1" VerticalAlignment="Top" Width="148">
                 <ComboBoxItem>День</ComboBoxItem>
                 <ComboBoxItem>Неделя</ComboBoxItem>
                 <ComboBoxItem>Месяц</ComboBoxItem>
-                <ComboBoxItem>Год</ComboBoxItem>
-                <ComboBoxItem>Определенный день</ComboBoxItem>
+            <ComboBoxItem>Год</ComboBoxItem>
+            <ComboBoxItem>Определенный день</ComboBoxItem>
             </ComboBox>
             <Grid Grid.Row="2">
                 <Grid.RowDefinitions>
