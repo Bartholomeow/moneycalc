@@ -146,13 +146,6 @@ namespace BudgetManager
                 SumOfExpensesTextBlock.Text = SumExpensesAtMonth.ToString();
 
             }
-            
-        }
-
-        private void SelectDate_Click(object sender, RoutedEventArgs e)
-        {
-            
-
         }
     }
 }
