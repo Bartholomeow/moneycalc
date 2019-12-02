@@ -8,7 +8,7 @@ namespace BudgetManager
 {
     public class Transaction
     {
-        public Transaction(Date date, int type, Category category, double cost)
+        public Transaction(Date date, TypeOfTransaction type, Category category, double cost)
         {
             Date = date;
             Type = type;
@@ -16,11 +16,24 @@ namespace BudgetManager
             Cost = cost;
         }
 
+        public Transaction(Category category, double cost)
+        {
+            Category = category;
+            Cost = cost;
+        }
         public Transaction(string transaction)
         {
             var dataStrings = transaction.Split(' ');
             Date = new Date(dataStrings[0]);
-            Type = int.Parse(dataStrings[1]);
+            switch (dataStrings[1])
+            {
+                case "Доход":
+                    Type = TypeOfTransaction.Доход;
+                    break;
+                case "Расход":
+                    Type = TypeOfTransaction.Расход;
+                    break;
+            }
             Category = new Category(dataStrings[2]);
             Cost = double.Parse(dataStrings[3]);
         }
@@ -32,12 +45,16 @@ namespace BudgetManager
 
         public string GetFullString()
         {
-            return Date + " " + Type + " " + Category + " " + Cost;
+            return Date + " " + Type.ToString("g") + " " + Category + " " + Cost;
         }
 
         public Date Date { get; set; }
-        public int Type { get; set; }
+        public TypeOfTransaction Type { get; set; }
         public Category Category { get; set; }
         public double Cost { get; set; }
+    } 
+    public enum TypeOfTransaction
+    {
+        Доход = 1, Расход = -1
     }
 }

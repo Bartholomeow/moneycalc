@@ -13,14 +13,15 @@
         <StackPanel Grid.Column="0">
             <TextBlock Name="DateTextBlock" Style="{StaticResource DefaultTextBlockStyle}" Margin="5" Foreground="Brown"/>
             <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Margin="5,0,0,0" Text="Категории"/>
-            <ListBox x:Name="CategoryListbox" Margin="10,7,10,0" MinHeight="50" MaxHeight="190" BorderBrush="DarkSeaGreen">
+            <ListBox x:Name="CategoryListbox" Margin="10,7,10,0" MinHeight="50" MaxHeight="160" BorderBrush="DarkSeaGreen">
                 <ListBox.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Удалить" x:Name="DeleteMenuItem" Click="DeleteMenuItem_OnClick"/>
                     </ContextMenu>
                 </ListBox.ContextMenu>
             </ListBox>
-            <Button x:Name="AddCategoryButton"  Margin="10,10,10,0" Height="40" Content="Добавить категорию" Click="AddCategoryButton_OnClick" FontWeight="Bold" FontSize="14" FontStretch="Condensed" FontFamily="comic sans ms" BorderThickness="0.5"/>
+            <TextBox Text ="Заметка" Margin="5"></TextBox>
+            <Button x:Name="AddCategoryButton"  Margin="10,0,10,0" Height="40" Content="Добавить категорию" Click="AddCategoryButton_OnClick" FontWeight="Bold" FontSize="14" FontStretch="Condensed" FontFamily="comic sans ms" BorderThickness="0.5"/>
         </StackPanel>
         <StackPanel Grid.Column="1">
             <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Margin="5,0,5,0">Введите расход / доход</TextBlock>
