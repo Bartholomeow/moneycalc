@@ -26,13 +26,14 @@
                 </MenuItem>
             </Menu>
             <TextBlock Name="BalanceTextBlock" Grid.Row="1" Text="{Binding Path=Balance, UpdateSourceTrigger=PropertyChanged}" FontSize="16" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left"  Margin="85,0,0,0"/>
-            <TextBlock Text="Баланс :" Grid.Row="1" FontSize="16" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left"  Margin="15,0,0,0" Height="21" Width="63"/>
-            <DatePicker Name="DatePicker" Grid.Row="1" SelectedDateChanged="DatePicker_OnSelectedDateChanged" VerticalAlignment="Top" HorizontalAlignment="Left"  Margin="15,25,0,0" Height="24" Width="100"/>
-            <ComboBox HorizontalAlignment="Left" Height="24" Margin="125,25,0,0" Grid.Row="1" VerticalAlignment="Top" Width="100">
+            <TextBlock Text="Баланс :" Grid.Row="1" FontSize="16" FontWeight="Bold" VerticalAlignment="Top" HorizontalAlignment="Left"  Margin="15,0,0,0" Height="21"/>
+            <TextBlock Name="PeriodTextBlock" HorizontalAlignment="Left" Height="24" Style="{StaticResource DefaultTextBlockStyle}"  Margin="130,25,0,0" Grid.Row="1" VerticalAlignment="Top"/>
+            <ComboBox Name="PeriodComboBox" SelectedIndex="0"  SelectionChanged="PeriodComboBox_OnSelectionChanged"  HorizontalAlignment="Left" Height="24" Margin="15,25,0,0" Grid.Row="1" VerticalAlignment="Top" Width="100">
                 <ComboBoxItem>День</ComboBoxItem>
                 <ComboBoxItem>Неделя</ComboBoxItem>
                 <ComboBoxItem>Месяц</ComboBoxItem>
                 <ComboBoxItem>Год</ComboBoxItem>
+                <ComboBoxItem>Определенный день</ComboBoxItem>
             </ComboBox>
             <Grid Grid.Row="2">
                 <Grid.RowDefinitions>
@@ -50,8 +51,8 @@
                 <Button Name="IncomeButton" Content="Доход" Height="50" Width="135" VerticalAlignment="Top" HorizontalAlignment="Left"  Margin="5,0,0,0" BorderThickness="0" FontSize="30" Click="Transaction_Click" Grid.Row="0" Grid.Column="1"/>
                 <ListBox Name ="ExpensesListBox" Height="125" Width="135" VerticalAlignment="Top" HorizontalAlignment="Right"  Margin="0,0,5,0" Grid.Column="2" Grid.Row="2"/>
                 <ListBox Name="IncomesListBox" Height="125" Width="135" VerticalAlignment="Top" HorizontalAlignment="Left"  Margin="5,0,0,0" Grid.Column="1" Grid.Row="2"/>
-                <Button Name="LeftDateButton" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="0" Margin="10,0,0,10" Height="218" Width="30" Click="LeftButton_Click" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3">&lt;&lt;</Button>
-                <Button Name="RightDateButton" VerticalAlignment="Top" HorizontalAlignment="Right" BorderThickness="0" Margin="0,0,10,10"  Height="218" Width="30" Click="RightButton_Click" Grid.Column="3" Grid.Row="0" Grid.RowSpan="3">&gt;&gt;</Button>
+                <Button Name="LeftDateButton" VerticalAlignment="Top" HorizontalAlignment="Left" BorderThickness="0" Margin="10,0,0,10" Height="218" Width="30" Click="ChangeDateButtonClick"  Grid.Column="0" Grid.Row="0" Grid.RowSpan="3">&lt;&lt;</Button>
+                <Button Name="RightDateButton" VerticalAlignment="Top" HorizontalAlignment="Right" BorderThickness="0" Margin="0,0,10,10"  Height="218" Width="30" Click="ChangeDateButtonClick"  Grid.Column="3" Grid.Row="0" Grid.RowSpan="3">&gt;&gt;</Button>
                 <TextBlock Name="SumOfIncomesTextBlock" HorizontalAlignment="Center" Margin="0,10,0,0" Height="26" Style="{StaticResource DefaultTextBlockStyle}" VerticalAlignment="Center" Grid.Column="1" Grid.Row="1"/>
                 <TextBlock Name="SumOfExpensesTextBlock"  HorizontalAlignment="Center" Margin="0,10,0,0" Height="26" Style="{StaticResource DefaultTextBlockStyle}" VerticalAlignment="Center"  Grid.Column="2" Grid.Row="1"/>
             </Grid>

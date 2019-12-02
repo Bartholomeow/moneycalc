@@ -6,12 +6,12 @@ namespace BudgetManager
     public partial class AddCategoryWindow
     {
         private readonly Account _account;
-        private readonly byte _incomeOrExpense;
-        public AddCategoryWindow(byte incomeOrExpense)
+        private readonly int type;
+        public AddCategoryWindow(int type)
         {
             InitializeComponent();
             _account = Account.GetAccount();
-            _incomeOrExpense = incomeOrExpense;
+            this.type = type;
             AddCategoryTextBox.Foreground = Brushes.LightGray;
             AddCategoryTextBox.Text = "Не более 12 букв.";
         }
@@ -23,7 +23,7 @@ namespace BudgetManager
                 MessageBox.Show("Введите название категории.");
                 return;
             }
-            if (_incomeOrExpense == 1)
+            if (type == 1)
                 _account.AddIncomeCategory(AddCategoryTextBox.Text);
             else _account.AddExpenseCategory(AddCategoryTextBox.Text);
             MessageBox.Show($"Добавлена категория {AddCategoryTextBox.Text}");

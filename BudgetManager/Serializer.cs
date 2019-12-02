@@ -16,107 +16,49 @@ namespace BudgetManager
             {
                 using (var sr = new StreamReader(path, Encoding.GetEncoding("windows-1251")))
                 {
-                    int k;
                     account.RegistrationDate = new Date(sr.ReadLine() ?? throw new InvalidOperationException());
-                    account.Balance = Double.Parse(sr.ReadLine() ?? throw new InvalidOperationException());
-                    var n = int.Parse(sr.ReadLine() ?? throw new InvalidOperationException());
-                    for (byte i = 0; i < n; i++)
-                    {
-                        account.ExpenseCategories.Add(new Category(sr.ReadLine()));
-                    }
-
-                    n = int.Parse(sr.ReadLine() ?? throw new InvalidOperationException());
-                    for (byte i = 0; i < n; i++)
+                    account.Balance = double.Parse(sr.ReadLine() ?? throw new InvalidOperationException());
+                    var k = int.Parse(sr.ReadLine() ?? throw new InvalidOperationException());
+                    for (int i = 0; i < k; i++)
                     {
                         account.IncomeCategories.Add(new Category(sr.ReadLine()));
                     }
-
-                    n = int.Parse(sr.ReadLine() ?? throw new InvalidOperationException());
-                    for (byte i = 0; i < n; i++)
+                    k = int.Parse(sr.ReadLine() ?? throw new InvalidOperationException());
+                    for (int i = 0; i < k; i++)
                     {
-                        var date = new Date(sr.ReadLine());
-                        account.ExpensesAtDay.Add(date, new ObservableCollection<(Category, double)>());
-                        k = int.Parse(sr.ReadLine() ?? throw new InvalidOperationException());
-                        for (byte j = 0; j < k; j++)
-                        {
-                            var categoryCost = sr.ReadLine()?.Split(' ');
-                            if (categoryCost == null) continue;
-                            var category = new Category(categoryCost[0]);
-                            var cost = Double.Parse(categoryCost[1]);
-                            account.ExpensesAtDay[date].Add((category, cost));
-                        }
+                        account.ExpenseCategories.Add(new Category(sr.ReadLine()));
                     }
-
-                    n = int.Parse(sr.ReadLine() ?? throw new InvalidOperationException());
-                    for (byte i = 0; i < n; i++)
+                    string data;
+                    while ((data = sr.ReadLine()) != null)
                     {
-                        var date = new Date(sr.ReadLine());
-                        account.IncomesAtDay.Add(date, new ObservableCollection<(Category, double)>());
-                        k = int.Parse(sr.ReadLine() ?? throw new InvalidOperationException());
-                        for (byte j = 0; j < k; j++)
-                        {
-                            var categoryCost = sr.ReadLine()?.Split(' ');
-                            if (categoryCost == null) continue;
-                            var category = new Category(categoryCost[0]);
-                            var cost = Double.Parse(categoryCost[1]);
-                            account.IncomesAtDay[date].Add((category, cost));
-                        }
+                        account.Data.Add(new Transaction(data));
                     }
                 }
             }
-            catch (FileNotFoundException)
-            {
-                Create(path);
-            }
-            catch
-            {
-                var s = "" + DateTime.Now.Hour + DateTime.Now.Minute + DateTime.Now.Second;
-                Move(path, path.Remove(path.Length - 4, 4) + s + ".txt");
-                Create(path);
-            }
+            catch  { Create(path);}
             return account;
         }
-
-        //Метод сохранения данных об аккаунте в файле.
+        //Метод записи данных об аккаунте в файл.
         public static void AccountWriter(string path)
         {
             var account = Account.GetAccount();
-            using (var sw = new StreamWriter(path, false, Encoding.GetEncoding("windows-1251")))
+            using (var sw = new StreamWriter(path))
             {
                 sw.WriteLine(account.RegistrationDate);
-
                 sw.WriteLine(account.Balance);
-                sw.WriteLine(account.ExpenseCategories.Count);
-                foreach (var category in account.ExpenseCategories)
-                {
-                    sw.WriteLine(category);
-                }
-
                 sw.WriteLine(account.IncomeCategories.Count);
                 foreach (var category in account.IncomeCategories)
                 {
                     sw.WriteLine(category);
                 }
-
-                sw.WriteLine(account.ExpensesAtDay.Count);
-                foreach (var tuple in account.ExpensesAtDay)
+                sw.WriteLine(account.ExpenseCategories.Count);
+                foreach (var category in account.ExpenseCategories)
                 {
-                    sw.WriteLine(tuple.Key);
-                    sw.WriteLine(tuple.Value.Count);
-                    foreach (var (category, cost) in tuple.Value)
-                    {
-                        sw.WriteLine(category + " " + cost);
-                    }
+                    sw.WriteLine(category);
                 }
-                sw.WriteLine(account.IncomesAtDay.Count);
-                foreach (var tuple in account.IncomesAtDay)
+                foreach (var transaction in account.Data)
                 {
-                    sw.WriteLine(tuple.Key);
-                    sw.WriteLine(tuple.Value.Count);
-                    foreach (var (category, cost) in tuple.Value)
-                    {
-                        sw.WriteLine(category + " " + cost);
-                    }
+                    sw.WriteLine(transaction.GetFullString());
                 }
             }
         }

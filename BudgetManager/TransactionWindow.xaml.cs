@@ -10,21 +10,21 @@ namespace BudgetManager
 {
     public partial class TransactionWindow
     {
-        private readonly byte _type;
+        private readonly int type;
         private readonly Account _account;
 
-        public TransactionWindow(byte type)
+        public TransactionWindow(int type)
         {
             InitializeComponent();
-            _type = type;
+            this.type = type;
             _account = Account.GetAccount();
             if (CategoryListbox != null)
-                CategoryListbox.ItemsSource = _type == 1 ? _account.IncomeCategories : _account.ExpenseCategories;
+                CategoryListbox.ItemsSource = this.type == 1 ? _account.IncomeCategories : _account.ExpenseCategories;
         }
 
         private void AddCategoryButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var addCategoryWindow = new AddCategoryWindow(_type);
+            var addCategoryWindow = new AddCategoryWindow(type);
             addCategoryWindow.ShowDialog();
         }
 
@@ -59,7 +59,7 @@ namespace BudgetManager
         private void DeleteMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
             var category = (Category)CategoryListbox.SelectedItem;
-            if (_type == 1)
+            if (type == 1)
             {
                 _account.DeleteIncomeCategory(category);
             }
@@ -76,6 +76,11 @@ namespace BudgetManager
                 MessageBox.Show("Введите расход / доход.");
                 return;
             }
+            if (CategoryListbox.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("Выберите категорию.");
+                return;
+            }
             try
             {
                 TransactionTextBox.Text = Calc.Calculate(TransactionTextBox.Text).ToString(CultureInfo.CurrentCulture);
@@ -87,22 +92,8 @@ namespace BudgetManager
                 return;
             }
             var cost = double.Parse(TransactionTextBox.Text);
-            if (CategoryListbox.SelectedItems.Count == 0)
-            {
-                MessageBox.Show("Выберите категорию.");
-                return;
-            }
             var category = (Category)CategoryListbox.SelectedItem;
-            if (_type == 1)
-            {
-                _account.GetIncome((category, cost));
-                MessageBox.Show($"Получено: {cost} \nКатегория: {category}");
-            }
-            else
-            {
-                _account.GetExpense((category, cost));
-                MessageBox.Show($"Потрачено: {cost} \nКатегория: {category}");
-            }
+            _account.GetTransaction(new Transaction(Date.Now, type, category, cost));
             TransactionTextBox.Text = "0";
         }
         private void CReapitButton_Click(object sender, RoutedEventArgs e)

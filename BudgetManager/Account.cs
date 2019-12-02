@@ -9,14 +9,26 @@ namespace BudgetManager
 {
     public class Account : INotifyPropertyChanged
     {
-        //Дата первого захода в приложение
+        //Дата первого захода в приложение.
         public Date RegistrationDate;
+        //Баланс.
+        private double _balance;
+        public double Balance
+        {
+            get => _balance;
+            set
+            {
+                _balance = value;
+                OnPropertyChanged();
+            }
+        }
         //Конструктор, который позволяет создать только один экземпляр класса.
         private static Account _account;
         public static Account GetAccount()
         {
             return _account ?? (_account = new Account());
         }
+        //Удаление данных.
         public static Account DeleteData()
         {
             _account = new Account();
@@ -28,60 +40,37 @@ namespace BudgetManager
             RegistrationDate = Date.Now;
             ExpenseCategories = new ObservableCollection<Category>();
             IncomeCategories = new ObservableCollection<Category>();
-            ExpensesAtDay = new SortedDictionary<Date, ObservableCollection<(Category, double)>>(new DateComparer());
-            IncomesAtDay = new SortedDictionary<Date, ObservableCollection<(Category, double)>>(new DateComparer());
+            Data = new List<Transaction>();
         }
         //Реализация интерфейса INotifyPropertyChanged, позволяющаяя привязывать поле "баланс" к элементам WPF.
         public event PropertyChangedEventHandler PropertyChanged;
+        //Данные о всех транзакциях в виде [Дата, Тип(доход=1/расход=-1), Категория, Стоимость].
+        public List<Transaction> Data { get; set; }
+        //Получение списка транзаций за период.
+        public List<Transaction> GetExpensesAtPeriod(Date date1, Date date2) => (from t in Data where (t.Type == -1 && t.Date <= date2 && t.Date >= date1) select t).ToList();
+        public List<Transaction> GetIncomesAtPeriod(Date date1, Date date2) => (from t in Data where (t.Type == 1 && t.Date <= date2 && t.Date >= date1) select t).ToList();
+        //Получение суммы транзакций за период.
+        public double GetSumOfExpensesAtPeriod(Date date1, Date date2) => (from t in Data where (t.Type == -1 && t.Date <= date2 && t.Date >= date1) select t.Cost).ToList().Sum();
+        public double GetSumOfIncomesAtPeriod(Date date1, Date date2) => (from t in Data where (t.Type == 1 && t.Date <= date2 && t.Date >= date1) select t.Cost).ToList().Sum();
+
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
         
-        private double _balance;
-        public double Balance 
-        {
-            get => _balance;
-            set { _balance = value;
-                OnPropertyChanged();
-            }
-        }
         //Списки категорий расходов и доходов.
         public ObservableCollection<Category> ExpenseCategories { get; set; }
         public ObservableCollection<Category> IncomeCategories { get; set; }
-        //Методы добавления на аккаунт категорий
+        //Методы добавления и удаления категорий.
         public void AddExpenseCategory(string name) => ExpenseCategories.Add(new Category(name));
         public void AddIncomeCategory(string name) => IncomeCategories.Add(new Category(name));
-
         public void DeleteExpenseCategory(Category category) => ExpenseCategories.Remove(category);
         public void DeleteIncomeCategory(Category category) => IncomeCategories.Remove(category);
-        //Словари, хранящие данные о том, сколько и в какой категории в какой день было расходов и доходов
-        public SortedDictionary<Date, ObservableCollection<(Category, double)>> ExpensesAtDay { get; set; }
-        public SortedDictionary<Date, ObservableCollection<(Category, double)>> IncomesAtDay { get; set; }
-        //Методы добавления расходов и доходов на сегодняшнее число
-        public void GetIncome((Category, double) transaction)
+        //Добавление данных о транзакции.
+        public void GetTransaction(Transaction transaction)
         {
-            var date = new Date(DateTime.Now);
-            if(!IncomesAtDay.ContainsKey(date))
-            {
-                IncomesAtDay.Add(date, new ObservableCollection<(Category, double)>());
-            }
-            IncomesAtDay[date].Add(transaction);
-            Balance += transaction.Item2;
+            Data.Add(transaction);
+            Balance += transaction.Cost * transaction.Type;
         }
-
-        public void GetExpense((Category, double) transaction)
-        {
-            var date = new Date(DateTime.Now);
-            if (!ExpensesAtDay.ContainsKey(date))
-            {
-                ExpensesAtDay.Add(date, new ObservableCollection<(Category, double)>());
-            }
-
-            ExpensesAtDay[date].Add(transaction);
-            Balance -= transaction.Item2;
-        }
-        public double GetSumOfExpensesAtDate(Date date) => ExpensesAtDay[date].Sum(category => category.Item2);
-        public double GetSumOfIncomesAtDate(Date date) => IncomesAtDay[date].Sum(category => category.Item2);
     }
 }

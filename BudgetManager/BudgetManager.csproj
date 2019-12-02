@@ -91,6 +91,7 @@
     <Compile Include="SynchronizationWindow.xaml.cs">
       <DependentUpon>SynchronizationWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Transaction.cs" />
     <Compile Include="TransactionWindow.xaml.cs">
       <DependentUpon>TransactionWindow.xaml</DependentUpon>
     </Compile>

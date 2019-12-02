@@ -10,67 +10,85 @@ namespace BudgetManager
     {
         private Account _account;
         //Период за который будуд выводиться данные
-        private string selectDate = "Месяц";
-        public MainWindow()
-        {
-            _account = Serializer.AccountReader("config.txt");
-            InitializeComponent();
-            DataConfiguration();
-        }
-
-        private void Transaction_Click(object sender, RoutedEventArgs e)
-        {
-            var button = (Button)sender;
-            var transactionWindow = button.Name == "IncomeButton" ? new TransactionWindow(1) : new TransactionWindow(0);
-            transactionWindow.ShowDialog();
-            //SumOfIncomesTextBlock.Text = _account.GetSumOfIncomesAtDate(Date.Now).ToString();
-            //SumOfExpensesTextBlock.Text = _account.GetSumOfExpensesAtDate(Date.Now).ToString();
-            TransactionConfiguration(new Date((DateTime)DatePicker.SelectedDate));
-        }
+        private string _selectedTypeOfDate;
+        private Date _startPeriod;
+        private Date _endPeriod;
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Serializer.AccountWriter("config.txt");
         }
-
-        private void DatePicker_OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        public MainWindow()
         {
-            if (DatePicker.SelectedDate == null) return;
-            var date = new Date((DateTime)DatePicker.SelectedDate);
-            if (date < _account.RegistrationDate)
-            {
-                DatePicker.SelectedDate = _account.RegistrationDate;
-                MessageBox.Show("Данные об указанном периоде отсутствуют.");
-                return;
-            }
-            if (date > Date.Now)
-            {
-                DatePicker.SelectedDate = Date.Now;
-                MessageBox.Show("Данные об указанном периоде отсутствуют.");
-                return;
-            }
-            TransactionConfiguration(date);
+            _account = Serializer.AccountReader("config.txt");
+            InitializeComponent();
+            StartWindowConfiguration();
         }
 
-        private void RightButton_Click(object sender, RoutedEventArgs e)
+        private void StartWindowConfiguration()
         {
-            if (DatePicker.SelectedDate == Date.Now)
-            {
-                MessageBox.Show("Данные об указанном периоде отсутствуют.");
-                return;
-            }
-            if (DatePicker.SelectedDate != null)
-                DatePicker.SelectedDate = ((DateTime) DatePicker.SelectedDate).AddDays(1);
+            DataContext = _account;
+            _selectedTypeOfDate = PeriodComboBox.SelectedItem.ToString();
+            _startPeriod = Date.Now;
+            _endPeriod = Date.Now;
+            PeriodConfiguration();
+            DataConfiguration();
         }
-
-        private void LeftButton_Click(object sender, RoutedEventArgs e)
+        private void PeriodConfiguration()
         {
-            if (DatePicker.SelectedDate == _account.RegistrationDate)
+            PeriodTextBlock.Text = _startPeriod + " - " + _endPeriod;
+        }
+        private void DataConfiguration()
+        {
+            IncomesListBox.ItemsSource = _account.GetIncomesAtPeriod(_startPeriod, _endPeriod);
+            ExpensesListBox.ItemsSource = _account.GetExpensesAtPeriod(_startPeriod, _endPeriod);
+            SumOfExpensesTextBlock.Text = _account.GetSumOfExpensesAtPeriod(_startPeriod, _endPeriod).ToString();
+            SumOfIncomesTextBlock.Text = _account.GetSumOfIncomesAtPeriod(_startPeriod, _endPeriod).ToString();
+        }
+        private void Transaction_Click(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            var transactionWindow = button.Name == "IncomeButton" ? new TransactionWindow(1) : new TransactionWindow(-1);
+            transactionWindow.ShowDialog();
+            DataConfiguration();
+        }
+        private void ChangeDateButtonClick(object sender, RoutedEventArgs e)
+        {
+            var button = (Button) sender;
+            var coefficient = 1;
+            var date = Date.Now;
+            if (button.Name == "LeftDateButton")
+            {
+                coefficient = -1;
+                date = _account.RegistrationDate;
+            }
+
+            if (_startPeriod <= date && _endPeriod >= date)
             {
                 MessageBox.Show("Данные об указанном периоде отсутствуют.");
                 return;
             }
-            if (DatePicker.SelectedDate != null)
-                DatePicker.SelectedDate = ((DateTime) DatePicker.SelectedDate).AddDays(-1);
+
+            switch (_selectedTypeOfDate)
+            {
+                case "День":
+                    _startPeriod = new Date(((DateTime)_startPeriod).AddDays(coefficient * 1));
+                    _endPeriod = new Date(((DateTime)_endPeriod).AddDays(coefficient * 1));
+                    break;
+                case "Неделя":
+                    _startPeriod = new Date(((DateTime)_startPeriod).AddDays(coefficient * 7));
+                    _endPeriod = new Date(((DateTime)_endPeriod).AddDays(coefficient * 7));
+                    break;
+                case "Месяц":
+                    _startPeriod = new Date(((DateTime)_startPeriod).AddMonths(coefficient * 1));
+                    _endPeriod = new Date(((DateTime)_endPeriod).AddMonths(coefficient * 1));
+                    break;
+                case "Год":
+                    _startPeriod = new Date(((DateTime)_startPeriod).AddYears(coefficient * 1));
+                    _endPeriod = new Date(((DateTime)_endPeriod).AddYears(coefficient * 1));
+                    break;
+            }
+            DataConfiguration();
+            PeriodConfiguration();
         }
 
         private void SynchMenuItem_OnClick(object sender, RoutedEventArgs e)
@@ -78,8 +96,7 @@ namespace BudgetManager
             var synchronizationWindow = new SynchronizationWindow();
             synchronizationWindow.ShowDialog();
             _account = Account.GetAccount();
-            DataConfiguration();
-            TransactionConfiguration(Date.Now);
+            StartWindowConfiguration();
         }
 
         private void DeleteMenuItem_OnClick(object sender, RoutedEventArgs e)
@@ -87,65 +104,46 @@ namespace BudgetManager
             var messageBoxResult = MessageBox.Show("Вы уверены, что хотите очистить данные?", "Подтверждение", MessageBoxButton.YesNo);
             if (messageBoxResult == MessageBoxResult.Yes)
                 _account = Account.DeleteData();
-            DataConfiguration();
-            TransactionConfiguration(Date.Now);
+            StartWindowConfiguration();
         }
 
-        public void DataConfiguration()
+        private void PeriodComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            DataContext = _account;
-            DatePicker.SelectedDate = Date.Now;
-            DatePicker.DisplayDateEnd = Date.Now;
-            DatePicker.DisplayDateStart = _account.RegistrationDate;
-        }
-
-        public void TransactionConfiguration(Date date)
-        {
-            if (!_account.IncomesAtDay.ContainsKey(date))
+            var comboBox = (ComboBox)sender;
+            var selectedItem = (ComboBoxItem)comboBox.SelectedItem;
+            _selectedTypeOfDate = selectedItem.Content.ToString();
+            var date = DateTime.Now;
+            switch (_selectedTypeOfDate)
             {
-                _account.IncomesAtDay.Add(date, new ObservableCollection<(Category, double)>());
-            }
-            if (!_account.ExpensesAtDay.ContainsKey(date))
-            {
-                _account.ExpensesAtDay.Add(date, new ObservableCollection<(Category, double)>());
-            }
-            // день
-            if (selectDate == "День")
-            {
-                IncomesListBox.ItemsSource = _account.IncomesAtDay[date];
-                ExpensesListBox.ItemsSource = _account.ExpensesAtDay[date];
-                SumOfIncomesTextBlock.Text = _account.GetSumOfIncomesAtDate(date).ToString();
-                SumOfExpensesTextBlock.Text = _account.GetSumOfExpensesAtDate(date).ToString();
-            }  
-            if (selectDate == "Месяц")
-            {
-                ObservableCollection<(Category,double)> IncomesAtMonth = new ObservableCollection<(Category, double)>();
-                ObservableCollection<(Category, double)> ExpensesAtMonth = new ObservableCollection<(Category, double)>();
-                double SumIncomesAtMonth = 0.0;
-                double SumExpensesAtMonth = 0.0;
-                for (int i = 1; i <= System.DateTime.DaysInMonth(date.Year, date.Month); i++)
+                case "День":
+                    _startPeriod = Date.Now;
+                    _endPeriod = Date.Now;
+                    break;
+                case "Неделя":
                 {
-                    if (_account.IncomesAtDay.ContainsKey(new Date(i, date.Month, date.Year)))
-                    {
-                        for(int j = 0; j < _account.IncomesAtDay[new Date(i, date.Month, date.Year)].Count; j++)
-                            IncomesAtMonth.Add(_account.IncomesAtDay[new Date(i, date.Month, date.Year)][j]);
-                        SumIncomesAtMonth += _account.GetSumOfIncomesAtDate(new Date(i, date.Month, date.Year));
-                    }
-                    if (_account.ExpensesAtDay.ContainsKey(new Date(i, date.Month, date.Year)))
-                    {
-
-                        for (int j = 0; j < _account.ExpensesAtDay[new Date(i, date.Month, date.Year)].Count; j++)
-                            ExpensesAtMonth.Add(_account.ExpensesAtDay[new Date(i, date.Month, date.Year)][j]);
-                        SumExpensesAtMonth += _account.GetSumOfExpensesAtDate(new Date(i, date.Month, date.Year));
-                    }
-
+                    var dayOfWeek = (int) date.DayOfWeek;
+                    _startPeriod = new Date(date.AddDays(1 - dayOfWeek));
+                    _endPeriod = new Date(date.AddDays(7 - dayOfWeek));
+                    break;
                 }
-                IncomesListBox.ItemsSource = IncomesAtMonth;
-                ExpensesListBox.ItemsSource = ExpensesAtMonth;
-                SumOfIncomesTextBlock.Text = SumIncomesAtMonth.ToString();
-                SumOfExpensesTextBlock.Text = SumExpensesAtMonth.ToString();
-
+                case "Месяц":
+                {
+                    var month = date.Month;
+                    var year = date.Year;
+                    var daysInMonth = DateTime.DaysInMonth(year, month);
+                    _startPeriod = new Date(1, month, year);
+                    _endPeriod = new Date(daysInMonth, month, year);
+                    break;
+                }
+                case "Год":
+                {
+                    var year = date.Year;
+                    _startPeriod = new Date(1,1,year);
+                    _endPeriod = new Date(31, 12, year);
+                    break;
+                }
             }
+            PeriodConfiguration();
         }
     }
 }

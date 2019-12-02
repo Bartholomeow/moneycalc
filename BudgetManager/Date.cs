@@ -60,11 +60,23 @@ namespace BudgetManager
             var result = dateComparer.Compare(x, y);
             return result == -1;
         }
+        public static bool operator <=(Date x, Date y)
+        {
+            var dateComparer = new DateComparer();
+            var result = dateComparer.Compare(x, y);
+            return result == -1 || result == 0;
+        }
         public static bool operator >(Date x, Date y)
         {
             var dateComparer = new DateComparer();
             var result = dateComparer.Compare(x, y);
             return result == 1;
+        }
+        public static bool operator >=(Date x, Date y)
+        {
+            var dateComparer = new DateComparer();
+            var result = dateComparer.Compare(x, y);
+            return result == 1 || result == 0;
         }
 
         public static implicit operator DateTime(Date date)
