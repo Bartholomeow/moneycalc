@@ -42,7 +42,7 @@ namespace BudgetManager
         public static void AccountWriter(string path)
         {
             var account = Account.GetAccount();
-            using (var sw = new StreamWriter(path))
+            using (var sw = new StreamWriter(path, false, Encoding.GetEncoding("windows-1251")))
             {
                 sw.WriteLine(account.RegistrationDate);
                 sw.WriteLine(account.Balance);
