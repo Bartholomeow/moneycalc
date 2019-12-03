@@ -19,7 +19,7 @@ namespace BudgetManager
     /// </summary>
     public partial class Calendar : Window
     {
-        public Date date;
+        public Date date = Date.Now;
         public Calendar(Date Start, Date End)
         {
             InitializeComponent();
@@ -29,9 +29,8 @@ namespace BudgetManager
 
         private void calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
-            DateTime? selectedDate = calendar.SelectedDate;
-            date = new Date(selectedDate.Value.Date.Day, selectedDate.Value.Date.Month, selectedDate.Value.Date.Year);
-            this.Close();
+            date = new Date((DateTime)calendar.SelectedDate);
+            Close();
         }
     }
 }

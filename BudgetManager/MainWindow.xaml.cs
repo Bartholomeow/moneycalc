@@ -27,10 +27,10 @@ namespace BudgetManager
         private void StartWindowConfiguration()
         {
             DataContext = _account;
-            _selectedTypeOfDate = "День";
-            PeriodComboBox.SelectedIndex = 0;
             _startPeriod = Date.Now;
             _endPeriod = Date.Now;
+            _selectedTypeOfDate = "День";
+            PeriodComboBox.SelectedIndex = 0;
             PeriodConfiguration();
             DataConfiguration();
         }
@@ -155,6 +155,8 @@ namespace BudgetManager
                 {
                         var calendar = new Calendar(_account.RegistrationDate, Date.Now);
                         calendar.ShowDialog();
+                        _selectedTypeOfDate = "День";
+                        PeriodComboBox.SelectedIndex = 0;
                         _startPeriod = calendar.date;
                         _endPeriod = calendar.date;
                         break;

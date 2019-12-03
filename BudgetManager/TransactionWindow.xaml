@@ -23,8 +23,7 @@
             <Button x:Name="AddCategoryButton"  Margin="10,10,10,0" Height="40" Content="Добавить категорию" Click="AddCategoryButton_OnClick" FontWeight="Bold" FontSize="14" FontStretch="Condensed" FontFamily="comic sans ms" BorderThickness="0.5"/>
         </StackPanel>
         <StackPanel Grid.Column="1">
-            <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Margin="5,0,5,0">Введите расход / доход</TextBlock>
-
+            <TextBlock Name="TransactionTextBlock" Style="{StaticResource DefaultTextBlockStyle}" Margin="5,0,5,0"></TextBlock>
             <Grid Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50"></ColumnDefinition>

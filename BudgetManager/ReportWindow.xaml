@@ -18,10 +18,12 @@
             <RowDefinition Height="39*"/>
         </Grid.RowDefinitions>
         <ListBox Name="CategoriesListBox" Grid.RowSpan="3" Grid.Column="0" Margin="10" SelectionMode="Multiple"></ListBox>
-        <DatePicker Name="StartPeriod" SelectedDate="{x:Static sys:DateTime.Now}" Grid.Row="0" HorizontalAlignment="Center" Height="25" Margin="-130,0,0,0" VerticalAlignment="Center" Width="100" Grid.Column="1"/>
-        <DatePicker Name="EndPeriod" SelectedDate="{x:Static sys:DateTime.Now}" Grid.Row="0" HorizontalAlignment="Center" Height="25" Margin="130,0,0,0" VerticalAlignment="Center" Width="100" Grid.Column="1"/>
+        <TextBlock Grid.Row="0" TextWrapping="Wrap" Grid.Column="1" Style="{StaticResource DefaultTextBlockStyle}" VerticalAlignment="Center" Width="80" Margin="10,0,0,0" HorizontalAlignment="Left">Выберите период</TextBlock>
+        <DatePicker Name="StartPeriod" SelectedDate="{x:Static sys:DateTime.Now}" Grid.Row="0" HorizontalAlignment="Left" Height="25" Margin="89,0,0,0" VerticalAlignment="Center" Width="100" Grid.Column="1"/>
+        <DatePicker Name="EndPeriod" SelectedDate="{x:Static sys:DateTime.Now}" Grid.Row="0" HorizontalAlignment="Left" Height="25" Margin="201,0,0,0" VerticalAlignment="Center" Width="100" Grid.Column="1"/>
         <DataGrid Name="DataGrid" Margin="5" Grid.Row="1" Grid.Column="1"></DataGrid>
         <Button Name="ShowButton" Grid.Row="2" Content="Показать" Click="ShowButton_Click" Grid.Column="1" Margin="5"></Button>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="190,12,0,0" Style="{StaticResource DefaultTextBlockStyle}" VerticalAlignment="Top" Width="10" Height="18">&#8212;</TextBlock>
     </Grid>
 </Window>
 
