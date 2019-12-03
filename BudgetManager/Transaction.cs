@@ -8,53 +8,57 @@ namespace BudgetManager
 {
     public class Transaction
     {
-        public Transaction(Date date, TypeOfTransaction type, Category category, double cost)
+        public Transaction(Date дата, TypeOfTransaction тип, Category категория, double стоимость)
         {
-            Date = date;
-            Type = type;
-            Category = category;
-            Cost = cost;
+            Дата = дата;
+            Тип = тип;
+            Категория = категория;
+            Стоимость = стоимость;
         }
 
-        public Transaction(Category category, double cost)
+        public Transaction(Category категория, double стоимость)
         {
-            Category = category;
-            Cost = cost;
+            Категория = категория;
+            Стоимость = стоимость;
         }
+
         public Transaction(string transaction)
         {
             var dataStrings = transaction.Split(' ');
-            Date = new Date(dataStrings[0]);
+            Дата = new Date(dataStrings[0]);
             switch (dataStrings[1])
             {
                 case "Доход":
-                    Type = TypeOfTransaction.Доход;
+                    Тип = TypeOfTransaction.Доход;
                     break;
                 case "Расход":
-                    Type = TypeOfTransaction.Расход;
+                    Тип = TypeOfTransaction.Расход;
                     break;
             }
-            Category = new Category(dataStrings[2]);
-            Cost = double.Parse(dataStrings[3]);
+
+            Категория = new Category(dataStrings[2]);
+            Стоимость = double.Parse(dataStrings[3]);
         }
 
         public override string ToString()
         {
-            return Category + " " + Cost;
+            return Категория + " " + Стоимость;
         }
 
         public string GetFullString()
         {
-            return Date + " " + Type.ToString("g") + " " + Category + " " + Cost;
+            return Дата + " " + Тип.ToString("g") + " " + Категория + " " + Стоимость;
         }
 
-        public Date Date { get; set; }
-        public TypeOfTransaction Type { get; set; }
-        public Category Category { get; set; }
-        public double Cost { get; set; }
-    } 
+        public Date Дата { get; set; }
+        public TypeOfTransaction Тип { get; set; }
+        public Category Категория { get; set; }
+        public double Стоимость { get; set; }
+    }
+
     public enum TypeOfTransaction
     {
-        Доход = 1, Расход = -1
+        Доход = 1,
+        Расход = -1
     }
 }

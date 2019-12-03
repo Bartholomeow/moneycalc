@@ -4,9 +4,24 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BudgetManager"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="Отчёт" Height="300" Width="300" ResizeMode="NoResize">
-    <Grid>
-        
+        Title="Отчёт" Height="300" Width="460" ResizeMode="NoResize">
+    <Grid Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="44*"/>
+            <RowDefinition Height="178*"/>
+            <RowDefinition Height="39*"/>
+        </Grid.RowDefinitions>
+        <ListBox Name="CategoriesListBox" Grid.RowSpan="3" Grid.Column="0" Margin="10" SelectionMode="Multiple"></ListBox>
+        <DatePicker Name="StartPeriod" SelectedDate="{x:Static sys:DateTime.Now}" Grid.Row="0" HorizontalAlignment="Center" Height="25" Margin="-130,0,0,0" VerticalAlignment="Center" Width="100" Grid.Column="1"/>
+        <DatePicker Name="EndPeriod" SelectedDate="{x:Static sys:DateTime.Now}" Grid.Row="0" HorizontalAlignment="Center" Height="25" Margin="130,0,0,0" VerticalAlignment="Center" Width="100" Grid.Column="1"/>
+        <DataGrid Name="DataGrid" Margin="5" Grid.Row="1" Grid.Column="1"></DataGrid>
+        <Button Name="ShowButton" Grid.Row="2" Content="Показать" Click="ShowButton_Click" Grid.Column="1" Margin="5"></Button>
     </Grid>
 </Window>
+

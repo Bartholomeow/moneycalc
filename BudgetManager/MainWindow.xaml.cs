@@ -166,7 +166,8 @@ namespace BudgetManager
 
         private void ReportMenu_OnClick(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            var reportWindow = new ReportWindow();
+            reportWindow.ShowDialog();
         }
     }
 }
