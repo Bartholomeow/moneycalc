@@ -9,7 +9,7 @@ namespace BudgetManager
     public partial class MainWindow
     {
         private Account _account;
-        //Период за который будуд выводиться данные
+        //Период за который будут выводиться данные
         private string _selectedTypeOfDate;
         private Date _startPeriod;
         private Date _endPeriod;
