@@ -22,13 +22,13 @@ namespace BudgetManager
                 OnPropertyChanged();
             }
         }
-        //Конструктор, который позволяет создать только один экземпляр класса.
+        //Конструктор, позволяющий создать не более одного экземпляра класса.
         private static Account _account;
         public static Account GetAccount()
         {
             return _account ?? (_account = new Account());
         }
-        //Удаление данных.
+        //Полное удаление данных.
         public static Account DeleteData()
         {
             _account = new Account();
@@ -42,11 +42,11 @@ namespace BudgetManager
             IncomeCategories = new ObservableCollection<Category>();
             Data = new List<Transaction>();
         }
-        //Реализация интерфейса INotifyPropertyChanged, позволяющаяя привязывать поле "баланс" к элементам WPF.
+        //Реализация интерфейса INotifyPropertyChanged, позволяющая привязывать поле "баланс" к элементам WPF.
         public event PropertyChangedEventHandler PropertyChanged;
         //Данные о всех транзакциях в виде [Дата, Тип(доход=1/расход=-1), Категория, Стоимость].
         public List<Transaction> Data { get; set; }
-        //Получение списка транзаций за период.
+        //Получение списка транзаций за определенный период.
         public List<Transaction> GetExpensesAtPeriod(Date date1, Date date2) =>
             (from category in ExpenseCategories
                 let cost =
@@ -64,11 +64,12 @@ namespace BudgetManager
                 where cost != 0
                 select new Transaction(category, cost)).ToList();
 
-        //Получение суммы транзакций за период.
+        //Вычисление общей суммы расходов за определенный период.
         public double GetSumOfExpensesAtPeriod(Date date1, Date date2) => (from t in Data where (t.Тип == TypeOfTransaction.Расход && t.Дата <= date2 && t.Дата >= date1) select t.Стоимость).ToList().Sum();
+        //Вычисление общей суммы доходов за определенный период.
         public double GetSumOfIncomesAtPeriod(Date date1, Date date2) => (from t in Data where (t.Тип == TypeOfTransaction.Доход && t.Дата <= date2 && t.Дата >= date1) select t.Стоимость).ToList().Sum();
 
-        //Получение транзакций категории за период.
+        //Вычисление транзакций по определенной категории за определенный период.
         public List<Transaction> GetTransactionsOfCategoryAtPeriod(List<Category> category, Date date1, Date date2) =>
             (from t in Data where (t.Дата <= date2 && t.Дата >= date1 && category.Contains(t.Категория)) select t)
             .ToList();

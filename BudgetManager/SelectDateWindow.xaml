@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="SelectDateWindow" Height="450" Width="800">
     <Grid>
-        <Button Content="День" HorizontalAlignment="Left" Margin="0,32,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-        <Button Content="Неделя" HorizontalAlignment="Left" Margin="232,32,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Content="Месяц" HorizontalAlignment="Left" Margin="96,32,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="День" HorizontalAlignment="Left" Margin="0,32,0,0" VerticalAlignment="Top" Width="75" />
+        <Button Content="Неделя" HorizontalAlignment="Left" Margin="97,32,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Content="Месяц" HorizontalAlignment="Left" Margin="194,32,0,0" VerticalAlignment="Top" Width="75"/>
         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Выбрать период" VerticalAlignment="Top" Height="32" Width="782"/>
         <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="Выбрать дату" VerticalAlignment="Top" Margin="0,57,0,0" Height="42" Width="782"/>
         <DatePicker HorizontalAlignment="Left" Margin="0,99,0,0" VerticalAlignment="Top"/>
