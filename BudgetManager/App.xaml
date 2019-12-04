@@ -4,6 +4,14 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Buttons.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Texts.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Windows.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
             <LinearGradientBrush x:Key="ButtonBackground" StartPoint="0,0" EndPoint="1,1">
                 <GradientStop Color="#FFD9EDFF" Offset="0"/>
                 <GradientStop Color="#FFC0DEFF" Offset="0.445"/>
