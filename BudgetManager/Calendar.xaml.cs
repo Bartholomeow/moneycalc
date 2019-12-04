@@ -19,12 +19,14 @@ namespace BudgetManager
     /// </summary>
     public partial class Calendar : Window
     {
+        private readonly Account _account;
         public Date date = Date.Now;
-        public Calendar(Date Start, Date End)
+        public Calendar()
         {
             InitializeComponent();
-            calendar.DisplayDateStart = Start;
-            calendar.DisplayDateEnd = End;
+            _account = Account.GetAccount();;
+            calendar.DisplayDateStart = _account.RegistrationDate;
+            calendar.DisplayDateEnd = Date.Now;
         }
 
         private void calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)

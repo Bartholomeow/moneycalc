@@ -10,24 +10,28 @@ namespace BudgetManager
 {
     public partial class TransactionWindow
     {
-        private readonly TypeOfTransaction type;
+        private readonly TypeOfCategory type;
         private readonly Account _account;
 
-        public TransactionWindow(TypeOfTransaction type)
+        public TransactionWindow(TypeOfCategory type)
         {
             InitializeComponent();
             this.type = type;
             _account = Account.GetAccount();
             TransactionTextBlock.Text = "Введите " + type.ToString("g");
-            DateTextBlock.Text = CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(DateTime.Now.DayOfWeek).ToUpper() + ", " + DateTime.Now.ToShortDateString();
             if (CategoryListbox != null)
-                CategoryListbox.ItemsSource = this.type == TypeOfTransaction.Доход ? _account.IncomeCategories : _account.ExpenseCategories;
+                CategoryConfiguration();
         }
 
+        private void CategoryConfiguration()
+        {
+            CategoryListbox.ItemsSource = _account.GetCategories(type);
+        }
         private void AddCategoryButton_OnClick(object sender, RoutedEventArgs e)
         {
             var addCategoryWindow = new AddCategoryWindow(type);
             addCategoryWindow.ShowDialog();
+            CategoryConfiguration();
         }
 
         private void Calc_Click(object sender, RoutedEventArgs e)
@@ -61,14 +65,8 @@ namespace BudgetManager
         private void DeleteMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
             var category = (Category)CategoryListbox.SelectedItem;
-            if (type == TypeOfTransaction.Доход)
-            {
-                _account.DeleteIncomeCategory(category);
-            }
-            else
-            {
-                _account.DeleteExpenseCategory(category);
-            }
+            _account.DeleteCategory(category);
+            CategoryConfiguration();
         }
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
@@ -95,7 +93,7 @@ namespace BudgetManager
             }
             var cost = double.Parse(TransactionTextBox.Text);
             var category = (Category)CategoryListbox.SelectedItem;
-            _account.GetTransaction(new Transaction(Date.Now, type, category, cost));
+            _account.AddTransaction(new Transaction(Date.Now, category, cost));
             TransactionTextBox.Text = "0";
         }
         private void CReapitButton_Click(object sender, RoutedEventArgs e)

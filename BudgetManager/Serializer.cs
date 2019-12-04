@@ -17,22 +17,18 @@ namespace BudgetManager
                 using (var sr = new StreamReader(path, Encoding.GetEncoding("windows-1251")))
                 {
                     account.RegistrationDate = new Date(sr.ReadLine() ?? throw new InvalidOperationException());
-                    account.Balance = double.Parse(sr.ReadLine() ?? throw new InvalidOperationException());
                     var k = int.Parse(sr.ReadLine() ?? throw new InvalidOperationException());
                     for (int i = 0; i < k; i++)
                     {
-                        account.IncomeCategories.Add(new Category(sr.ReadLine()));
-                    }
-                    k = int.Parse(sr.ReadLine() ?? throw new InvalidOperationException());
-                    for (int i = 0; i < k; i++)
-                    {
-                        account.ExpenseCategories.Add(new Category(sr.ReadLine()));
+                        var category = sr.ReadLine()?.Split(' ');
+                        if (category != null) account.AddCategory(new Category(category[0], category[1]));
                     }
                     string data;
                     while ((data = sr.ReadLine()) != null)
                     {
                         account.Data.Add(new Transaction(data));
                     }
+                    account.Balance = account.GetBalance();
                 }
             }
             catch  { Create(path);}
@@ -45,20 +41,14 @@ namespace BudgetManager
             using (var sw = new StreamWriter(path, false, Encoding.GetEncoding("windows-1251")))
             {
                 sw.WriteLine(account.RegistrationDate);
-                sw.WriteLine(account.Balance);
-                sw.WriteLine(account.IncomeCategories.Count);
-                foreach (var category in account.IncomeCategories)
+                sw.WriteLine(account.Categories.Count);
+                foreach (var category in account.Categories)
                 {
-                    sw.WriteLine(category);
-                }
-                sw.WriteLine(account.ExpenseCategories.Count);
-                foreach (var category in account.ExpenseCategories)
-                {
-                    sw.WriteLine(category);
+                    sw.WriteLine(category.Name + " " + category.TypeOfCategory.ToString("g"));
                 }
                 foreach (var transaction in account.Data)
                 {
-                    sw.WriteLine(transaction.GetFullString());
+                    sw.WriteLine(transaction);
                 }
             }
         }

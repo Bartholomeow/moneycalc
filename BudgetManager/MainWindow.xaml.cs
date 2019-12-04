@@ -3,6 +3,8 @@ using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
+using System.Globalization;
 
 namespace BudgetManager
 {
@@ -10,9 +12,9 @@ namespace BudgetManager
     {
         private Account _account;
         //Период за который будут выводиться данные
-        private string _selectedTypeOfDate;
-        private Date _startPeriod;
-        private Date _endPeriod;
+        private TypeOfDate _selectedTypeOfDate;
+        private Date _startPeriod, _endPeriod;
+
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Serializer.AccountWriter("config.txt");
@@ -29,14 +31,33 @@ namespace BudgetManager
             DataContext = _account;
             _startPeriod = Date.Now;
             _endPeriod = Date.Now;
-            _selectedTypeOfDate = "День";
+            _selectedTypeOfDate = TypeOfDate.День;
             PeriodComboBox.SelectedIndex = 0;
             PeriodConfiguration();
             DataConfiguration();
         }
         private void PeriodConfiguration()
         {
-            PeriodTextBlock.Text = _startPeriod + " - " + _endPeriod;
+            switch (_selectedTypeOfDate)
+            {
+                case TypeOfDate.День:
+                case TypeOfDate.ОпределённыйДень:
+                    PeriodTextBlock.Text =
+                        CultureInfo.CurrentCulture.DateTimeFormat.GetDayName(((DateTime) _startPeriod).DayOfWeek).ToUpper() + ", " +
+                        _startPeriod;
+                    break;
+                case TypeOfDate.Месяц:
+                    PeriodTextBlock.Text =
+                        CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(((DateTime) _startPeriod).Month).ToUpper() + ", " +
+                        _startPeriod.Year;
+                    break;
+                case TypeOfDate.Год:
+                    PeriodTextBlock.Text = _startPeriod.Year.ToString();
+                    break;
+                case TypeOfDate.Неделя:
+                    PeriodTextBlock.Text = _startPeriod + " — " + _endPeriod;
+                    break;
+            }
         }
         private void DataConfiguration()
         {
@@ -44,30 +65,57 @@ namespace BudgetManager
             {
                 return;
             }
-            IncomesListBox.ItemsSource = _account.GetIncomesAtPeriod(_startPeriod, _endPeriod);
-            ExpensesListBox.ItemsSource = _account.GetExpensesAtPeriod(_startPeriod, _endPeriod);
-            SumOfExpensesTextBlock.Text = _account.GetSumOfExpensesAtPeriod(_startPeriod, _endPeriod).ToString();
-            SumOfIncomesTextBlock.Text = _account.GetSumOfIncomesAtPeriod(_startPeriod, _endPeriod).ToString();
+            IncomesListBox.ItemsSource = _account.GetTransactionsAtPeriod(_startPeriod, _endPeriod, TypeOfCategory.Доход);
+            ExpensesListBox.ItemsSource = _account.GetTransactionsAtPeriod(_startPeriod, _endPeriod, TypeOfCategory.Расход);
+            SumOfExpensesTextBlock.Text = _account.GetSumOfTransactionsAtPeriod(_startPeriod, _endPeriod, TypeOfCategory.Расход).ToString();
+            SumOfIncomesTextBlock.Text = _account.GetSumOfTransactionsAtPeriod(_startPeriod, _endPeriod, TypeOfCategory.Доход).ToString();
+        }
+        private static TypeOfDate TypeOfDateConfiguration(string typeOfDate)
+        {
+            switch (typeOfDate)
+            {
+                case "День":
+                    return TypeOfDate.День;
+                case "Неделя":
+                    return TypeOfDate.Неделя;
+                case "Месяц":
+                    return TypeOfDate.Месяц;
+                case "Год":
+                    return TypeOfDate.Год;
+                case "Определённый день":
+                    return TypeOfDate.ОпределённыйДень;
+                default: return TypeOfDate.День;
+            }
+        }
+        private void SetPeriod(Date date1, Date date2)
+        {
+            _startPeriod = date1;
+            _endPeriod = date2;
         }
         private void Transaction_Click(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
-            var transactionWindow = button.Name == "IncomeButton" ? new TransactionWindow(TypeOfTransaction.Доход) : new TransactionWindow(TypeOfTransaction.Расход);
+            var transactionWindow = button.Name == "IncomeButton" ? new TransactionWindow(TypeOfCategory.Доход) : new TransactionWindow(TypeOfCategory.Расход);
             transactionWindow.ShowDialog();
             DataConfiguration();
         }
         private void ChangeDateButtonClick(object sender, RoutedEventArgs e)
         {
-            var button = (Button) sender;
-            var coefficient = 1;
-            var date = Date.Now;
-            if (button.Name == "LeftDateButton")
+            int coefficient = 0;
+            Date date = null;
+            switch (((Button)sender).Name)
             {
-                coefficient = -1;
-                date = _account.RegistrationDate;
+                case "LeftDateButton":
+                    coefficient = -1;
+                    date = _account.RegistrationDate;
+                    break;
+                case "RightDateButton":
+                    coefficient = 1;
+                    date = Date.Now;
+                    break;
             }
 
-            if (_startPeriod <= date && _endPeriod >= date)
+            if (_startPeriod <= date && date <= _endPeriod)
             {
                 MessageBox.Show("Данные об указанном периоде отсутствуют.");
                 return;
@@ -75,25 +123,18 @@ namespace BudgetManager
 
             switch (_selectedTypeOfDate)
             {
-                case "День":
-                    _startPeriod = new Date(((DateTime)_startPeriod).AddDays(coefficient * 1));
-                    _endPeriod = new Date(((DateTime)_endPeriod).AddDays(coefficient * 1));
+                case TypeOfDate.День:
+                case TypeOfDate.ОпределённыйДень:
+                    SetPeriod(new Date(((DateTime)_startPeriod).AddDays(coefficient * 1)), new Date(((DateTime)_endPeriod).AddDays(coefficient * 1)));
                     break;
-                case "Неделя":
-                    _startPeriod = new Date(((DateTime)_startPeriod).AddDays(coefficient * 7));
-                    _endPeriod = new Date(((DateTime)_endPeriod).AddDays(coefficient * 7));
+                case TypeOfDate.Неделя:
+                    SetPeriod(new Date(((DateTime)_startPeriod).AddDays(coefficient * 7)), new Date(((DateTime)_endPeriod).AddDays(coefficient * 7)));
                     break;
-                case "Месяц":
-                    _startPeriod = new Date(((DateTime)_startPeriod).AddMonths(coefficient * 1));
-                    _endPeriod = new Date(((DateTime)_endPeriod).AddMonths(coefficient * 1));
+                case TypeOfDate.Месяц:
+                    SetPeriod(new Date(((DateTime)_startPeriod).AddMonths(coefficient * 1)), new Date(((DateTime)_endPeriod).AddMonths(coefficient * 1)));
                     break;
-                case "Год":
-                    _startPeriod = new Date(((DateTime)_startPeriod).AddYears(coefficient * 1));
-                    _endPeriod = new Date(((DateTime)_endPeriod).AddYears(coefficient * 1));
-                    break;
-                case "Определенный день":
-                    _startPeriod = new Date(((DateTime)_startPeriod).AddDays(coefficient * 1));
-                    _endPeriod = new Date(((DateTime)_endPeriod).AddDays(coefficient * 1));
+                case TypeOfDate.Год:
+                    SetPeriod(new Date(((DateTime)_startPeriod).AddYears(coefficient * 1)), new Date(((DateTime)_endPeriod).AddYears(coefficient * 1)));
                     break;
             }
             DataConfiguration();
@@ -111,31 +152,28 @@ namespace BudgetManager
         private void DeleteMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
             var messageBoxResult = MessageBox.Show("Вы уверены, что хотите очистить данные?", "Подтверждение", MessageBoxButton.YesNo);
-            if (messageBoxResult == MessageBoxResult.Yes)
-                _account = Account.DeleteData();
+            if (messageBoxResult != MessageBoxResult.Yes) return;
+            _account = Account.DeleteData();
             StartWindowConfiguration();
         }
 
         private void PeriodComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var comboBox = (ComboBox)sender;
-            var selectedItem = (ComboBoxItem)comboBox.SelectedItem;
-            _selectedTypeOfDate = selectedItem.Content.ToString();
+            _selectedTypeOfDate = TypeOfDateConfiguration(((ComboBoxItem)((ComboBox)sender).SelectedItem).Content.ToString());
             var date = DateTime.Now;
             switch (_selectedTypeOfDate)
             {
-                case "День":
-                    _startPeriod = Date.Now;
-                    _endPeriod = Date.Now;
+                case TypeOfDate.День:
+                    SetPeriod(new Date(date), new Date(date));
                     break;
-                case "Неделя":
+                case TypeOfDate.Неделя:
                 {
                     var dayOfWeek = (int) date.DayOfWeek;
                     _startPeriod = new Date(date.AddDays(1 - dayOfWeek));
                     _endPeriod = new Date(date.AddDays(7 - dayOfWeek));
                     break;
                 }
-                case "Месяц":
+                case TypeOfDate.Месяц:
                 {
                     var month = date.Month;
                     var year = date.Year;
@@ -144,18 +182,18 @@ namespace BudgetManager
                     _endPeriod = new Date(daysInMonth, month, year);
                     break;
                 }
-                case "Год":
+                case TypeOfDate.Год:
                 {
                     var year = date.Year;
                     _startPeriod = new Date(1,1,year);
                     _endPeriod = new Date(31, 12, year);
                     break;
                 }
-                case "Определенный день":
+                case TypeOfDate.ОпределённыйДень:
                 {
-                        var calendar = new Calendar(_account.RegistrationDate, Date.Now);
+                        var calendar = new Calendar();
                         calendar.ShowDialog();
-                        _selectedTypeOfDate = "День";
+                        _selectedTypeOfDate = TypeOfDate.День;
                         PeriodComboBox.SelectedIndex = 0;
                         _startPeriod = calendar.date;
                         _endPeriod = calendar.date;
@@ -170,7 +208,10 @@ namespace BudgetManager
         {
             var reportWindow = new ReportWindow();
             reportWindow.ShowDialog();
+            DataConfiguration();
         }
     }
+    public enum TypeOfDate
+    { День, Неделя, Месяц, Год, ОпределённыйДень}
 }
 

@@ -6,8 +6,8 @@ namespace BudgetManager
     public partial class AddCategoryWindow
     {
         private readonly Account _account;
-        private readonly TypeOfTransaction type;
-        public AddCategoryWindow(TypeOfTransaction type)
+        private readonly TypeOfCategory type;
+        public AddCategoryWindow(TypeOfCategory type)
         {
             InitializeComponent();
             _account = Account.GetAccount();
@@ -23,9 +23,7 @@ namespace BudgetManager
                 MessageBox.Show("Введите название категории.");
                 return;
             }
-            if (type == TypeOfTransaction.Доход)
-                _account.AddIncomeCategory(AddCategoryTextBox.Text);
-            else _account.AddExpenseCategory(AddCategoryTextBox.Text);
+            _account.AddCategory(new Category(AddCategoryTextBox.Text, type));
             MessageBox.Show($"Добавлена категория {AddCategoryTextBox.Text}");
             Close();
         }

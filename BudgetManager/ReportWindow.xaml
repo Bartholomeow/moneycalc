@@ -6,24 +6,45 @@
         xmlns:local="clr-namespace:BudgetManager"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="Отчёт" Height="300" Width="460" ResizeMode="NoResize">
+        Title="Отчёт" Height="320" Width="450" ResizeMode="NoResize">
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="44*"/>
-            <RowDefinition Height="178*"/>
-            <RowDefinition Height="39*"/>
-        </Grid.RowDefinitions>
-        <ListBox Name="CategoriesListBox" Grid.RowSpan="3" Grid.Column="0" Margin="10" SelectionMode="Multiple"></ListBox>
-        <TextBlock Grid.Row="0" TextWrapping="Wrap" Grid.Column="1" Style="{StaticResource DefaultTextBlockStyle}" VerticalAlignment="Center" Width="80" Margin="10,0,0,0" HorizontalAlignment="Left">Выберите период</TextBlock>
-        <DatePicker Name="StartPeriod" SelectedDate="{x:Static sys:DateTime.Now}" Grid.Row="0" HorizontalAlignment="Left" Height="25" Margin="89,0,0,0" VerticalAlignment="Center" Width="100" Grid.Column="1"/>
-        <DatePicker Name="EndPeriod" SelectedDate="{x:Static sys:DateTime.Now}" Grid.Row="0" HorizontalAlignment="Left" Height="25" Margin="201,0,0,0" VerticalAlignment="Center" Width="100" Grid.Column="1"/>
-        <DataGrid Name="DataGrid" Margin="5" Grid.Row="1" Grid.Column="1"></DataGrid>
-        <Button Name="ShowButton" Grid.Row="2" Content="Показать" Click="ShowButton_Click" Grid.Column="1" Margin="5"></Button>
-        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="190,12,0,0" Style="{StaticResource DefaultTextBlockStyle}" VerticalAlignment="Top" Width="10" Height="18">&#8212;</TextBlock>
+        <StackPanel Margin="5,10,5,10" Grid.Column="0">
+            <TextBlock Style="{StaticResource DefaultTextBlockStyle}" HorizontalAlignment="Center">Категории</TextBlock>
+            <ListBox Name="CategoriesListBox" SelectionMode="Multiple"  MinHeight="20" Margin="5" MaxHeight="190"/>
+            <Button Name="AllCategoriesButton" Margin="5">Выбрать все</Button>
+        </StackPanel>
+        <StackPanel Margin="10" Grid.Column="1">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextBlock Style="{StaticResource DefaultTextBlockStyle}" HorizontalAlignment="Center" TextWrapping="Wrap" Width="76">Выберите период</TextBlock>
+                <DatePicker SelectedDate="{x:Static sys:DateTime.Now}" Name="StartPeriod" Width="90" Height="25"></DatePicker>
+                <TextBlock VerticalAlignment="Center" Margin="5" Style="{StaticResource DefaultTextBlockStyle}">&#8211;</TextBlock>
+                <DatePicker SelectedDate="{x:Static sys:DateTime.Now}" Name="EndPeriod" Width="90" Height="25"></DatePicker>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <TextBlock Style="{StaticResource DefaultTextBlockStyle}">Всё время</TextBlock>
+                <CheckBox Name="DateCheckBox" Margin="5,0,5,0" VerticalAlignment="Center" Checked="DateCheckBox_OnChecked" Unchecked="DateCheckBox_OnUnchecked"></CheckBox>
+            </StackPanel>
+            <ListView Name="TransactionsListView" Margin="0,10,0,10" Height="145">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding Path=Date}" Width="70"></GridViewColumn>
+                        <GridViewColumn Header="Категория" DisplayMemberBinding="{Binding Path=Category}" Width="80"></GridViewColumn>
+                        <GridViewColumn Header="Тип" DisplayMemberBinding="{Binding Path=TypeOfCategory}" Width="50"></GridViewColumn>
+                        <GridViewColumn Header="Стоимость" DisplayMemberBinding="{Binding Path=Cost}"></GridViewColumn>
+                    </GridView>
+                </ListView.View>
+                <ListView.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Name="DeleteMenuItem" Click="DeleteMenuItem_OnClick" Header="Удалить"></MenuItem>
+                    </ContextMenu>
+                </ListView.ContextMenu>
+            </ListView>
+            <Button Name="ShowButton" Click="ShowButton_Click" Height="29">Показать</Button>
+        </StackPanel>
     </Grid>
 </Window>
 

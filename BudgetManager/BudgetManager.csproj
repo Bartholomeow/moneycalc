@@ -90,9 +90,6 @@
     <Compile Include="ReportWindow.xaml.cs">
       <DependentUpon>ReportWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SelectDateWindow.xaml.cs">
-      <DependentUpon>SelectDateWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Serializer.cs" />
     <Compile Include="SynchronizationWindow.xaml.cs">
       <DependentUpon>SynchronizationWindow.xaml</DependentUpon>
@@ -101,6 +98,7 @@
     <Compile Include="TransactionWindow.xaml.cs">
       <DependentUpon>TransactionWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TypeOfCategory.cs" />
     <Page Include="AddCategoryWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -122,10 +120,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ReportWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="SelectDateWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

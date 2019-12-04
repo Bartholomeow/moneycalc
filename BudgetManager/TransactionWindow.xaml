@@ -11,12 +11,11 @@
             <ColumnDefinition Width="200*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
-            <TextBlock Name="DateTextBlock" Style="{StaticResource DefaultTextBlockStyle}" Margin="5" Foreground="Brown"/>
-            <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Margin="5,0,0,0" Text="Категории"/>
+            <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Margin="5" Text="Категории"/>
             <ListBox x:Name="CategoryListbox" Margin="10,7,10,0" MinHeight="50" MaxHeight="150" BorderBrush="DarkSeaGreen">
                 <ListBox.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Удалить" x:Name="DeleteMenuItem" Click="DeleteMenuItem_OnClick"/>
+                        <MenuItem Header="Удалить" Name="DeleteMenuItem" Click="DeleteMenuItem_OnClick"/>
                     </ContextMenu>
                 </ListBox.ContextMenu>
             </ListBox>

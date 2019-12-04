@@ -34,7 +34,7 @@
                 <ComboBoxItem>Неделя</ComboBoxItem>
                 <ComboBoxItem>Месяц</ComboBoxItem>
                 <ComboBoxItem>Год</ComboBoxItem>
-                <ComboBoxItem>Определенный день</ComboBoxItem>
+                <ComboBoxItem>Определённый день</ComboBoxItem>
             </ComboBox>
             <Grid Grid.Row="2">
                 <Grid.RowDefinitions>
