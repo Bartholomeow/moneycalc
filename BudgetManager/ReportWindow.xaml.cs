@@ -85,5 +85,14 @@ namespace BudgetManager
             TransactionsListView.ItemsSource = _account.GetTransactionsOfCategoryAtPeriod(category, date1, date2);
             _account.Balance = _account.GetBalance();
         }
+
+        private void SelectAllCategoriesButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+            if (CategoriesListBox.SelectedItems.Count != _account.Categories.Count)
+                CategoriesListBox.SelectAll();
+            else
+                CategoriesListBox.SelectedItem = null;
+        }
     }
 }

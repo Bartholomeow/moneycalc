@@ -15,7 +15,7 @@
         <StackPanel Margin="5,10,5,10" Grid.Column="0">
             <TextBlock Style="{StaticResource DefaultTextBlockStyle}" HorizontalAlignment="Center">Категории</TextBlock>
             <ListBox Name="CategoriesListBox" SelectionMode="Multiple"  MinHeight="20" Margin="5" MaxHeight="190"/>
-            <Button Name="AllCategoriesButton" Margin="5">Выбрать все</Button>
+            <Button Name="SelectAllCategoriesButton" Click ="SelectAllCategoriesButton_Click" Margin="5">Выбрать все</Button>
         </StackPanel>
         <StackPanel Margin="10" Grid.Column="1">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
