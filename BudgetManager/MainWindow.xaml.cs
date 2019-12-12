@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
+using System.Windows.Input;
 
 namespace BudgetManager
 {
@@ -101,20 +102,20 @@ namespace BudgetManager
         }
         private void ChangeDateButtonClick(object sender, RoutedEventArgs e)
         {
-            int coefficient = 0;
-            Date date = null;
             switch (((Button)sender).Name)
             {
                 case "LeftDateButton":
-                    coefficient = -1;
-                    date = _account.RegistrationDate;
+                    ChangeDate(-1, _account.RegistrationDate);
                     break;
                 case "RightDateButton":
-                    coefficient = 1;
-                    date = Date.Now;
+                    ChangeDate(1, Date.Now);
                     break;
-            }
+            }        
+        }
 
+
+        private void ChangeDate(int coefficient, Date date)
+        {
             if (_startPeriod <= date && date <= _endPeriod)
             {
                 MessageBox.Show("Данные об указанном периоде отсутствуют.");
@@ -140,6 +141,7 @@ namespace BudgetManager
             DataConfiguration();
             PeriodConfiguration();
         }
+
 
         private void SynchMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
@@ -202,6 +204,22 @@ namespace BudgetManager
             }
             DataConfiguration();
             PeriodConfiguration();
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            //MessageBox.Show(e.Key.ToString()); если нужно узнать название клавишы 
+            switch (e.Key.ToString())
+            {
+                case "Left":
+                    ChangeDate(-1, _account.RegistrationDate);
+                    break;
+                case "Right":
+                    ChangeDate(1, Date.Now);
+                    break;
+            }
+
+
         }
 
         private void ReportMenu_OnClick(object sender, RoutedEventArgs e)
