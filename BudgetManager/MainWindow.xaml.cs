@@ -202,10 +202,12 @@ namespace BudgetManager
             }
             DataConfiguration();
             PeriodConfiguration();
+            this.Focus();
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
+            this.Focus();
             //MessageBox.Show(e.Key.ToString()); если нужно узнать название клавишы 
             switch (e.Key.ToString())
             {
@@ -215,6 +217,27 @@ namespace BudgetManager
                 case "Right":
                     ChangeDate(1, Date.Now);
                     break;
+                case "Up":
+                    if (PeriodComboBox.SelectedIndex < 3)
+                    {
+                        PeriodComboBox.SelectedIndex++;
+                    }
+                    else
+                    {
+                        PeriodComboBox.SelectedIndex = 0;
+                    }
+                    break;
+                case "Down":
+                    if (PeriodComboBox.SelectedIndex > 0)
+                    {
+                        PeriodComboBox.SelectedIndex--;
+                    }
+                    else
+                    {
+                        PeriodComboBox.SelectedIndex = 3;
+                    }
+                    break;
+
             }
 
 
