@@ -23,8 +23,12 @@ namespace BudgetManager
                 MessageBox.Show("Введите название категории.");
                 return;
             }
+            int CheckAddCategory = _account.Categories.Count;
             _account.AddCategory(new Category(AddCategoryTextBox.Text, type));
-            MessageBox.Show($"Добавлена категория {AddCategoryTextBox.Text}");
+            if (CheckAddCategory != _account.Categories.Count)
+                MessageBox.Show($"Добавлена категория {AddCategoryTextBox.Text}");
+            else
+                MessageBox.Show($"Категория {AddCategoryTextBox.Text} уже существует ");
             Close();
         }
 

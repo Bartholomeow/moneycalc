@@ -89,7 +89,7 @@ namespace BudgetManager
         //Методы добавления и удаления категорий.
         public void AddCategory(Category category)
         {
-            if (Categories.All(t => t.Name != category.Name && t.TypeOfCategory != category.TypeOfCategory))
+            if (!Categories.Any(t => t.Name == category.Name && t.TypeOfCategory == category.TypeOfCategory))
                 Categories.Add(category);
         }
         public void DeleteCategory(Category category)
