@@ -93,27 +93,6 @@ namespace BudgetManager
             _startPeriod = date1;
             _endPeriod = date2;
         }
-        private void Transaction_Click(object sender, RoutedEventArgs e)
-        {
-            var button = (Button)sender;
-            var transactionWindow = button.Name == "IncomeButton" ? new TransactionWindow(TypeOfCategory.Доход) : new TransactionWindow(TypeOfCategory.Расход);
-            transactionWindow.ShowDialog();
-            DataConfiguration();
-        }
-        private void ChangeDateButtonClick(object sender, RoutedEventArgs e)
-        {
-            switch (((Button)sender).Name)
-            {
-                case "LeftDateButton":
-                    ChangeDate(-1, _account.RegistrationDate);
-                    break;
-                case "RightDateButton":
-                    ChangeDate(1, Date.Now);
-                    break;
-            }        
-        }
-
-
         private void ChangeDate(int coefficient, Date date)
         {
             if (_startPeriod <= date && date <= _endPeriod)
@@ -140,6 +119,25 @@ namespace BudgetManager
             }
             DataConfiguration();
             PeriodConfiguration();
+        }
+        private void Transaction_Click(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            var transactionWindow = button.Name == "IncomeButton" ? new TransactionWindow(TypeOfCategory.Доход) : new TransactionWindow(TypeOfCategory.Расход);
+            transactionWindow.ShowDialog();
+            DataConfiguration();
+        }
+        private void ChangeDateButtonClick(object sender, RoutedEventArgs e)
+        {
+            switch (((Button)sender).Name)
+            {
+                case "LeftDateButton":
+                    ChangeDate(-1, _account.RegistrationDate);
+                    break;
+                case "RightDateButton":
+                    ChangeDate(1, Date.Now);
+                    break;
+            }        
         }
 
 
