@@ -16,3 +16,4 @@
         <Button Name="AddButton" Content="Добавить" IsDefault="True" Grid.Row="2" Height="24" Click="AddButton_Click" Width="56"/>
     </Grid>
 </Window>
+

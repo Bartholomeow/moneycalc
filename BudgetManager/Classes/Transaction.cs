@@ -23,7 +23,6 @@
         {
             return Date + " " +  Category.Name + " " + TypeOfCategory.ToString("g") + " " + Cost;
         }
-
         public Date Date { get;}
         public Category Category { get;}
         public TypeOfCategory TypeOfCategory { get; }

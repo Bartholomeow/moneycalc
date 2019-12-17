@@ -8,7 +8,7 @@ namespace BudgetManager
     public static class Serializer
     {
         //Метод взятия данных об аккаунте из файла.
-        public static void AccountReader(string path)
+        public static Account AccountReader(string path)
         {
             var account = Account.DeleteData();
             try
@@ -31,8 +31,8 @@ namespace BudgetManager
                 }
             }
             catch  { Create(path);}
+            return account;
         }
-
         //Метод записи данных об аккаунте в файл.
         public static void AccountWriter(string path)
         {
@@ -53,3 +53,4 @@ namespace BudgetManager
         }
     }
 }
+

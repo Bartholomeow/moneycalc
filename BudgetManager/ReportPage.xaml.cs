@@ -6,10 +6,10 @@ using System.Windows.Media;
 
 namespace BudgetManager
 {
-    public partial class ReportWindow
+    public partial class ReportPage : UserControl
     {
         private readonly Account _account;
-        public ReportWindow()
+        public ReportPage()
         {
             _account = Account.GetAccount();
             InitializeComponent();
@@ -18,14 +18,13 @@ namespace BudgetManager
                 switch (category.TypeOfCategory)
                 {
                     case TypeOfCategory.Расход:
-                        CategoriesListBox.Items.Add(new ListBoxItem {Content = category, Foreground = Brushes.MediumSeaGreen});
+                        CategoriesListBox.Items.Add(new ListBoxItem { Content = category, Foreground = Brushes.MediumSeaGreen });
                         break;
                     case TypeOfCategory.Доход:
                         CategoriesListBox.Items.Add(new ListBoxItem { Content = category, Foreground = Brushes.Crimson });
                         break;
                 }
             }
-
             StartPeriod.DisplayDateStart = _account.RegistrationDate;
             StartPeriod.DisplayDateEnd = Date.Now;
             EndPeriod.DisplayDateStart = _account.RegistrationDate;
@@ -47,13 +46,13 @@ namespace BudgetManager
                 MessageBox.Show("Выберите хотя бы одну категорию.");
                 return;
             }
-            var category = (from object selectedItem in CategoriesListBox.SelectedItems select (Category) ((ListBoxItem) selectedItem).Content).ToList();
+            var category = (from object selectedItem in CategoriesListBox.SelectedItems select (Category)((ListBoxItem)selectedItem).Content).ToList();
             TransactionsListView.ItemsSource = _account.GetTransactionsOfCategoryAtPeriod(category, date1, date2);
         }
 
         private void DeleteMenuItem_OnClick(object sender, RoutedEventArgs e)
         {
-            var transaction = (Transaction) TransactionsListView.SelectedItem;
+            var transaction = (Transaction)TransactionsListView.SelectedItem;
             _account.DeleteTransaction(transaction);
             if (StartPeriod.SelectedDate != null)
             {
@@ -65,13 +64,11 @@ namespace BudgetManager
                     TransactionsListView.ItemsSource = _account.GetTransactionsOfCategoryAtPeriod(category, date1, date2);
                 }
             }
-
             _account.Balance = _account.GetBalance();
         }
 
         private void SelectAllCategoriesButton_Click(object sender, RoutedEventArgs e)
         {
-            
             if (CategoriesListBox.SelectedItems.Count != _account.Categories.Count)
                 CategoriesListBox.SelectAll();
             else
@@ -82,6 +79,11 @@ namespace BudgetManager
         {
             StartPeriod.SelectedDate = _account.RegistrationDate;
             EndPeriod.SelectedDate = Date.Now;
+        }
+
+        private void MainMenuButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            Switcher.Switch(new MainMenu());
         }
     }
 }

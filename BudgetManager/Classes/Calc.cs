@@ -12,13 +12,13 @@ namespace BudgetManager
             var result = Counting(output);
             return result;
         }
-
         private static string GetExpression(string input)  //  метод получение из строки опз
         {
             var output = string.Empty;
             var operationStack = new Stack<char>();
             for (byte i = 0; i < input.Length; i++) 
             {
+               
                 if (IsDelimeter(input[i]))
                     continue;
                 if (char.IsDigit(input[i]) || input[i] == ',') 
@@ -53,8 +53,11 @@ namespace BudgetManager
                     operationStack.Push(char.Parse(input[i].ToString()));
                 }
             }
+
+           
             while (operationStack.Count > 0)
                 output += operationStack.Pop() + " ";
+
             return output;
         }
 
@@ -94,17 +97,14 @@ namespace BudgetManager
             }
             return temp.Peek(); 
         }
-
         private static bool IsDelimeter(char c)
         {
             return " =".IndexOf(c) != -1;
         }
-
         private static bool IsOperator(char с)
         {
             return "+-*^()".IndexOf(с) != -1;
         }
-
         private static byte GetPriority(char s)
         {
             switch (s)

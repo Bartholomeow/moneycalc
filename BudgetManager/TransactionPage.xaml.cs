@@ -4,15 +4,15 @@ using System.Windows.Controls;
 
 namespace BudgetManager
 {
-    public partial class TransactionWindow
+    public partial class TransactionPage : UserControl
     {
         private readonly TypeOfCategory _type;
         private readonly Account _account;
 
-        public TransactionWindow(TypeOfCategory type)
+        public TransactionPage(TypeOfCategory type)
         {
             InitializeComponent();
-            this._type = type;
+            _type = type;
             _account = Account.GetAccount();
             TransactionTextBlock.Text = "Введите " + type.ToString("g");
             if (CategoryListbox != null)
@@ -92,7 +92,8 @@ namespace BudgetManager
             _account.AddTransaction(new Transaction(Date.Now, category, cost));
             TransactionTextBox.Text = "0";
         }
-        private void CReapitButton_Click(object sender, RoutedEventArgs e)
+
+        private void CRepeatButton_Click(object sender, RoutedEventArgs e)
         {
             if (TransactionTextBox.Text != "")
             {
@@ -106,6 +107,11 @@ namespace BudgetManager
             {
                 TransactionTextBox.Clear();
             }
+        }
+
+        private void MainMenuButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            Switcher.Switch(new MainMenu());
         }
     }
 }

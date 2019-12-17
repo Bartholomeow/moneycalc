@@ -30,14 +30,12 @@ namespace BudgetManager
         {
             return _account ?? (_account = new Account());
         }
-
         //Полное удаление данных.
         public static Account DeleteData()
         {
             _account = new Account();
             return _account;
         }
-
         private Account()
         {
             Balance = 0;
@@ -57,7 +55,6 @@ namespace BudgetManager
         public event PropertyChangedEventHandler PropertyChanged;
         //Данные о всех транзакциях в виде [Date, Тип транзакции, Category, Cost].
         public List<Transaction> Data { get; set; }
-
         //Получение списка транзаций за период.
         public List<string> GetTransactionsAtPeriod(Date date1, Date date2, TypeOfCategory typeOfCategory) =>
             (from category in Categories
@@ -68,7 +65,6 @@ namespace BudgetManager
              where cost != 0
              orderby cost descending
              select category + " " + cost).ToList();
-
         //Получение суммы транзакций за период.
         public double GetSumOfTransactionsAtPeriod(Date date1, Date date2, TypeOfCategory typeOfCategory) => (from t in Data where (t.Category.TypeOfCategory == typeOfCategory && t.Date <= date2 && t.Date >= date1) select t.Cost).ToList().Sum();
 
@@ -81,7 +77,6 @@ namespace BudgetManager
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
         }
-
         //Списки категорий расходов и доходов.
         public ObservableCollection<Category> Categories { get; set; }
 
@@ -89,7 +84,6 @@ namespace BudgetManager
         {
             return (from categories in Categories where categories.TypeOfCategory == typeOfCategory select categories).ToList();
         }
-
         //Методы добавления и удаления категорий.
         public void AddCategory(Category category)
         {
@@ -100,15 +94,13 @@ namespace BudgetManager
         {
             Categories.Remove(category);
         }
-
         //Добавление данных о транзакции.
         public void AddTransaction(Transaction transaction)
         {
-            Balance += transaction.Cost * (int)transaction.TypeOfCategory;
             Data.Add(transaction);
+            Balance += transaction.Cost * (int)transaction.TypeOfCategory;
         }
 
-        //Удаление данных о транзакции
         public void DeleteTransaction(Transaction transaction)
         {
             Data.Remove(transaction);

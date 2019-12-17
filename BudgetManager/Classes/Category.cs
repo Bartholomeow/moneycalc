@@ -12,7 +12,6 @@ namespace BudgetManager
             Name = name;
             TypeOfCategory = typeOfCategory;
         }
-
         public Category(string name, string typeOfCategory)
         {
             Name = name;

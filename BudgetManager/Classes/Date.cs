@@ -26,7 +26,7 @@ namespace BudgetManager
 
         public Date(string date) 
         {
-            var dateString = date.Split('.');
+            string[] dateString = date.Split('.');
             Day = int.Parse(dateString[0]);
             Month = int.Parse(dateString[1]);
             var year = int.Parse(dateString[2]);
@@ -39,19 +39,16 @@ namespace BudgetManager
                 Year = year;
             }
         }
-
         public override bool Equals(object obj)
         {
             var o = (Date)obj;
             return o != null && (Day == o.Day && Month == o.Month && Year == o.Year);
         }
-
         public override int GetHashCode()
         {
             var hash = Day + Month + Year + "";
             return int.Parse(hash);
         }
-
         public override string ToString()
         {
             return Day + "." + Month + "." + Year;
@@ -63,21 +60,18 @@ namespace BudgetManager
             var result = dateComparer.Compare(x, y);
             return result == -1;
         }
-
         public static bool operator <=(Date x, Date y)
         {
             var dateComparer = new DateComparer();
             var result = dateComparer.Compare(x, y);
             return result == -1 || result == 0;
         }
-
         public static bool operator >(Date x, Date y)
         {
             var dateComparer = new DateComparer();
             var result = dateComparer.Compare(x, y);
             return result == 1;
         }
-
         public static bool operator >=(Date x, Date y)
         {
             var dateComparer = new DateComparer();
@@ -90,17 +84,16 @@ namespace BudgetManager
             return new DateTime(date.Year,date.Month,date.Day);
         }
     }
-
     public class DateComparer :IComparer<Date>
     {
         public int Compare(Date x, Date y)
         {
-            if (y != null && (x != null && x.Year > y.Year)) return 1;
-            if (y != null && (x != null && x.Year < y.Year)) return -1;
-            if (y != null && (x != null && x.Month > y.Month)) return 1;
-            if (y != null && (x != null && x.Month < y.Month)) return -1;
-            if (y != null && (x != null && x.Day > y.Day)) return 1;
-            if (y != null && (x != null && x.Day < y.Day)) return -1;
+            if (x != null && x.Year > y.Year) return 1;
+            if (x != null && x.Year < y.Year) return -1;
+            if (x != null && x.Month > y.Month) return 1;
+            if (x != null && x.Month < y.Month) return -1;
+            if (x != null && x.Day > y.Day) return 1;
+            if (x != null && x.Day < y.Day) return -1;
             return 0;
         }
     }
