@@ -63,8 +63,8 @@ namespace BudgetManager
             }
             IncomesListBox.ItemsSource = _account.GetTransactionsAtPeriod(_startPeriod, _endPeriod, TypeOfCategory.Доход);
             ExpensesListBox.ItemsSource = _account.GetTransactionsAtPeriod(_startPeriod, _endPeriod, TypeOfCategory.Расход);
-            SumOfExpensesTextBlock.Text = _account.GetSumOfTransactionsAtPeriod(_startPeriod, _endPeriod, TypeOfCategory.Доход).ToString(CultureInfo.CurrentCulture);
-            SumOfIncomesTextBlock.Text = _account.GetSumOfTransactionsAtPeriod(_startPeriod, _endPeriod, TypeOfCategory.Расход).ToString(CultureInfo.CurrentCulture);
+            SumOfExpensesTextBlock.Text = _account.GetSumOfTransactionsAtPeriod(_startPeriod, _endPeriod, TypeOfCategory.Расход).ToString(CultureInfo.CurrentCulture);
+            SumOfIncomesTextBlock.Text = _account.GetSumOfTransactionsAtPeriod(_startPeriod, _endPeriod, TypeOfCategory.Доход).ToString(CultureInfo.CurrentCulture);
         }
         private static TypeOfDate TypeOfDateConfiguration(string typeOfDate)
         {
