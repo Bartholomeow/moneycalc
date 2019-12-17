@@ -4,10 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Транзакция" Height="315" Width="390" ResizeMode="NoResize">
+        Title="Транзакция" Height="330" Width="450" ResizeMode="NoResize" Background="LightSkyBlue">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="160*"></ColumnDefinition>
+            <ColumnDefinition Width="200*"></ColumnDefinition>
             <ColumnDefinition Width="200*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">

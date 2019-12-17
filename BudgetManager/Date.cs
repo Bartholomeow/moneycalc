@@ -88,12 +88,12 @@ namespace BudgetManager
     {
         public int Compare(Date x, Date y)
         {
-            if (x.Year > y.Year) return 1;
-            if (x.Year < y.Year) return -1;
-            if (x.Month > y.Month) return 1;
-            if (x.Month < y.Month) return -1;
-            if (x.Day > y.Day) return 1;
-            if (x.Day < y.Day) return -1;
+            if (x != null && x.Year > y.Year) return 1;
+            if (x != null && x.Year < y.Year) return -1;
+            if (x != null && x.Month > y.Month) return 1;
+            if (x != null && x.Month < y.Month) return -1;
+            if (x != null && x.Day > y.Day) return 1;
+            if (x != null && x.Day < y.Day) return -1;
             return 0;
         }
     }

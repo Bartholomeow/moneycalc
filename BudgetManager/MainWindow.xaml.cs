@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
 using System.Windows.Input;
 
@@ -68,8 +65,8 @@ namespace BudgetManager
             }
             IncomesListBox.ItemsSource = _account.GetTransactionsAtPeriod(_startPeriod, _endPeriod, TypeOfCategory.Доход);
             ExpensesListBox.ItemsSource = _account.GetTransactionsAtPeriod(_startPeriod, _endPeriod, TypeOfCategory.Расход);
-            SumOfExpensesTextBlock.Text = _account.GetSumOfTransactionsAtPeriod(_startPeriod, _endPeriod, TypeOfCategory.Расход).ToString();
-            SumOfIncomesTextBlock.Text = _account.GetSumOfTransactionsAtPeriod(_startPeriod, _endPeriod, TypeOfCategory.Доход).ToString();
+            SumOfExpensesTextBlock.Text = _account.GetSumOfTransactionsAtPeriod(_startPeriod, _endPeriod, TypeOfCategory.Доход).ToString();
+            SumOfIncomesTextBlock.Text = _account.GetSumOfTransactionsAtPeriod(_startPeriod, _endPeriod, TypeOfCategory.Расход).ToString();
         }
         private static TypeOfDate TypeOfDateConfiguration(string typeOfDate)
         {
@@ -195,8 +192,8 @@ namespace BudgetManager
                         calendar.ShowDialog();
                         _selectedTypeOfDate = TypeOfDate.День;
                         PeriodComboBox.SelectedIndex = 0;
-                        _startPeriod = calendar.date;
-                        _endPeriod = calendar.date;
+                        _startPeriod = calendar.Date;
+                        _endPeriod = calendar.Date;
                         break;
                 }
             }

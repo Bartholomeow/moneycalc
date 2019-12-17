@@ -6,12 +6,12 @@ namespace BudgetManager
     public partial class AddCategoryWindow
     {
         private readonly Account _account;
-        private readonly TypeOfCategory type;
+        private readonly TypeOfCategory _type;
         public AddCategoryWindow(TypeOfCategory type)
         {
             InitializeComponent();
             _account = Account.GetAccount();
-            this.type = type;
+            _type = type;
             AddCategoryTextBox.Foreground = Brushes.LightGray;
             AddCategoryTextBox.Text = "Не более 12 букв.";
         }
@@ -23,12 +23,11 @@ namespace BudgetManager
                 MessageBox.Show("Введите название категории.");
                 return;
             }
-            int CheckAddCategory = _account.Categories.Count;
-            _account.AddCategory(new Category(AddCategoryTextBox.Text, type));
-            if (CheckAddCategory != _account.Categories.Count)
-                MessageBox.Show($"Добавлена категория {AddCategoryTextBox.Text}");
-            else
-                MessageBox.Show($"Категория {AddCategoryTextBox.Text} уже существует ");
+            var checkAddCategory = _account.Categories.Count;
+            _account.AddCategory(new Category(AddCategoryTextBox.Text, _type));
+            MessageBox.Show(checkAddCategory != _account.Categories.Count
+                ? $"Добавлена категория {AddCategoryTextBox.Text}"
+                : $"Категория {AddCategoryTextBox.Text} уже существует ");
             Close();
         }
 

@@ -1,22 +1,18 @@
 ﻿using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
-using System.Text.RegularExpressions;
-using System;
-using System.Diagnostics;
-using System.Windows.Input;
 
 namespace BudgetManager
 {
     public partial class TransactionWindow
     {
-        private readonly TypeOfCategory type;
+        private readonly TypeOfCategory _type;
         private readonly Account _account;
 
         public TransactionWindow(TypeOfCategory type)
         {
             InitializeComponent();
-            this.type = type;
+            this._type = type;
             _account = Account.GetAccount();
             TransactionTextBlock.Text = "Введите " + type.ToString("g");
             if (CategoryListbox != null)
@@ -25,11 +21,11 @@ namespace BudgetManager
 
         private void CategoryConfiguration()
         {
-            CategoryListbox.ItemsSource = _account.GetCategories(type);
+            CategoryListbox.ItemsSource = _account.GetCategories(_type);
         }
         private void AddCategoryButton_OnClick(object sender, RoutedEventArgs e)
         {
-            var addCategoryWindow = new AddCategoryWindow(type);
+            var addCategoryWindow = new AddCategoryWindow(_type);
             addCategoryWindow.ShowDialog();
             CategoryConfiguration();
         }
