@@ -42,15 +42,7 @@ namespace BudgetManager
         {
             Balance = 0;
             RegistrationDate = Date.Now;
-            Categories = new ObservableCollection<Category>()
-            {
-                new Category("Еда", TypeOfCategory.Расход), new Category("Жилье", TypeOfCategory.Расход), new Category("Здоровье", TypeOfCategory.Расход),
-                new Category("Кафе", TypeOfCategory.Расход), new Category("Транспорт", TypeOfCategory.Расход), new Category("Машина", TypeOfCategory.Расход),
-                new Category("Одежда", TypeOfCategory.Расход), new Category("Развлечения", TypeOfCategory.Расход),new Category("Связь", TypeOfCategory.Расход),
-                new Category("Такси", TypeOfCategory.Расход),new Category("Счета", TypeOfCategory.Расход),new Category("Спорт", TypeOfCategory.Расход),
-                new Category("Зарплата", TypeOfCategory.Доход), new Category("Сбережения", TypeOfCategory.Доход), new Category("Подарок", TypeOfCategory.Доход),
-                new Category("Депозиты", TypeOfCategory.Доход)
-            };
+            Categories = new ObservableCollection<Category>();
             Data = new List<Transaction>();
         }
         //Реализация интерфейса INotifyPropertyChanged, позволяющая привязывать поле "баланс" к элементам WPF.
@@ -60,14 +52,9 @@ namespace BudgetManager
 
         //Получение списка транзаций за период.
         public List<string> GetTransactionsAtPeriod(Date date1, Date date2, TypeOfCategory typeOfCategory) =>
-            (from category in Categories
-                let cost =
-                 (from t in Data
-                  where (t.Category.TypeOfCategory == typeOfCategory && t.Date <= date2 && t.Date >= date1 && Equals(t.Category, category))
-                  select t.Cost).ToList().Sum()
-             where cost != 0
-             orderby cost descending
-             select category + " " + cost).ToList();
+            Data
+                .Where(t => t.Category.TypeOfCategory == typeOfCategory && t.Date <= date2 && t.Date >= date1)
+                .GroupBy(t => t.Category).Select(t => t.Key + " " + t.Sum(x => x.Cost)).ToList();
 
         //Получение суммы транзакций за период.
         public double GetSumOfTransactionsAtPeriod(Date date1, Date date2, TypeOfCategory typeOfCategory) => (from t in Data where (t.Category.TypeOfCategory == typeOfCategory && t.Date <= date2 && t.Date >= date1) select t.Cost).ToList().Sum();

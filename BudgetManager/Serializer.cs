@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Text;
 using static System.IO.File;
 
@@ -22,15 +25,38 @@ namespace BudgetManager
                         var category = sr.ReadLine()?.Split(' ');
                         if (category != null) account.AddCategory(new Category(category[0], category[1]));
                     }
+
                     string data;
                     while ((data = sr.ReadLine()) != null)
                     {
                         account.Data.Add(new Transaction(data));
                     }
+
                     account.Balance = account.GetBalance();
                 }
             }
-            catch  { Create(path);}
+            catch
+            {
+                var categories = new List<Category>()
+                {
+                    new Category("Еда", TypeOfCategory.Расход), new Category("Жилье", TypeOfCategory.Расход),
+                    new Category("Здоровье", TypeOfCategory.Расход),
+                    new Category("Кафе", TypeOfCategory.Расход), new Category("Транспорт", TypeOfCategory.Расход),
+                    new Category("Машина", TypeOfCategory.Расход),
+                    new Category("Одежда", TypeOfCategory.Расход), new Category("Развлечения", TypeOfCategory.Расход),
+                    new Category("Связь", TypeOfCategory.Расход),
+                    new Category("Такси", TypeOfCategory.Расход), new Category("Счета", TypeOfCategory.Расход),
+                    new Category("Спорт", TypeOfCategory.Расход),
+                    new Category("Зарплата", TypeOfCategory.Доход), new Category("Сбережения", TypeOfCategory.Доход),
+                    new Category("Подарок", TypeOfCategory.Доход),
+                    new Category("Депозиты", TypeOfCategory.Доход)
+                };
+                foreach (var category in categories)
+                {
+                    account.AddCategory(category);
+                }
+                Create(path);
+            }
         }
 
         //Метод записи данных об аккаунте в файл.
