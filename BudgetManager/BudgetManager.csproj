@@ -87,6 +87,7 @@
     </Compile>
     <Compile Include="Category.cs" />
     <Compile Include="Date.cs" />
+    <Compile Include="IncorrectDataException.cs" />
     <Compile Include="MainMenu.xaml.cs">
       <DependentUpon>MainMenu.xaml</DependentUpon>
     </Compile>
