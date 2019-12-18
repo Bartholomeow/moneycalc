@@ -86,6 +86,7 @@
       <DependentUpon>Calendar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Category.cs" />
+    <Compile Include="Currency.cs" />
     <Compile Include="Date.cs" />
     <Compile Include="IncorrectDataException.cs" />
     <Compile Include="MainMenu.xaml.cs">
