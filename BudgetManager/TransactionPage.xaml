@@ -4,26 +4,26 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d" 
-             d:DesignHeight="330" d:DesignWidth="450">
+             d:DesignHeight="330" d:DesignWidth="460">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200*"></ColumnDefinition>
             <ColumnDefinition Width="200*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0">
-            <TextBlock Style="{StaticResource DefaultTextBlockStyle}" Margin="5" Text="Категории"/>
-            <ListBox x:Name="CategoryListbox" Margin="10,7,10,0" MinHeight="50" MaxHeight="150" BorderBrush="DarkSeaGreen">
+        <StackPanel Grid.Column="0" Margin="7,0,0,0">
+            <TextBlock FontSize="16" HorizontalAlignment="Center" Margin="0,0,0,7" Text="Категории"/>
+            <ListBox x:Name="CategoryListbox" Margin="10,0,10,0" BorderBrush="DarkSeaGreen" Height="165" MaxHeight="165">
                 <ListBox.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Удалить" Name="DeleteMenuItem" Click="DeleteMenuItem_OnClick"/>
                     </ContextMenu>
                 </ListBox.ContextMenu>
             </ListBox>
-            <Button x:Name="AddCategoryButton"  Margin="10,10,10,0" Height="40" Content="Добавить категорию" Click="AddCategoryButton_OnClick" FontWeight="Bold" FontSize="14" FontStretch="Condensed" BorderThickness="0.5"/>
-            <Button Name="MainMenuButton" Margin="10" Height="30" Click="MainMenuButton_OnClick">Назад</Button>
+            <Button x:Name="AddCategoryButton"  Margin="10,10,10,0" Height="30" Content="Добавить категорию" Click="AddCategoryButton_OnClick" Style="{StaticResource WhiteButtonStyle}"/>
+            <Button Name="MainMenuButton" Margin="10" Height="30" Style="{StaticResource WhiteButtonStyle}" Click="MainMenuButton_OnClick">Назад</Button>
         </StackPanel>
         <StackPanel Grid.Column="1">
-            <TextBlock Name="TransactionTextBlock" Style="{StaticResource DefaultTextBlockStyle}" Margin="5,0,5,0"></TextBlock>
+            <TextBlock Name="TransactionTextBlock" FontSize="16" HorizontalAlignment="Center" Margin="5,0,5,0"></TextBlock>
             <Grid Margin="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50"></ColumnDefinition>
@@ -38,7 +38,7 @@
                     <RowDefinition Height="50"></RowDefinition>
                     <RowDefinition Height="50"></RowDefinition>
                 </Grid.RowDefinitions>
-                <TextBox  Name="TransactionTextBox" GotFocus="TransactionTextBox_GotFocus" Text="0" FontSize="32" TextAlignment="Right" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" Margin="0,2,2,2"></TextBox>
+                <TextBox  Name="TransactionTextBox" GotFocus="TransactionTextBox_GotFocus" Text="0" FontSize="32" TextAlignment="Right" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" Margin="2"></TextBox>
                 <Button Grid.Row="1" Grid.Column="0" Click="Calc_Click" Content="7" Style="{StaticResource DefaultButtonStyle}"/>
                 <Button Grid.Row="1" Grid.Column="1" Click="Calc_Click" Content="8" Style="{StaticResource DefaultButtonStyle}"/>
                 <Button Grid.Row="1" Grid.Column="2" Click="Calc_Click" Content="9" Style="{StaticResource DefaultButtonStyle}"/>

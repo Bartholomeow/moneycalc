@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Календарь" Height="210" Width="210" ResizeMode="NoResize" Background="LightSkyBlue">
+        Title="Календарь" Height="220" Width="210" ResizeMode="NoResize" Background="White" FontFamily="century gothic">
     <Grid Margin="5">
         <Calendar Name="calendar" HorizontalAlignment="Center" VerticalAlignment="Center" SelectedDatesChanged ="calendar_SelectedDatesChanged"/>
     </Grid>

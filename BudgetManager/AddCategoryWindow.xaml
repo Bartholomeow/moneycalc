@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Добавить" Height="110" Width="180" ResizeMode="NoResize" Background="LightSkyBlue">
+        Title="Добавить" Height="110" Width="195" ResizeMode="NoResize" Background="White" FontFamily="century gothic">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -13,6 +13,6 @@
         </Grid.RowDefinitions>
         <TextBlock Text="Введите название категории" HorizontalAlignment="Center"/>
         <TextBox Name="AddCategoryTextBox" MaxLength="12" Grid.Row="1" Height="20" Width="140" GotFocus="AddCategoryTextBox_OnGotFocus"/>
-        <Button Name="AddButton" Content="Добавить" IsDefault="True" Grid.Row="2" Height="24" Click="AddButton_Click" Width="56"/>
+        <Button Name="AddButton" Content="Добавить" IsDefault="True" Grid.Row="2" HorizontalAlignment="Center" Style="{StaticResource WhiteButtonStyle}" BorderBrush="Black" Height="24" Click="AddButton_Click"/>
     </Grid>
 </Window>

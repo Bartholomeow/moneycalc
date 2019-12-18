@@ -47,5 +47,13 @@
 
         public override string ToString() =>
             $"{Rubles} руб. {Pennies} коп.";
+        public static implicit operator Currency(double x)
+        {
+            return new Currency(x);
+        }
+        public static implicit operator Currency(int x)
+        {
+            return new Currency(x);
+        }
     }
 }

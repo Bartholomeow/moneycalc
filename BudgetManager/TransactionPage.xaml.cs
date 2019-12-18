@@ -14,7 +14,7 @@ namespace BudgetManager
             InitializeComponent();
             _type = type;
             _account = Account.GetAccount();
-            TransactionTextBlock.Text = "Введите " + type.ToString("g");
+            TransactionTextBlock.Text = "Введите " + type.ToString("g").ToLower();
             if (CategoryListbox != null)
                 CategoryConfiguration();
         }

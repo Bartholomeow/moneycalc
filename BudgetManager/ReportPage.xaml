@@ -5,34 +5,34 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
-             d:DesignHeight="330" d:DesignWidth="450">
+             d:DesignHeight="330" d:DesignWidth="460">
     <Grid Margin="5">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2.3*"/>
+            <ColumnDefinition Width="1.9*"/>
             <ColumnDefinition Width="5*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Margin="5" Grid.Column="0">
+        <StackPanel Margin="1" Grid.Column="0">
             <TextBlock FontSize="16" HorizontalAlignment="Center">Категории</TextBlock>
-            <ListBox Name="CategoriesListBox" SelectionMode="Multiple" Margin="5" Height="180" MaxHeight="180"/>
+            <ListBox Name="CategoriesListBox" SelectionMode="Multiple" Margin="5" Height="176" MaxHeight="176"/>
             <Button x:Name="SelectAllCategoriesButton" FontSize="16" Background="White" BorderThickness="1" Click ="SelectAllCategoriesButton_Click" Margin="5" Content="Выбрать все"/>
-            <Button Name="MainMenuButton" Margin="5,5,5,20" Click="MainMenuButton_OnClick" FontSize="16" Background="White" BorderThickness="1" VerticalAlignment="Bottom" Height="30">Назад</Button>
+            <Button x:Name="MainMenuButton" Margin="5,5,5,5" Click="MainMenuButton_OnClick" FontSize="16" Background="White" BorderThickness="1" VerticalAlignment="Bottom" Height="30" Content="Назад"/>
         </StackPanel>
-        <StackPanel Margin="10" Grid.Column="1">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <TextBlock FontSize="16" HorizontalAlignment="Center" TextWrapping="Wrap" Width="75"><Run Text="Выберите период"/></TextBlock>
+        <StackPanel Margin="5" Grid.Column="1">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <TextBlock FontSize="16" HorizontalAlignment="Left"><Run Text="Выберите период"/></TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                 <DatePicker SelectedDate="{x:Static sys:DateTime.Now}" x:Name="StartPeriod" Width="95" Height="24"/>
                 <TextBlock VerticalAlignment="Center" Margin="5" Style="{StaticResource DefaultTextBlockStyle}"><Run Text="–"/></TextBlock>
                 <DatePicker SelectedDate="{x:Static sys:DateTime.Now}" x:Name="EndPeriod" Width="94" Height="24"/>
+                <Button Name="AllTimeButton" Click="AllTimeButton_OnClick_" Height="20" Style="{StaticResource WhiteButtonStyle}" FontSize="12" Margin="5,0,5,0">Всё время</Button>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Name="AllTimeButton" Click="AllTimeButton_OnClick_" Margin="0,0,5,0">Всё время</Button>
-            </StackPanel>
-            <ListView Name="TransactionsListView" Margin="0,10,0,10" Height="145">
+            <ListView Name="TransactionsListView" Margin="0,10,0,10" Height="172">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding Path=Date}" Width="70"></GridViewColumn>
+                        <GridViewColumn Header="Дата" DisplayMemberBinding="{Binding Path=Date}" Width="73"></GridViewColumn>
                         <GridViewColumn Header="Категория" DisplayMemberBinding="{Binding Path=Category}" Width="80"></GridViewColumn>
-                        <GridViewColumn Header="Тип" DisplayMemberBinding="{Binding Path=TypeOfCategory}" Width="50"></GridViewColumn>
+                        <GridViewColumn Header="Тип" DisplayMemberBinding="{Binding Path=TypeOfCategory}" Width="57"></GridViewColumn>
                         <GridViewColumn Header="Стоимость" DisplayMemberBinding="{Binding Path=Cost}"></GridViewColumn>
                     </GridView>
                 </ListView.View>
@@ -42,7 +42,7 @@
                     </ContextMenu>
                 </ListView.ContextMenu>
             </ListView>
-            <Button Name="ShowButton" Background="White" BorderThickness="1" FontSize="16" Click="ShowButton_Click" Height="29">Показать</Button>
+            <Button x:Name="ShowButton" Background="White" BorderThickness="1" FontSize="16" Click="ShowButton_Click" Height="30" Content="Показать"/>
         </StackPanel>
     </Grid>
 </UserControl>

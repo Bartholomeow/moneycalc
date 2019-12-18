@@ -11,8 +11,8 @@ namespace BudgetManager
         //Date первого захода в приложение.
         public Date RegistrationDate;
         //Баланс.
-        private double _balance;
-        public double Balance
+        private Currency _balance;
+        public Currency Balance
         {
             get => _balance;
             set
@@ -22,7 +22,7 @@ namespace BudgetManager
             }
         }
 
-        public double GetBalance() => (from t in Data select t.Cost * (int)t.Category.TypeOfCategory).Sum();
+        public Currency GetBalance() => (from t in Data select t.Cost * (int)t.Category.TypeOfCategory).Sum();
 
         //Конструктор, который позволяет создать только один экземпляр класса.
         private static Account _account;
