@@ -80,11 +80,11 @@ namespace BudgetManager
 
                 TransactionTextBox.Text = Calc.Calculate(TransactionTextBox.Text).ToString(CultureInfo.CurrentCulture);
 
-                if (int.Parse(TransactionTextBox.Text) < 0)
+                if (double.Parse(TransactionTextBox.Text) < 0)
                 {
                     throw new IncorrectDataException("Ввведенные данные меньше 0");
                 }
-                if (int.Parse(TransactionTextBox.Text) == 0)
+                if (double.Parse(TransactionTextBox.Text) == 0)
                 {
                     throw new IncorrectDataException("Введенные данные равны 0");
                 }           
