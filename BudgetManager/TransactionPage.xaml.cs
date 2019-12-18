@@ -53,7 +53,7 @@ namespace BudgetManager
                     }
                     break;
                 default:
-                    TransactionTextBox.Text = TransactionTextBox.Text.TrimStart('0') + value;
+                    TransactionTextBox.Text = TransactionTextBox.Text + value;
                     break;
             }
         }
