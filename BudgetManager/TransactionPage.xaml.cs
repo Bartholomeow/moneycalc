@@ -67,24 +67,42 @@ namespace BudgetManager
 
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            if (TransactionTextBox.Text == "" || TransactionTextBox.Text == "0")
-            {
-                MessageBox.Show("Введите расход / доход.");
-                return;
-            }
-            if (CategoryListbox.SelectedItems.Count == 0)
-            {
-                MessageBox.Show("Выберите категорию.");
-                return;
-            }
             try
             {
+                if (CategoryListbox.SelectedItems.Count == 0)
+                {
+                    throw new IncorrectDataException("Не выбрана ни одна категория.");
+                }
+                if (TransactionTextBox.Text == "")
+                {
+                    throw new IncorrectDataException("Данные не были введены");
+                }
+
                 TransactionTextBox.Text = Calc.Calculate(TransactionTextBox.Text).ToString(CultureInfo.CurrentCulture);
+
+                if (int.Parse(TransactionTextBox.Text) < 0)
+                {
+                    throw new IncorrectDataException("Ввведенные данные меньше 0");
+                }
+                if (int.Parse(TransactionTextBox.Text) == 0)
+                {
+                    throw new IncorrectDataException("Введенные данные равны 0");
+                }           
+                
+            }
+            catch (IncorrectDataException ex)
+            {
+                if (ex.Message != "Не выбрана ни одна категория.")
+                {
+                    TransactionTextBox.Text = "Error";
+                }
+                MessageBox.Show(ex.Message, "Ошибка!");
+                return;
             }
             catch
             {
                 TransactionTextBox.Text = "Error";
-                MessageBox.Show("Введите корректные данные в поле.");
+                MessageBox.Show("Введены некорректные данные.", "Ошибка!");
                 return;
             }
             var cost = double.Parse(TransactionTextBox.Text);
