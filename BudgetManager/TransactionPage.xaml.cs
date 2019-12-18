@@ -53,6 +53,11 @@ namespace BudgetManager
                     }
                     break;
                 default:
+                    if (TransactionTextBox.Text=="0" && value !=",")
+                    {
+                        TransactionTextBox.Clear();
+                    }
+
                     TransactionTextBox.Text = TransactionTextBox.Text + value;
                     break;
             }
