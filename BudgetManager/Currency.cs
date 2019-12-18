@@ -26,12 +26,12 @@
 
         public static Currency operator +(Currency a, Currency b)
         {
-            var money = new Currency(a.Rubles + b.Rubles, a.Pennies + b.Pennies);
+            var money = new Currency((double)a + (double)b);
             return money;
         }
         public static Currency operator -(Currency a, Currency b)
         {
-            var money = new Currency(a.Rubles - b.Rubles, a.Pennies - b.Pennies);
+            var money = new Currency((double)a - (double)b);
             return money;
         }
         public static Currency operator +(Currency a, double b)
@@ -54,6 +54,10 @@
         public static implicit operator Currency(int x)
         {
             return new Currency(x);
+        }
+        public static explicit operator double(Currency currency)
+        {
+            return currency.Rubles + currency.Pennies / 100.0;
         }
     }
 }
