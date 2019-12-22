@@ -126,7 +126,7 @@ namespace BudgetManager
 
         private void TransactionTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (TransactionTextBox.Text == "Error")
+            if (TransactionTextBox.Text == "Error" || TransactionTextBox.Text == "0")
             {
                 TransactionTextBox.Clear();
             }
