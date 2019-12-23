@@ -18,10 +18,10 @@ namespace BudgetManager
                 switch (category.TypeOfCategory)
                 {
                     case TypeOfCategory.Расход:
-                        CategoriesListBox.Items.Add(new ListBoxItem { Content = category, Foreground = Brushes.MediumSeaGreen });
+                        CategoriesListBox.Items.Add(new ListBoxItem { Content = category, Foreground = Brushes.Crimson });
                         break;
                     case TypeOfCategory.Доход:
-                        CategoriesListBox.Items.Add(new ListBoxItem { Content = category, Foreground = Brushes.Crimson });
+                        CategoriesListBox.Items.Add(new ListBoxItem { Content = category, Foreground = Brushes.LightSeaGreen });
                         break;
                 }
             }
