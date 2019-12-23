@@ -10,7 +10,7 @@ namespace BudgetManager
         {
             var output = GetExpression(input);
             var result = Counting(output);
-            return result;
+            return Math.Round(result, 2);
         }
 
         private static string GetExpression(string input)  //  метод получение из строки опз

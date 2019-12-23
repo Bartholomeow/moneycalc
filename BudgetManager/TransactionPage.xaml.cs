@@ -53,7 +53,12 @@ namespace BudgetManager
                     }
                     break;
                 default:
-                    TransactionTextBox.Text = TransactionTextBox.Text.TrimStart('0') + value;
+                    if (TransactionTextBox.Text=="0" && value !=",")
+                    {
+                        TransactionTextBox.Clear();
+                    }
+
+                    TransactionTextBox.Text = TransactionTextBox.Text + value;
                     break;
             }
         }
@@ -75,18 +80,22 @@ namespace BudgetManager
                 }
                 if (TransactionTextBox.Text == "")
                 {
-                    throw new IncorrectDataException("Данные не были введены");
+                    throw new IncorrectDataException("Данные не были введены.");
+                }
+                if (double.Parse(TransactionTextBox.Text) > 1000000)
+                {
+                    throw new IncorrectDataException("Введены слишком большие данные.");
                 }
 
                 TransactionTextBox.Text = Calc.Calculate(TransactionTextBox.Text).ToString(CultureInfo.CurrentCulture);
 
                 if (double.Parse(TransactionTextBox.Text) < 0)
                 {
-                    throw new IncorrectDataException("Ввведенные данные меньше 0");
+                    throw new IncorrectDataException("Ввведенные данные меньше 0.");
                 }
                 if (double.Parse(TransactionTextBox.Text) == 0)
                 {
-                    throw new IncorrectDataException("Введенные данные равны 0");
+                    throw new IncorrectDataException("Введенные данные равны 0.");
                 }           
                 
             }
@@ -121,7 +130,7 @@ namespace BudgetManager
 
         private void TransactionTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (TransactionTextBox.Text == "Error")
+            if (TransactionTextBox.Text == "Error" || TransactionTextBox.Text == "0")
             {
                 TransactionTextBox.Clear();
             }

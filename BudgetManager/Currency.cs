@@ -2,7 +2,7 @@
 {
     public class Currency
     {
-        public int Rubles { get; set; }
+        public long Rubles { get; set; }
 
         public int Pennies { get; set; }
 
@@ -12,7 +12,7 @@
             Pennies = 0;
         }
 
-        public Currency(int rubles, int pennies)
+        public Currency(long rubles, int pennies)
         {
             Rubles = rubles + (pennies / 100);
             Pennies = pennies % 100;
@@ -20,7 +20,7 @@
 
         public Currency(double value)
         {
-            Rubles = (int) value;
+            Rubles = (long) value;
             Pennies = (int)(value * 100 % 100);
         }
 
@@ -51,7 +51,7 @@
         {
             return new Currency(x);
         }
-        public static implicit operator Currency(int x)
+        public static implicit operator Currency(long x)
         {
             return new Currency(x);
         }
