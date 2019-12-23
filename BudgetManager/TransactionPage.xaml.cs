@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -37,6 +38,7 @@ namespace BudgetManager
                 TransactionTextBox.Clear();
             }
             var button = (Button)sender;
+            if(TransactionTextBox.Text.Length == TransactionTextBox.MaxLength) return;
             var value = button.Content.ToString();
             if (string.IsNullOrEmpty(value))
                 return;
@@ -139,6 +141,11 @@ namespace BudgetManager
         private void MainMenuButton_OnClick(object sender, RoutedEventArgs e)
         {
             Switcher.Switch(new MainMenu());
+        }
+
+        private void TransactionTextBox_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            TransactionTextBox.FontSize = 42 - 2 * Math.Max(5, TransactionTextBox.Text.Length);
         }
     }
 }
