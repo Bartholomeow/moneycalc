@@ -38,7 +38,6 @@ namespace BudgetManager
                 TransactionTextBox.Clear();
             }
             var button = (Button)sender;
-            if(TransactionTextBox.Text.Length == TransactionTextBox.MaxLength) return;
             var value = button.Content.ToString();
             if (string.IsNullOrEmpty(value))
                 return;
@@ -55,6 +54,7 @@ namespace BudgetManager
                     }
                     break;
                 default:
+                    if (TransactionTextBox.Text.Length == TransactionTextBox.MaxLength) return;
                     if (TransactionTextBox.Text=="0" && value !=",")
                     {
                         TransactionTextBox.Clear();
